@@ -1,0 +1,2346 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" type="image/png" href="data:image/png;base64,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">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="RunPace Pro">
+    <title>RunPace Pro — Pilotage VMA, FC, Puissance & Piste</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Polices Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Sliders tactiles optimisés mobile */
+        input[type=range] {
+            -webkit-appearance: none;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #38bdf8;
+            cursor: pointer;
+            margin-top: -9px;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
+            border: 2px solid #0f172a;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            cursor: pointer;
+            background: #334155;
+            border-radius: 999px;
+        }
+        .slider-orange::-webkit-slider-thumb {
+            background: #f97316;
+            box-shadow: 0 0 12px rgba(249, 115, 22, 0.6);
+        }
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        /* Masquer la vue impression à l'écran */
+        #print-sheet {
+            display: none;
+        }
+        /* STYLES SPÉCIFIQUES POUR LE PDF / IMPRESSION 2 PAGES */
+        @media print {
+            /* Page 1 : tableau des temps de passage en A4 paysage */
+            @page landscape {
+                size: A4 landscape;
+                margin: 10mm 12mm;
+            }
+            /* Page 2 : récapitulatif des zones en A4 portrait */
+            @page portrait {
+                size: A4 portrait;
+                margin: 10mm 12mm;
+            }
+            #pdf-page-1 {
+                page: landscape;
+            }
+            #pdf-page-2 {
+                page: portrait;
+            }
+            body {
+                background: #ffffff !important;
+                color: #0f172a !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            #app-ui {
+                display: none !important;
+            }
+            #print-sheet {
+                display: block !important;
+                width: 100%;
+                font-family: 'Inter', sans-serif;
+            }
+            .page-break {
+                page-break-before: always;
+                break-before: page;
+            }
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+            th, td {
+                border: 1px solid #cbd5e1;
+                padding: 4px 5px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-sky-500 selection:text-white">
+
+<!-- =====================================================================
+     INTERFACE APPLICATION MOBILE (PWA)
+     ===================================================================== -->
+<div id="app-ui" class="min-h-screen pb-24">
+
+    <!-- Header fixe -->
+    <header class="bg-slate-900/95 backdrop-blur-md border-b border-slate-800 sticky top-0 z-30">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2.5">
+                <img data-logo alt="" width="40" height="40" class="w-10 h-10 rounded-xl shadow-lg shadow-sky-500/20">
+                <div>
+                    <h1 class="text-base sm:text-lg font-extrabold tracking-tight text-white leading-tight">RUN<span class="text-sky-400">PACE</span> PRO</h1>
+                    <p class="text-[11px] text-slate-400 leading-tight">VMA • Karvonen FC • Watts</p>
+                </div>
+            </div>
+
+            <!-- Indicateurs rapides -->
+            <div class="flex items-center gap-2 bg-slate-800/90 border border-slate-700 px-3 py-1.5 rounded-xl text-xs font-mono">
+                <span id="hdr-vma" class="font-bold text-sky-400">18.0 km/h</span>
+                <span class="text-slate-600">|</span>
+                <span id="hdr-pace" class="text-slate-200 font-semibold">3'20"/km</span>
+                <span class="hidden sm:inline text-slate-600">|</span>
+                <span id="hdr-fc" class="hidden sm:inline text-rose-400 font-semibold">FC 50-190</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenu principal des onglets -->
+    <main class="max-w-4xl mx-auto px-4 pt-5">
+
+        <!-- ===============================================================
+             ONGLET 1 : PROFIL COUREUR (VMA, POIDS, FC, PUISSANCE & CÔTES)
+             =============================================================== -->
+        <section id="tab-profil" class="tab-panel space-y-5">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-bold text-white">Profil Physiologique</h2>
+                    <p class="text-xs text-slate-400">Tes données sont enregistrées automatiquement sur ton appareil.</p>
+                </div>
+                <span id="save-badge" class="text-[11px] font-medium px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                    ✓ Sauvegardé
+                </span>
+            </div>
+
+            <!-- Carte 1 : Paramètres fondamentaux -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-4 shadow-lg">
+                <div class="text-xs font-bold uppercase tracking-wider text-sky-400 flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-sky-400"></span>
+                    Données de Base & Fréquence Cardiaque
+                </div>
+
+                <!-- VMA -->
+                <div class="bg-slate-950/70 border border-slate-800 p-3.5 rounded-xl space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <label for="in-vma" class="text-sm font-semibold text-slate-200">VMA (km/h)</label>
+                        <div class="flex items-center gap-2">
+                            <button type="button" onclick="stepInput('in-vma', -0.1, 1)" class="w-9 h-9 rounded-lg bg-slate-800 active:bg-slate-700 font-bold text-lg">-</button>
+                            <input type="number" id="in-vma" step="0.1" min="8" max="26" value="18.0" class="w-20 text-center font-mono text-xl font-bold bg-slate-900 border border-slate-700 rounded-lg py-1 text-sky-400">
+                            <button type="button" onclick="stepInput('in-vma', 0.1, 1)" class="w-9 h-9 rounded-lg bg-slate-800 active:bg-slate-700 font-bold text-lg">+</button>
+                        </div>
+                    </div>
+                    <input type="range" id="sl-vma" min="10" max="25" step="0.1" value="18.0" class="w-full">
+                </div>
+
+                <!-- Grille FC Repos, FC Max, Poids -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div class="bg-slate-950/70 border border-slate-800 p-3.5 rounded-xl">
+                        <label for="in-fcrepos" class="block text-xs font-semibold text-slate-400 uppercase mb-1.5">FC Repos (bpm)</label>
+                        <div class="flex items-center gap-2">
+                            <input type="number" id="in-fcrepos" min="30" max="100" value="48" class="w-full font-mono text-xl font-bold bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-emerald-400 text-center">
+                            <span class="text-xs text-slate-500">au réveil</span>
+                        </div>
+                    </div>
+                    <div class="bg-slate-950/70 border border-slate-800 p-3.5 rounded-xl">
+                        <label for="in-fcmax" class="block text-xs font-semibold text-slate-400 uppercase mb-1.5">FC Max (bpm)</label>
+                        <div class="flex items-center gap-2">
+                            <input type="number" id="in-fcmax" min="130" max="230" value="188" class="w-full font-mono text-xl font-bold bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-rose-400 text-center">
+                            <span class="text-xs text-slate-500">test VMA</span>
+                        </div>
+                    </div>
+                    <div class="bg-slate-950/70 border border-slate-800 p-3.5 rounded-xl">
+                        <label for="in-poids" class="block text-xs font-semibold text-slate-400 uppercase mb-1.5">Poids (kg)</label>
+                        <div class="flex items-center gap-2">
+                            <input type="number" id="in-poids" step="0.1" min="40" max="130" value="71.0" class="w-full font-mono text-xl font-bold bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-amber-400 text-center">
+                            <span class="text-xs text-slate-500">pour W/kg</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Résumé FC Réserve -->
+                <div class="bg-slate-950/40 border border-slate-800/80 rounded-xl px-4 py-2.5 flex items-center justify-between text-xs">
+                    <span class="text-slate-400">Fréquence Cardiaque de Réserve (Karvonen) :</span>
+                    <span id="fc-reserve-display" class="font-mono font-bold text-white text-sm">140 bpm</span>
+                </div>
+            </div>
+
+            <!-- Carte 2 : Relevés de Puissance (Watts montre) -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-4 shadow-lg">
+                <div>
+                    <div class="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                        Calibration Puissance (Relevés Montre en Watts)
+                    </div>
+                    <p class="text-xs text-slate-400 mt-1">Saisis les puissances moyennes relevées après tes séances spécifiques (laisse vide ou à 0 si non renseigné).</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <!-- Z1 EF -->
+                    <div class="bg-slate-950/70 border border-slate-800 p-3 rounded-xl flex items-center justify-between gap-3">
+                        <div>
+                            <span class="text-xs font-bold text-emerald-400 block">Zone 1 • EF</span>
+                            <span class="text-[11px] text-slate-400">Footing plat</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <input type="number" id="in-w-z1" placeholder="ex: 225" value="225" class="w-24 font-mono text-lg font-bold bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white text-right">
+                            <span class="text-xs font-mono text-slate-400">W</span>
+                        </div>
+                    </div>
+
+                    <!-- Z2 SV1 -->
+                    <div class="bg-slate-950/70 border border-slate-800 p-3 rounded-xl flex items-center justify-between gap-3">
+                        <div>
+                            <span class="text-xs font-bold text-sky-400 block">Zone 2 • SV1</span>
+                            <span class="text-[11px] text-slate-400">Tempo / Seuil aérobie</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <input type="number" id="in-w-z2" placeholder="ex: 265" value="265" class="w-24 font-mono text-lg font-bold bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white text-right">
+                            <span class="text-xs font-mono text-slate-400">W</span>
+                        </div>
+                    </div>
+
+                    <!-- Z3 SV2 -->
+                    <div class="bg-slate-950/70 border border-slate-800 p-3 rounded-xl flex items-center justify-between gap-3">
+                        <div>
+                            <span class="text-xs font-bold text-amber-400 block">Zone 3 • SV2</span>
+                            <span class="text-[11px] text-slate-400">Allure 10 km / Seuil</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <input type="number" id="in-w-z3" placeholder="ex: 300" value="300" class="w-24 font-mono text-lg font-bold bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white text-right">
+                            <span class="text-xs font-mono text-slate-400">W</span>
+                        </div>
+                    </div>
+
+                    <!-- Z4 VMA Longue -->
+                    <div class="bg-slate-950/70 border border-slate-800 p-3 rounded-xl flex items-center justify-between gap-3">
+                        <div>
+                            <span class="text-xs font-bold text-orange-400 block">Zone 4 • VMA Longue</span>
+                            <span class="text-[11px] text-slate-400">Blocs 800m - 1500m</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <input type="number" id="in-w-z4" placeholder="ex: 330" value="330" class="w-24 font-mono text-lg font-bold bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white text-right">
+                            <span class="text-xs font-mono text-slate-400">W</span>
+                        </div>
+                    </div>
+
+                    <!-- Z5 VMA -->
+                    <div class="bg-slate-950/70 border border-slate-800 p-3 rounded-xl flex items-center justify-between gap-3">
+                        <div>
+                            <span class="text-xs font-bold text-rose-400 block">Zone 5 • VMA</span>
+                            <span class="text-[11px] text-slate-400">Répétitions courtes</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <input type="number" id="in-w-z5" placeholder="ex: 360" value="360" class="w-24 font-mono text-lg font-bold bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white text-right">
+                            <span class="text-xs font-mono text-slate-400">W</span>
+                        </div>
+                    </div>
+
+                    <!-- Spécifique Côte / D+ -->
+                    <div class="bg-gradient-to-r from-purple-950/50 to-slate-950/70 border border-purple-500/40 p-3 rounded-xl flex items-center justify-between gap-3">
+                        <div>
+                            <span class="text-xs font-bold text-purple-300 block">⛰️ Spécifique Côte / D+</span>
+                            <span class="text-[11px] text-slate-400">Séance côte / fort D+</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <input type="number" id="in-w-hill" placeholder="ex: 345" value="345" class="w-24 font-mono text-lg font-bold bg-slate-900 border border-purple-500/50 rounded-lg px-2.5 py-1.5 text-purple-300 text-right">
+                            <span class="text-xs font-mono text-purple-300">W</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carte 3 : Sauvegarde du profil -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3 shadow-lg">
+                <div>
+                    <div class="text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                        Sauvegarde du profil
+                    </div>
+                    <p class="text-xs text-slate-400 mt-1">Copie ton profil pour le garder ou le transférer sur un autre appareil, puis colle-le ici et applique-le.</p>
+                </div>
+                <textarea id="profile-json" rows="3" spellcheck="false" placeholder="Ton profil apparaîtra ici (ou colle-le ici pour l'importer)" class="w-full font-mono text-xs bg-slate-950 border border-slate-700 rounded-xl p-3 text-slate-200"></textarea>
+                <div class="flex flex-wrap gap-2">
+                    <button type="button" onclick="exportProfile()" class="px-3.5 py-2 rounded-xl bg-slate-800 border border-slate-700 text-sm font-semibold text-white active:scale-95">Afficher et copier mon profil</button>
+                    <button type="button" onclick="importProfile()" class="px-3.5 py-2 rounded-xl bg-emerald-500 text-slate-950 text-sm font-bold active:scale-95">Appliquer le profil collé</button>
+                </div>
+                <p id="profile-json-msg" class="text-xs text-slate-400 min-h-[1rem]"></p>
+            </div>
+        </section>
+
+        <!-- ===============================================================
+             ONGLET 2 : TABLEAU CROISÉ DES ZONES (VITESSE + FC + PUISSANCE)
+             =============================================================== -->
+        <section id="tab-zones" class="tab-panel hidden space-y-5">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                    <h2 class="text-xl font-bold text-white">Tes Zones d'Entraînement</h2>
+                    <p class="text-xs text-slate-400">Synthèse personnalisée : Allure, FC (Karvonen) & Puissance.</p>
+                </div>
+                <button type="button" onclick="exportPdf()" class="inline-flex items-center gap-2 bg-sky-500 hover:bg-sky-400 active:scale-95 text-slate-950 font-bold text-xs px-3.5 py-2 rounded-xl shadow-lg shadow-sky-500/20 transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                    </svg>
+                    PDF 2 Pages
+                </button>
+            </div>
+
+            <!-- Tableau complet responsive -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-950/90 border-b border-slate-800 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                                <th class="py-3 px-3.5">Zone</th>
+                                <th class="py-3 px-3">Allure & Vitesse</th>
+                                <th class="py-3 px-3">FC Cible (Karvonen)</th>
+                                <th class="py-3 px-3 text-right">Puissance (Relevé)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="zones-table-body" class="divide-y divide-slate-800/80 text-sm">
+                            <!-- Généré dynamiquement -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Encart Spécial Côte / Trail -->
+            <div id="hill-card-container" class="bg-gradient-to-r from-purple-950/60 via-slate-900 to-slate-900 border border-purple-500/40 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div class="space-y-0.5">
+                    <div class="inline-flex items-center gap-1.5 text-purple-300 text-xs font-bold uppercase tracking-wider">
+                        ⛰️ Repère Spécifique Côte & D+
+                    </div>
+                    <p class="text-xs text-slate-300">Cible de puissance à maintenir en montée quand l'allure (min/km) n'est plus significative.</p>
+                </div>
+                <div class="flex items-center gap-4 bg-slate-950/80 border border-purple-500/30 px-4 py-2.5 rounded-xl shrink-0">
+                    <div>
+                        <span class="text-[10px] uppercase text-slate-400 block">Puissance Cible</span>
+                        <span id="hill-watts-display" class="font-mono text-xl font-extrabold text-purple-300">345 W</span>
+                    </div>
+                    <div class="h-7 w-px bg-slate-800"></div>
+                    <div>
+                        <span class="text-[10px] uppercase text-slate-400 block">Ratio Poids</span>
+                        <span id="hill-wkg-display" class="font-mono text-base font-bold text-white">4.86 W/kg</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===============================================================
+             ONGLET 3 : FRACTIONNÉ & PISTE + EXPORT PDF 2 PAGES
+             =============================================================== -->
+        <section id="tab-fractionne" class="tab-panel hidden space-y-5">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                    <h2 class="text-xl font-bold text-white">Fractionné & Temps de Passage</h2>
+                    <p class="text-xs text-slate-400">Calibrage piste (incluant 600m, 800m, 900m) & fiche PDF.</p>
+                </div>
+                <!-- BOUTON EXPORT PDF 2 PAGES -->
+                <button type="button" onclick="exportPdf()" class="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-400 hover:to-amber-400 active:scale-95 text-slate-950 font-extrabold text-xs sm:text-sm px-4 py-2.5 rounded-xl shadow-lg shadow-orange-500/25 transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                    </svg>
+                    Générer le PDF (2 pages)
+                </button>
+            </div>
+
+            <!-- Simulateur rapide d'une répétition -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-4 shadow-lg">
+                <div class="flex justify-between items-center">
+                    <label for="sl-pct" class="text-sm font-semibold text-slate-200">Intensité (% VMA)</label>
+                    <div class="flex items-center gap-2">
+                        <button type="button" onclick="adjustPct(-1)" class="w-8 h-8 rounded-lg bg-slate-800 font-bold">-</button>
+                        <span id="lbl-pct" class="font-mono text-lg font-extrabold text-orange-400 w-14 text-center">100%</span>
+                        <button type="button" onclick="adjustPct(1)" class="w-8 h-8 rounded-lg bg-slate-800 font-bold">+</button>
+                    </div>
+                </div>
+                <input type="range" id="sl-pct" min="80" max="110" step="1" value="100" class="w-full slider-orange">
+
+                <!-- Raccourcis zones -->
+                <div class="flex flex-wrap gap-1.5">
+                    <button type="button" onclick="setPct(85)" class="px-2.5 py-1 text-xs font-mono rounded-lg bg-slate-800 text-amber-300 border border-slate-700">85% SV2</button>
+                    <button type="button" onclick="setPct(92)" class="px-2.5 py-1 text-xs font-mono rounded-lg bg-slate-800 text-orange-300 border border-slate-700">92% VMA Longue</button>
+                    <button type="button" onclick="setPct(98)" class="px-2.5 py-1 text-xs font-mono rounded-lg bg-slate-800 text-rose-300 border border-slate-700">98% VMA Moy.</button>
+                    <button type="button" onclick="setPct(100)" class="px-2.5 py-1 text-xs font-mono rounded-lg bg-orange-500/20 text-orange-300 border border-orange-500/50">100% VMA</button>
+                    <button type="button" onclick="setPct(105)" class="px-2.5 py-1 text-xs font-mono rounded-lg bg-slate-800 text-rose-400 border border-slate-700">105% Courte</button>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                    <div>
+                        <label for="sel-dist" class="block text-xs font-semibold text-slate-400 uppercase mb-1">Distance répétition</label>
+                        <select id="sel-dist" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white font-mono text-base">
+                            <option value="200">200 m (0.5 tour)</option>
+                            <option value="300">300 m (0.75 tour)</option>
+                            <option value="400">400 m (1 tour)</option>
+                            <option value="500">500 m (1.25 tour)</option>
+                            <option value="600">600 m (1.5 tour)</option>
+                            <option value="800" selected>800 m (2 tours)</option>
+                            <option value="900">900 m (2.25 tours)</option>
+                            <option value="1000">1000 m (2.5 tours)</option>
+                            <option value="1500">1500 m (3.75 tours)</option>
+                            <option value="2000">2000 m (5 tours)</option>
+                        </select>
+                    </div>
+
+                    <!-- Résultat Chrono -->
+                    <div class="bg-slate-950 border border-orange-500/40 rounded-xl px-4 py-2.5 flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] uppercase text-slate-400 block">Chrono Cible</span>
+                            <span id="res-chrono" class="font-mono text-2xl sm:text-3xl font-extrabold text-white">02'40"0</span>
+                        </div>
+                        <div class="text-right font-mono">
+                            <span id="res-pace" class="text-sm font-bold text-sky-400 block">3'20"/km</span>
+                            <span class="text-[11px] text-slate-400">200m: <strong id="res-200" class="text-slate-200">40"0</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tableau des temps de passage avec surlignage des allures conseillées -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+                <div class="px-4 py-3 bg-slate-950/80 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Grille des Temps de Passage (Allures conseillées surlignées)</span>
+                    <div class="flex flex-wrap gap-2 text-[10px] font-semibold">
+                        <span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">VMA Courte/Moy</span>
+                        <span class="px-2 py-0.5 rounded bg-orange-500/20 text-orange-300 border border-orange-500/30">VMA Longue</span>
+                        <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">Seuil SV2</span>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-center border-collapse font-mono text-xs">
+                        <thead>
+                            <tr class="bg-slate-950 text-slate-400 border-b border-slate-800">
+                                <th class="py-2.5 px-2 text-left sticky left-0 bg-slate-950 z-10">% VMA</th>
+                                <th class="py-2.5 px-2">Allure</th>
+                                <th class="py-2.5 px-2">200m</th>
+                                <th class="py-2.5 px-2">300m</th>
+                                <th class="py-2.5 px-2">400m</th>
+                                <th class="py-2.5 px-2">500m</th>
+                                <th class="py-2.5 px-2">600m</th>
+                                <th class="py-2.5 px-2">800m</th>
+                                <th class="py-2.5 px-2">900m</th>
+                                <th class="py-2.5 px-2">1000m</th>
+                                <th class="py-2.5 px-2">1500m</th>
+                                <th class="py-2.5 px-2">2000m</th>
+                            </tr>
+                        </thead>
+                        <tbody id="splits-matrix-body" class="divide-y divide-slate-800/70">
+                            <!-- Rempli dynamiquement -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===============================================================
+             ONGLET 4 : OUTILS (CONVERTISSEUR & PRÉDICTIONS COURSES)
+             =============================================================== -->
+        <section id="tab-outils" class="tab-panel hidden space-y-5">
+            <!-- Impression des fiches -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3 shadow-lg">
+                <div>
+                    <h2 class="text-lg font-bold text-white">Fiches d'entraînement à imprimer</h2>
+                    <p class="text-xs text-slate-400 mt-1">Une fiche A4 de 2 pages : temps de passage en paysage sur la première page, zones d'allures, fréquences cardiaques et puissances en portrait sur la deuxième.</p>
+                </div>
+                <button type="button" onclick="exportPdf()" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-sky-500 hover:bg-sky-400 active:scale-95 text-slate-950 font-bold text-sm px-4 py-3 rounded-xl transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4H9v4zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                    </svg>
+                    Télécharger le PDF (2 pages)
+                </button>
+                <button type="button" onclick="printTrainingSheet()" class="w-full sm:w-auto ml-0 sm:ml-2 inline-flex items-center justify-center px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-slate-200 text-sm font-semibold active:scale-95 transition">Imprimer depuis le navigateur</button>
+            </div>
+
+            <!-- Convertisseur -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-4 shadow-lg">
+                <h2 class="text-lg font-bold text-white">Convertisseur Allure ⇄ Vitesse</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="bg-slate-950/70 border border-slate-800 p-3.5 rounded-xl">
+                        <label for="conv-kmh" class="block text-xs font-semibold text-slate-400 uppercase mb-1.5">Vitesse (km/h)</label>
+                        <input type="number" id="conv-kmh" value="15.0" step="0.1" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 font-mono text-2xl font-bold text-emerald-400">
+                    </div>
+                    <div class="bg-slate-950/70 border border-slate-800 p-3.5 rounded-xl">
+                        <label class="block text-xs font-semibold text-slate-400 uppercase mb-1.5">Allure (min : sec / km)</label>
+                        <div class="flex items-center gap-2">
+                            <input type="number" id="conv-min" value="4" min="1" max="15" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2 py-2 font-mono text-2xl font-bold text-sky-400 text-center">
+                            <span class="font-mono font-bold text-slate-400">:</span>
+                            <input type="number" id="conv-sec" value="0" min="0" max="59" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2 py-2 font-mono text-2xl font-bold text-sky-400 text-center">
+                        </div>
+                    </div>
+                </div>
+                <div class="text-xs text-slate-400 flex justify-between items-center pt-1">
+                    <span>Pourcentage de ta VMA :</span>
+                    <span id="conv-pct-out" class="font-mono font-bold text-white bg-slate-800 px-2.5 py-1 rounded-lg">83.3 % VMA</span>
+                </div>
+            </div>
+
+            <!-- Projections Compétitions -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-4 shadow-lg">
+                <div>
+                    <h2 class="text-lg font-bold text-white">Projections Chronos Compétition</h2>
+                    <p class="text-xs text-slate-400 mt-1">Chaque projection repose sur un % de ta VMA, modifiable. Saisis un chrono récent (ex : 39:30 ou 1:23:45) pour caler ce % sur ta réalité.</p>
+                </div>
+                <div id="races-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <!-- Généré dynamiquement -->
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-seance" class="tab-panel hidden space-y-5">
+            <div class="grid grid-cols-2 gap-1 bg-slate-900 border border-slate-800 rounded-xl p-1">
+                <button type="button" id="seance-btn-a" onclick="setSeanceView('a')" class="py-2 rounded-lg text-sm font-bold transition bg-sky-500 text-slate-950">Analyser</button>
+                <button type="button" id="seance-btn-c" onclick="setSeanceView('c')" class="py-2 rounded-lg text-sm font-bold transition text-slate-300">Carnet</button>
+            </div>
+            <div id="seance-view-a" class="space-y-5">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3 shadow-lg">
+                <div>
+                    <h2 class="text-lg font-bold text-white">Analyse d'une séance</h2>
+                    <p class="text-xs text-slate-400 mt-1">Choisis le fichier .fit de ta séance (ou le .zip exporté depuis Garmin Connect). Le fichier est lu sur ton téléphone, il n'est envoyé nulle part. Pense à appuyer sur « lap » à chaque répétition.</p>
+                </div>
+                <label class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-sky-500 hover:bg-sky-400 active:scale-95 text-slate-950 font-bold text-sm px-4 py-3 rounded-xl transition cursor-pointer">
+                    Choisir un fichier .fit
+                    <input type="file" accept=".fit,.zip,application/zip,application/octet-stream" class="hidden" onchange="onFitFile(this)">
+                </label>
+                <p id="seance-status" class="text-xs text-slate-400"></p>
+            </div>
+            <div id="seance-result" class="hidden space-y-5">
+                <div id="seance-summary" class="grid grid-cols-2 sm:grid-cols-4 gap-2"></div>
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+                    <label class="flex items-center justify-between gap-3 text-sm text-slate-300">
+                        <span>Distance réelle d'une répétition (m)</span>
+                        <input id="seance-dist" type="number" inputmode="numeric" min="50" step="50" value="200" oninput="renderSeance()" class="w-24 bg-slate-950 border border-slate-700 rounded-lg px-2 py-1.5 text-right font-mono text-white">
+                    </label>
+                    <p class="text-[11px] text-slate-500">Les vitesses sont calculées avec cette distance et le temps du tour, car le GPS d'une montre est peu fiable sur 200 m.</p>
+                    <div class="overflow-x-auto -mx-1">
+                        <table class="w-full text-xs text-slate-200 whitespace-nowrap">
+                            <thead><tr class="text-slate-400 text-[11px]">
+                                <th class="px-2 py-1.5 text-left font-semibold">#</th><th class="px-2 py-1.5 text-left font-semibold">Temps</th><th class="px-2 py-1.5 text-left font-semibold">km/h</th><th class="px-2 py-1.5 text-left font-semibold">%VMA</th>
+                                <th class="px-2 py-1.5 text-left font-semibold">FC fin</th><th class="px-2 py-1.5 text-left font-semibold">FC max</th><th class="px-2 py-1.5 text-left font-semibold">Cad.</th><th class="px-2 py-1.5 text-left font-semibold">Foulée m</th>
+                                <th class="px-2 py-1.5 text-left font-semibold">W</th><th class="px-2 py-1.5 text-left font-semibold">Osc. mm</th><th class="px-2 py-1.5 text-left font-semibold">Contact ms</th>
+                            </tr></thead>
+                            <tbody id="seance-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
+                    <h3 class="text-sm font-bold text-white">Comparaison des blocs</h3>
+                    <div class="overflow-x-auto"><table id="seance-cmp" class="w-full text-xs"></table></div>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-4">
+                    <div><h3 class="text-sm font-bold text-white mb-1">% VMA par répétition</h3><div id="seance-chart-pct"></div></div>
+                    <div><h3 class="text-sm font-bold text-white mb-1">Cadence par répétition (pas/min)</h3><div id="seance-chart-spm"></div></div>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+                    <h3 class="text-sm font-bold text-white">Lecture de la séance</h3>
+                    <ul id="seance-reading" class="space-y-1.5 text-xs text-slate-300 list-disc pl-4"></ul>
+                    <h3 class="text-sm font-bold text-white pt-2">Synthèse</h3>
+                    <p id="seance-synth" class="text-xs text-slate-300 leading-relaxed"></p>
+                    <button type="button" onclick="shareSynth()" class="bg-slate-800 border border-slate-700 text-slate-100 font-semibold text-sm px-4 py-2 rounded-xl active:scale-95 transition">Partager la synthèse</button>
+                    <p id="seance-share-msg" class="text-xs text-emerald-400"></p>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+                    <h3 class="text-sm font-bold text-white">Carnet d'entraînement</h3>
+                    <label class="flex items-center justify-between gap-3 text-sm text-slate-300">
+                        <span>Type de séance</span>
+                        <input id="seance-label" type="text" maxlength="40" oninput="this.dataset.touched=1" class="w-40 bg-slate-950 border border-slate-700 rounded-lg px-2 py-1.5 text-right font-mono text-white">
+                    </label>
+                    <p class="text-[11px] text-slate-500">Les tendances regroupent les séances portant le même nom : garde le même intitulé pour le même type de séance.</p>
+                    <button type="button" onclick="addToJournal()" class="bg-sky-500 hover:bg-sky-400 active:scale-95 text-slate-950 font-bold text-sm px-4 py-2 rounded-xl transition">Ajouter au carnet</button>
+                    <p id="seance-journal-msg" class="text-xs"></p>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+                    <h3 class="text-sm font-bold text-white">Reporter la puissance dans le profil</h3>
+                    <p class="text-xs text-slate-400">Puissance moyenne des répétitions : <span id="seance-power-val" class="font-mono font-bold text-white"></span>. Choisis la zone à renseigner.</p>
+                    <div class="flex items-center gap-2">
+                        <select id="seance-zone" onchange="this.dataset.touched=1" class="bg-slate-950 border border-slate-700 rounded-lg px-2 py-2 text-sm text-white">
+                            <option value="1">Z1</option><option value="2">Z2</option><option value="3">Z3</option><option value="4">Z4</option><option value="5">Z5</option><option value="hill">Côte</option>
+                        </select>
+                        <button type="button" onclick="reportPower()" class="bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 font-bold text-sm px-4 py-2 rounded-xl transition">Enregistrer</button>
+                    </div>
+                    <p id="seance-report-msg" class="text-xs text-emerald-400"></p>
+                </div>
+            </div>
+            </div>
+            <div id="seance-view-c" class="hidden space-y-5">
+                <div id="j-list" class="space-y-5">
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+                        <h2 class="text-lg font-bold text-white">Carnet d'entraînement</h2>
+                        <div id="j-items" class="space-y-2"></div>
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <button type="button" onclick="jCompare()" class="bg-sky-500 text-slate-950 font-bold text-sm px-4 py-2 rounded-xl active:scale-95 transition">Comparer les 2 cochées</button>
+                            <span id="j-sel-info" class="text-xs text-slate-400"></span>
+                        </div>
+                    </div>
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+                        <h3 class="text-sm font-bold text-white">Tendance</h3>
+                        <div class="grid grid-cols-3 gap-2">
+                            <select id="j-trend-type" onchange="renderTrend()" class="bg-slate-950 border border-slate-700 rounded-lg px-2 py-2 text-xs text-white"></select>
+                            <select id="j-trend-metric" onchange="renderTrend()" class="bg-slate-950 border border-slate-700 rounded-lg px-2 py-2 text-xs text-white"></select>
+                            <select id="j-trend-period" onchange="renderTrend()" class="bg-slate-950 border border-slate-700 rounded-lg px-2 py-2 text-xs text-white">
+                                <option value="0">Tout</option><option value="3">3 mois</option><option value="6">6 mois</option><option value="12">12 mois</option>
+                            </select>
+                        </div>
+                        <div id="j-trend-chart"></div>
+                        <p id="j-trend-text" class="text-xs text-slate-300 leading-relaxed"></p>
+                    </div>
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+                        <h3 class="text-sm font-bold text-white">Sauvegarde du carnet</h3>
+                        <p class="text-xs text-slate-400">Le carnet est stocké dans l'appli, sur ce téléphone. Exporte-le de temps en temps dans un fichier que tu ranges où tu veux, et réimporte-le pour le retrouver sur un autre appareil ou après un effacement.</p>
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <button type="button" onclick="jExport()" class="bg-slate-800 border border-slate-700 text-slate-100 font-semibold text-sm px-4 py-2 rounded-xl active:scale-95 transition">Exporter le carnet</button>
+                            <label class="bg-slate-800 border border-slate-700 text-slate-100 font-semibold text-sm px-4 py-2 rounded-xl active:scale-95 transition cursor-pointer">Importer un carnet<input type="file" accept=".json,application/json" class="hidden" onchange="jImport(this)"></label>
+                        </div>
+                        <p id="j-io-msg" class="text-xs text-emerald-400"></p>
+                    </div>
+                </div>
+                <div id="j-detail" class="hidden space-y-4">
+                    <button type="button" onclick="jShow('list')" class="text-sm text-sky-300">← Retour au carnet</button>
+                    <div id="j-detail-body" class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3"></div>
+                </div>
+                <div id="j-compare" class="hidden space-y-4">
+                    <button type="button" onclick="jShow('list')" class="text-sm text-sky-300">← Retour au carnet</button>
+                    <div id="j-compare-body" class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- BARRE DE NAVIGATION MOBILE INFÉRIEURE (TACTILE) -->
+    <nav class="fixed bottom-0 inset-x-0 bg-slate-900/95 backdrop-blur-lg border-t border-slate-800 z-40">
+        <div class="max-w-4xl mx-auto grid grid-cols-5 h-16">
+            <button type="button" onclick="openTab('tab-profil', this)" class="nav-btn active flex flex-col items-center justify-center gap-1 text-sky-400 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                <span class="text-[11px] font-semibold">Profil</span>
+            </button>
+            <button type="button" onclick="openTab('tab-zones', this)" class="nav-btn flex flex-col items-center justify-center gap-1 text-slate-400 hover:text-slate-200 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                <span class="text-[11px] font-semibold">Zones</span>
+            </button>
+            <button type="button" onclick="openTab('tab-fractionne', this)" class="nav-btn flex flex-col items-center justify-center gap-1 text-slate-400 hover:text-slate-200 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span class="text-[11px] font-semibold">Fractionné</span>
+            </button>
+            <button type="button" onclick="openTab('tab-seance', this)" class="nav-btn flex flex-col items-center justify-center gap-1 text-slate-400 hover:text-slate-200 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+                <span class="text-[11px] font-semibold">Séance</span>
+            </button>
+            <button type="button" onclick="openTab('tab-outils', this)" class="nav-btn flex flex-col items-center justify-center gap-1 text-slate-400 hover:text-slate-200 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                </svg>
+                <span class="text-[11px] font-semibold">Outils</span>
+            </button>
+        </div>
+    </nav>
+</div>
+
+<!-- =====================================================================
+     FEUILLE D'IMPRESSION PDF (2 PAGES STRICTES A4)
+     ===================================================================== -->
+<div id="print-sheet">
+    <!-- PAGE 1 : TEMPS DE PASSAGE FRACTIONNÉ AVEC ALLURES CONSEILLÉES SURLIGNÉES -->
+    <div id="pdf-page-1">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid #0f172a; padding-bottom: 8px; margin-bottom: 12px;">
+            <div>
+                <img data-logo alt="" style="float: left; width: 34px; height: 34px; margin-right: 10px; border-radius: 8px;"><h1 style="font-size: 18px; font-weight: 800; margin: 0; color: #0f172a;">FICHE TERRAIN — TEMPS DE PASSAGE FRACTIONNÉ</h1>
+                <p style="font-size: 11px; color: #475569; margin: 2px 0 0 0;">Allures cibles sur piste et route selon % de VMA • Page 1 / 2</p>
+            </div>
+            <div style="text-align: right; font-family: 'JetBrains Mono', monospace;">
+                <div style="font-size: 14px; font-weight: 800; color: #0284c7;" id="pdf-vma-header">VMA : 18.0 km/h (3'20"/km)</div>
+                <div style="font-size: 10px; color: #475569;" id="pdf-date-header">Généré le --/--/----</div>
+            </div>
+        </div>
+
+        <!-- Légende des cases surlignées -->
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; font-size: 10px; background: #f8fafc; border: 1px solid #cbd5e1; padding: 6px 10px; border-radius: 6px;">
+            <strong style="color: #0f172a;">Allures conseillées par distance (cases surlignées) :</strong>
+            <span style="background: #ffe4e6; color: #9f1239; padding: 1px 6px; border-radius: 4px; font-weight: 700;">100-200m : VMA Courte (100-105%)</span>
+            <span style="background: #fee2e2; color: #991b1b; padding: 1px 6px; border-radius: 4px; font-weight: 700;">300-600m : VMA Moyenne (96-100%)</span>
+            <span style="background: #ffedd5; color: #9a3412; padding: 1px 6px; border-radius: 4px; font-weight: 700;">800-1000m : VMA Longue (90-95%)</span>
+            <span style="background: #fef3c7; color: #92400e; padding: 1px 6px; border-radius: 4px; font-weight: 700;">1500-2000m : Seuil SV2 (82-87%)</span>
+        </div>
+
+        <!-- Tableau complet Page 1 -->
+        <table style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; text-align: center;">
+            <thead>
+                <tr style="background: #0f172a; color: #ffffff;">
+                    <th style="text-align: left; padding: 6px;">% VMA</th>
+                    <th style="padding: 6px;">Vitesse</th>
+                    <th style="padding: 6px;">Allure</th>
+                    <th style="padding: 6px;">100m</th>
+                    <th style="padding: 6px;">200m</th>
+                    <th style="padding: 6px;">300m</th>
+                    <th style="padding: 6px;">400m</th>
+                    <th style="padding: 6px;">500m</th>
+                    <th style="padding: 6px;">600m</th>
+                    <th style="padding: 6px;">800m</th>
+                    <th style="padding: 6px;">900m</th>
+                    <th style="padding: 6px;">1000m</th>
+                    <th style="padding: 6px;">1500m</th>
+                    <th style="padding: 6px;">2000m</th>
+                </tr>
+            </thead>
+            <tbody id="pdf-splits-body">
+                <!-- Rempli dynamiquement -->
+            </tbody>
+        </table>
+
+        <div style="margin-top: 10px; font-size: 9.5px; color: #475569; display: flex; justify-content: space-between;">
+            <span>* Les cases surlignées indiquent la plage d'intensité physiologique recommandée pour chaque distance de répétition.</span>
+            <span>RunPace Pro</span>
+        </div>
+    </div>
+
+    <!-- PAGE 2 : RÉCAPITULATIF DES ZONES DE TRAVAIL (VITESSE + FC + PUISSANCE) -->
+    <div id="pdf-page-2" class="page-break">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid #0f172a; padding-bottom: 8px; margin-bottom: 14px;">
+            <div>
+                <img data-logo alt="" style="float: left; width: 34px; height: 34px; margin-right: 10px; border-radius: 8px;"><h1 style="font-size: 18px; font-weight: 800; margin: 0; color: #0f172a;">RÉCAPITULATIF DES ZONES D'ENTRAÎNEMENT</h1>
+                <p style="font-size: 11px; color: #475569; margin: 2px 0 0 0;">Calibration personnelle : Vitesse, Fréquence Cardiaque (Karvonen) & Puissance • Page 2 / 2</p>
+            </div>
+            <div style="text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #0f172a;" id="pdf-profile-summary">
+                VMA: 18.0 km/h | FC: 48-188 bpm | Poids: 71.0 kg
+            </div>
+        </div>
+
+        <!-- Tableau des 5 Zones -->
+        <table style="font-size: 11px; text-align: left; margin-bottom: 16px;">
+            <thead>
+                <tr style="background: #0f172a; color: #ffffff;">
+                    <th style="padding: 8px;">Zone d'Entraînement</th>
+                    <th style="padding: 8px;">% VMA & Vitesse</th>
+                    <th style="padding: 8px;">Allure Cible</th>
+                    <th style="padding: 8px;">FC Cible (Karvonen)</th>
+                    <th style="padding: 8px;">Puissance (Watts & W/kg)</th>
+                </tr>
+            </thead>
+            <tbody id="pdf-zones-body">
+                <!-- Rempli dynamiquement -->
+            </tbody>
+        </table>
+
+        <!-- Encart Spécifique Côte / D+ sur Page 2 -->
+        <div style="border: 1.5px solid #7e22ce; background: #faf5ff; border-radius: 8px; padding: 12px; margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <strong style="font-size: 12px; color: #581c87; display: block;">⛰️ REPÈRE SPÉCIFIQUE CÔTE & FORT DÉNIVELÉ (D+)</strong>
+                    <span style="font-size: 10.5px; color: #6b21a8;">Référence de puissance mécanique à maintenir en montée lorsque l'allure (min/km) n'est plus exploitable.</span>
+                </div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 800; color: #581c87; text-align: right;" id="pdf-hill-box">
+                    345 W (4.86 W/kg)
+                </div>
+            </div>
+        </div>
+
+        <!-- Encart Projections Courses sur Page 2 -->
+        <h2 style="font-size: 13px; font-weight: 800; color: #0f172a; margin: 0 0 8px 0; text-transform: uppercase;">Projections Chronos Compétition</h2>
+        <table style="font-size: 10.5px; text-align: center;">
+            <thead>
+                <tr id="pdf-races-head" style="background: #f1f5f9; color: #0f172a;"></tr>
+            </thead>
+            <tbody>
+                <tr id="pdf-races-row" style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 12px;">
+                    <!-- Rempli dynamiquement -->
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="margin-top: 14px; font-size: 9.5px; color: #475569; border-top: 1px solid #cbd5e1; padding-top: 6px; display: flex; justify-content: space-between;">
+            <span>Méthode Karvonen : FC Cible = FC Repos + % × (FC Max - FC Repos)</span>
+            <span>RunPace Pro • Fiche personnelle</span>
+        </div>
+    </div>
+</div>
+
+<!-- =====================================================================
+     LOGIQUE JAVASCRIPT COMPLETE & SAUVEGARDE LOCALE
+     ===================================================================== -->
+<script>
+    const STORAGE_KEY = 'runpace_pro_profile_v1';
+
+    // Définition des 5 zones demandées (EF, SV1, SV2, VMA Longue, VMA)
+    const ZONES_DEF = [
+        {
+            id: 'z1',
+            name: 'Zone 1 • Endurance Fondamentale (EF)',
+            short: 'Z1 • EF',
+            vmaMin: 60, vmaMax: 72,
+            karvMin: 55, karvMax: 68,
+            colorClass: 'text-emerald-400',
+            badgeBg: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30',
+            pdfBg: '#ecfdf5', pdfColor: '#065f46',
+            desc: 'Aisance respiratoire, récupération, assimilation'
+        },
+        {
+            id: 'z2',
+            name: 'Zone 2 • Seuil Aérobie (SV1 / Tempo)',
+            short: 'Z2 • SV1',
+            vmaMin: 73, vmaMax: 79,
+            karvMin: 70, karvMax: 78,
+            colorClass: 'text-sky-400',
+            badgeBg: 'bg-sky-500/15 text-sky-300 border-sky-500/30',
+            pdfBg: '#f0f9ff', pdfColor: '#075985',
+            desc: 'Allure marathon / tempo soutenu confortable'
+        },
+        {
+            id: 'z3',
+            name: 'Zone 3 • Seuil Anaérobie (SV2 / 10 km)',
+            short: 'Z3 • SV2',
+            vmaMin: 82, vmaMax: 87,
+            karvMin: 80, karvMax: 88,
+            colorClass: 'text-amber-400',
+            badgeBg: 'bg-amber-500/15 text-amber-300 border-amber-500/30',
+            pdfBg: '#fffbeb', pdfColor: '#92400e',
+            desc: 'Allure spécifique 10 km, seuil lactique'
+        },
+        {
+            id: 'z4',
+            name: 'Zone 4 • VMA Longue (800m - 1500m)',
+            short: 'Z4 • VMA Longue',
+            vmaMin: 90, vmaMax: 95,
+            karvMin: 90, karvMax: 95,
+            colorClass: 'text-orange-400',
+            badgeBg: 'bg-orange-500/15 text-orange-300 border-orange-500/30',
+            pdfBg: '#fff7ed', pdfColor: '#9a3412',
+            desc: 'Fractionné long, développement VO2max'
+        },
+        {
+            id: 'z5',
+            name: 'Zone 5 • VMA Moyenne & Courte',
+            short: 'Z5 • VMA',
+            vmaMin: 96, vmaMax: 105,
+            karvMin: 95, karvMax: 100,
+            colorClass: 'text-rose-400',
+            badgeBg: 'bg-rose-500/15 text-rose-300 border-rose-500/30',
+            pdfBg: '#fff1f2', pdfColor: '#9f1239',
+            desc: 'Répétitions courtes (200m-600m), vitesse max'
+        }
+    ];
+
+    const MATRIX_PCTS = [75, 80, 82, 85, 87, 90, 92, 95, 96, 98, 100, 102, 105];
+    const MATRIX_DISTS = [200, 300, 400, 500, 600, 800, 900, 1000, 1500, 2000];
+    const PDF_DISTS = [100, 200, 300, 400, 500, 600, 800, 900, 1000, 1500, 2000];
+
+    const RACES = [
+        { key: 'r5',  name: '5 km',          meters: 5000 },
+        { key: 'r10', name: '10 km',         meters: 10000 },
+        { key: 'r21', name: 'Semi-Marathon', meters: 21097.5 },
+        { key: 'r42', name: 'Marathon',      meters: 42195 }
+    ];
+    // % de VMA par défaut (indicatifs, modifiables ou calables sur un chrono dans l'onglet Outils)
+    const DEFAULT_RACE_PCT = { r5: 93, r10: 86, r21: 82, r42: 77 };
+    function racePct(r) {
+        const v = profile.racePct && profile.racePct[r.key];
+        return (typeof v === 'number' && v > 0) ? v : DEFAULT_RACE_PCT[r.key];
+    }
+
+    let profile = {
+        vma: 18.0,
+        fcRepos: 48,
+        fcMax: 188,
+        poids: 71.0,
+        wZ1: 225,
+        wZ2: 265,
+        wZ3: 300,
+        wZ4: 330,
+        wZ5: 360,
+        wHill: 345,
+        racePct: { ...DEFAULT_RACE_PCT }
+    };
+
+    let simState = {
+        pct: 100,
+        dist: 800
+    };
+
+    // --- FORMATAGE ---
+    function speedToPace(kmh) {
+        if (!kmh || kmh <= 0) return "--'--\"";
+        const secPerKm = 3600 / kmh;
+        let m = Math.floor(secPerKm / 60);
+        let s = Math.round(secPerKm % 60);
+        if (s === 60) { m += 1; s = 0; }
+        return `${m}'${String(s).padStart(2, '0')}"`;
+    }
+
+    function formatTrack(sec) {
+        const m = Math.floor(sec / 60);
+        const rem = sec % 60;
+        let whole = Math.floor(rem);
+        let tenths = Math.round((rem - whole) * 10);
+        let fm = m;
+        if (tenths === 10) { whole += 1; tenths = 0; }
+        if (whole === 60) { fm += 1; whole = 0; }
+        if (fm === 0) return `${whole}"${tenths}`;
+        return `${String(fm).padStart(2, '0')}'${String(whole).padStart(2, '0')}"${tenths}`;
+    }
+
+    function formatRace(sec) {
+        const h = Math.floor(sec / 3600);
+        const m = Math.floor((sec % 3600) / 60);
+        const s = Math.round(sec % 60);
+        if (h > 0) return `${h}h${String(m).padStart(2, '0')}'${String(s).padStart(2, '0')}"`;
+        return `${String(m).padStart(2, '0')}'${String(s).padStart(2, '0')}"`;
+    }
+
+    // Calcul Karvonen
+    function calcKarvonen(pct) {
+        const fcr = profile.fcRepos || 50;
+        const fcm = profile.fcMax || 185;
+        const reserve = Math.max(20, fcm - fcr);
+        return Math.round(fcr + (pct / 100) * reserve);
+    }
+
+    // Règle de surlignage des allures conseillées selon la distance
+    function getRecommendedHighlight(pct, dist) {
+        // 100m - 200m -> VMA Courte (100 - 105%)
+        if (dist <= 200 && pct >= 100 && pct <= 105) {
+            return {
+                screenClass: 'bg-rose-500/25 text-rose-200 font-extrabold ring-1 ring-inset ring-rose-500/40',
+                pdfStyle: 'background: #ffe4e6; color: #9f1239; font-weight: 800;'
+            };
+        }
+        // 300m - 600m -> VMA Moyenne (96 - 100%)
+        if (dist >= 300 && dist <= 600 && pct >= 96 && pct <= 100) {
+            return {
+                screenClass: 'bg-red-500/25 text-red-200 font-extrabold ring-1 ring-inset ring-red-500/40',
+                pdfStyle: 'background: #fee2e2; color: #991b1b; font-weight: 800;'
+            };
+        }
+        // 800m - 1000m -> VMA Longue (90 - 95%)
+        if (dist >= 800 && dist <= 1000 && pct >= 90 && pct <= 95) {
+            return {
+                screenClass: 'bg-orange-500/25 text-orange-200 font-extrabold ring-1 ring-inset ring-orange-500/40',
+                pdfStyle: 'background: #ffedd5; color: #9a3412; font-weight: 800;'
+            };
+        }
+        // 1500m - 2000m -> Seuil SV2 (82 - 87%)
+        if (dist >= 1500 && pct >= 82 && pct <= 87) {
+            return {
+                screenClass: 'bg-amber-500/25 text-amber-200 font-extrabold ring-1 ring-inset ring-amber-500/40',
+                pdfStyle: 'background: #fef3c7; color: #92400e; font-weight: 800;'
+            };
+        }
+        return null;
+    }
+
+    // --- SAUVEGARDE & CHARGEMENT ---
+    function loadProfile() {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (raw) {
+                profile = { ...profile, ...JSON.parse(raw) };
+                profile.racePct = { ...DEFAULT_RACE_PCT, ...(profile.racePct || {}) };
+            }
+        } catch (e) {}
+        fillInputs();
+    }
+
+    function fillInputs() {
+        document.getElementById('in-vma').value = profile.vma.toFixed(1);
+        document.getElementById('sl-vma').value = profile.vma;
+        document.getElementById('in-fcrepos').value = profile.fcRepos;
+        document.getElementById('in-fcmax').value = profile.fcMax;
+        document.getElementById('in-poids').value = profile.poids;
+        document.getElementById('in-w-z1').value = profile.wZ1 || '';
+        document.getElementById('in-w-z2').value = profile.wZ2 || '';
+        document.getElementById('in-w-z3').value = profile.wZ3 || '';
+        document.getElementById('in-w-z4').value = profile.wZ4 || '';
+        document.getElementById('in-w-z5').value = profile.wZ5 || '';
+        document.getElementById('in-w-hill').value = profile.wHill || '';
+    }
+
+    function saveProfile() {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
+            const badge = document.getElementById('save-badge');
+            badge.textContent = '✓ Enregistré';
+            badge.classList.add('scale-105');
+            setTimeout(() => badge.classList.remove('scale-105'), 200);
+        } catch (e) {}
+    }
+
+    function readInputsAndRefresh() {
+        profile.vma = Math.min(26, Math.max(8, parseFloat(document.getElementById('in-vma').value) || 18.0));
+        profile.fcRepos = Math.min(110, Math.max(30, parseInt(document.getElementById('in-fcrepos').value, 10) || 48));
+        profile.fcMax = Math.min(230, Math.max(120, parseInt(document.getElementById('in-fcmax').value, 10) || 188));
+        profile.poids = Math.min(150, Math.max(35, parseFloat(document.getElementById('in-poids').value) || 71.0));
+        profile.wZ1 = parseInt(document.getElementById('in-w-z1').value, 10) || 0;
+        profile.wZ2 = parseInt(document.getElementById('in-w-z2').value, 10) || 0;
+        profile.wZ3 = parseInt(document.getElementById('in-w-z3').value, 10) || 0;
+        profile.wZ4 = parseInt(document.getElementById('in-w-z4').value, 10) || 0;
+        profile.wZ5 = parseInt(document.getElementById('in-w-z5').value, 10) || 0;
+        profile.wHill = parseInt(document.getElementById('in-w-hill').value, 10) || 0;
+
+        document.getElementById('sl-vma').value = profile.vma;
+        saveProfile();
+        renderAll();
+    }
+
+    function stepInput(id, delta, decimals = 0) {
+        const el = document.getElementById(id);
+        const cur = parseFloat(el.value) || 0;
+        el.value = (cur + delta).toFixed(decimals);
+        readInputsAndRefresh();
+    }
+
+    // --- RENDU GLOBAL ---
+    function renderAll() {
+        // Header & Réserve
+        document.getElementById('hdr-vma').textContent = `${profile.vma.toFixed(1)} km/h`;
+        document.getElementById('hdr-pace').textContent = `${speedToPace(profile.vma)}/km`;
+        document.getElementById('hdr-fc').textContent = `FC ${profile.fcRepos}-${profile.fcMax}`;
+        const reserve = Math.max(0, profile.fcMax - profile.fcRepos);
+        document.getElementById('fc-reserve-display').textContent = `${reserve} bpm (${profile.fcRepos} → ${profile.fcMax})`;
+
+        renderZones();
+        renderFractionne();
+        renderOutils();
+        renderPrintSheet();
+    }
+
+    function getZoneWatts(id) {
+        if (id === 'z1') return profile.wZ1;
+        if (id === 'z2') return profile.wZ2;
+        if (id === 'z3') return profile.wZ3;
+        if (id === 'z4') return profile.wZ4;
+        if (id === 'z5') return profile.wZ5;
+        return 0;
+    }
+
+    function renderZones() {
+        const tbody = document.getElementById('zones-table-body');
+        tbody.innerHTML = ZONES_DEF.map(z => {
+            const sMin = profile.vma * (z.vmaMin / 100);
+            const sMax = profile.vma * (z.vmaMax / 100);
+            const pSlow = speedToPace(sMin);
+            const pFast = speedToPace(sMax);
+            const fcMin = calcKarvonen(z.karvMin);
+            const fcMax = calcKarvonen(z.karvMax);
+            const watts = getZoneWatts(z.id);
+            const wkg = (watts > 0 && profile.poids > 0) ? (watts / profile.poids).toFixed(2) : null;
+
+            return `
+                <tr class="hover:bg-slate-800/40 transition">
+                    <td class="py-3.5 px-3.5">
+                        <span class="inline-block text-xs font-bold px-2 py-0.5 rounded border ${z.badgeBg} mb-1">${z.short}</span>
+                        <div class="font-semibold text-white text-xs sm:text-sm">${z.name.split('•')[1].trim()}</div>
+                        <div class="text-[11px] text-slate-400 hidden sm:block">${z.desc}</div>
+                    </td>
+                    <td class="py-3.5 px-3 font-mono">
+                        <div class="font-bold text-white text-xs sm:text-sm">${pFast} - ${pSlow}<span class="text-[10px] text-slate-400">/km</span></div>
+                        <div class="text-[11px] text-slate-400">${sMin.toFixed(1)}-${sMax.toFixed(1)} km/h (${z.vmaMin}-${z.vmaMax}%)</div>
+                    </td>
+                    <td class="py-3.5 px-3 font-mono">
+                        <div class="font-bold text-rose-400 text-xs sm:text-sm">${fcMin} - ${fcMax} <span class="text-[10px]">bpm</span></div>
+                        <div class="text-[11px] text-slate-400">${z.karvMin}-${z.karvMax}% FC rés.</div>
+                    </td>
+                    <td class="py-3.5 px-3 text-right font-mono">
+                        ${watts > 0
+                            ? `<div class="font-extrabold text-amber-400 text-sm sm:text-base">${watts} W</div>
+                               <div class="text-[11px] text-slate-400">${wkg} W/kg</div>`
+                            : `<span class="text-xs text-slate-500 italic">Non saisi</span>`
+                        }
+                    </td>
+                </tr>
+            `;
+        }).join('');
+
+        // Carte Côte
+        const hillW = profile.wHill;
+        const hillWkg = (hillW > 0 && profile.poids > 0) ? (hillW / profile.poids).toFixed(2) : '--';
+        document.getElementById('hill-watts-display').textContent = hillW > 0 ? `${hillW} W` : 'Non saisi';
+        document.getElementById('hill-wkg-display').textContent = hillW > 0 ? `${hillWkg} W/kg` : '-- W/kg';
+    }
+
+    function renderFractionne() {
+        const speed = profile.vma * (simState.pct / 100);
+        const secPerMeter = 3600 / (speed * 1000);
+        const totalSec = simState.dist * secPerMeter;
+
+        document.getElementById('lbl-pct').textContent = `${simState.pct}%`;
+        document.getElementById('res-chrono').textContent = formatTrack(totalSec);
+        document.getElementById('res-pace').textContent = `${speedToPace(speed)}/km`;
+        document.getElementById('res-200').textContent = formatTrack(200 * secPerMeter);
+
+        // Matrice des temps de passage
+        const tbody = document.getElementById('splits-matrix-body');
+        tbody.innerHTML = MATRIX_PCTS.map(pct => {
+            const sp = profile.vma * (pct / 100);
+            const spm = 3600 / (sp * 1000);
+            const is100 = pct === 100;
+
+            const cells = MATRIX_DISTS.map(d => {
+                const hl = getRecommendedHighlight(pct, d);
+                const cls = hl ? hl.screenClass : 'text-slate-300';
+                return `<td class="py-2 px-2 ${cls}">${formatTrack(d * spm)}</td>`;
+            }).join('');
+
+            return `
+                <tr class="${is100 ? 'bg-slate-800/60' : 'hover:bg-slate-800/30'}">
+                    <td class="py-2 px-2 text-left font-bold sticky left-0 ${is100 ? 'bg-slate-800 text-sky-400' : 'bg-slate-900 text-white'} z-10">${pct}%</td>
+                    <td class="py-2 px-2 text-slate-400">${speedToPace(sp)}</td>
+                    ${cells}
+                </tr>
+            `;
+        }).join('');
+    }
+
+    function renderOutils() {
+        // Sync convertisseur % VMA
+        const kmh = parseFloat(document.getElementById('conv-kmh').value) || 0;
+        const pct = (kmh / profile.vma) * 100;
+        document.getElementById('conv-pct-out').textContent = `${pct.toFixed(1)} % VMA`;
+        updateRaces();
+    }
+
+    // --- PROJECTIONS DE COURSE (% VMA modifiable + calage sur chrono) ---
+    function buildRacesGrid() {
+        const grid = document.getElementById('races-grid');
+        grid.innerHTML = RACES.map(r => `
+            <div class="bg-slate-950/70 border border-slate-800 rounded-xl p-3.5 space-y-2.5" data-race="${r.key}">
+                <div class="flex items-center justify-between gap-2">
+                    <div>
+                        <span class="font-bold text-white text-base block">${r.name}</span>
+                        <span class="text-xs font-mono text-slate-400" data-pace></span>
+                    </div>
+                    <div class="font-mono text-xl font-extrabold text-sky-400" data-time></div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <label class="block">
+                        <span class="block text-[10px] uppercase text-slate-400 mb-1">% de VMA</span>
+                        <input type="number" inputmode="decimal" step="0.5" min="60" max="110" data-pct class="w-full font-mono text-base font-bold bg-slate-900 border border-slate-700 rounded-lg px-2 py-1.5 text-white text-center">
+                    </label>
+                    <label class="block">
+                        <span class="block text-[10px] uppercase text-slate-400 mb-1">Caler sur un chrono</span>
+                        <input type="text" inputmode="text" placeholder="mm:ss ou h:mm:ss" data-chrono class="w-full font-mono text-base bg-slate-900 border border-slate-700 rounded-lg px-2 py-1.5 text-white text-center">
+                    </label>
+                </div>
+                <p class="text-[11px] text-slate-400 min-h-[1rem]" data-hint></p>
+            </div>
+        `).join('');
+
+        RACES.forEach(r => {
+            const card = grid.querySelector(`[data-race="${r.key}"]`);
+            card.querySelector('[data-pct]').addEventListener('input', (e) => {
+                const v = parseFloat(e.target.value);
+                if (!v || v < 60 || v > 110) return;
+                profile.racePct[r.key] = Math.round(v * 10) / 10;
+                saveProfile();
+                updateRaces();
+                renderPrintSheet();
+            });
+            card.querySelector('[data-chrono]').addEventListener('change', (e) => {
+                const hint = card.querySelector('[data-hint]');
+                const sec = parseChrono(e.target.value);
+                if (!sec) {
+                    hint.textContent = e.target.value.trim() ? 'Format non reconnu : utilise mm:ss ou h:mm:ss.' : '';
+                    return;
+                }
+                const speed = (r.meters / 1000) / (sec / 3600);
+                const pct = Math.round((speed / profile.vma) * 1000) / 10;
+                if (pct < 60 || pct > 110) {
+                    hint.textContent = `Ce chrono donne ${pct} % de ta VMA : vérifie-le (ou ta VMA).`;
+                    return;
+                }
+                profile.racePct[r.key] = pct;
+                saveProfile();
+                hint.textContent = `Calé : ${speed.toFixed(1)} km/h = ${pct.toFixed(1)} % de ta VMA.`;
+                e.target.value = '';
+                updateRaces();
+                renderPrintSheet();
+            });
+        });
+    }
+
+    function parseChrono(str) {
+        const parts = String(str || '').trim().replace(/[hH'’]/g, ':').replace(/["”]/g, '').split(':').map(s => s.trim());
+        if (parts.length < 2 || parts.length > 3 || parts.some(p => p === '' || isNaN(p))) return 0;
+        const nums = parts.map(Number);
+        const s = nums[nums.length - 1];
+        const m = nums[nums.length - 2];
+        const hh = nums.length === 3 ? nums[0] : 0;
+        if (s < 0 || s >= 60 || m < 0 || hh < 0 || (nums.length === 3 && m >= 60)) return 0;
+        return hh * 3600 + m * 60 + s;
+    }
+
+    function updateRaces() {
+        const grid = document.getElementById('races-grid');
+        if (!grid.firstElementChild) buildRacesGrid();
+        RACES.forEach(r => {
+            const card = grid.querySelector(`[data-race="${r.key}"]`);
+            const pct = racePct(r);
+            const sp = profile.vma * (pct / 100);
+            const sec = (r.meters / 1000) / sp * 3600;
+            card.querySelector('[data-pace]').textContent = `${speedToPace(sp)}/km • ${sp.toFixed(1)} km/h`;
+            card.querySelector('[data-time]').textContent = formatRace(sec);
+            const inp = card.querySelector('[data-pct]');
+            if (document.activeElement !== inp) inp.value = pct;
+        });
+    }
+
+    // --- SAUVEGARDE / TRANSFERT DU PROFIL ---
+    function exportProfile() {
+        const ta = document.getElementById('profile-json');
+        const msg = document.getElementById('profile-json-msg');
+        ta.value = JSON.stringify(profile);
+        ta.focus();
+        ta.select();
+        let copied = false;
+        try { copied = document.execCommand('copy'); } catch (e) {}
+        msg.textContent = copied
+            ? 'Profil copié. Colle-le sur l\'autre appareil dans cette même zone.'
+            : 'Profil affiché : sélectionne le texte et copie-le.';
+    }
+
+    function importProfile() {
+        const ta = document.getElementById('profile-json');
+        const msg = document.getElementById('profile-json-msg');
+        try {
+            const obj = JSON.parse(ta.value);
+            if (!obj || typeof obj !== 'object' || typeof obj.vma !== 'number') throw new Error('invalide');
+            const keys = ['vma', 'fcRepos', 'fcMax', 'poids', 'wZ1', 'wZ2', 'wZ3', 'wZ4', 'wZ5', 'wHill'];
+            keys.forEach(k => { if (typeof obj[k] === 'number' && isFinite(obj[k])) profile[k] = obj[k]; });
+            if (obj.racePct && typeof obj.racePct === 'object') {
+                Object.keys(DEFAULT_RACE_PCT).forEach(k => {
+                    const v = obj.racePct[k];
+                    if (typeof v === 'number' && v >= 60 && v <= 110) profile.racePct[k] = v;
+                });
+            }
+            fillInputs();
+            readInputsAndRefresh();
+            msg.textContent = 'Profil appliqué et enregistré.';
+        } catch (e) {
+            msg.textContent = 'Profil non reconnu : colle le texte copié depuis « Afficher et copier mon profil ».';
+        }
+    }
+
+    // --- GÉNÉRATION DE LA FICHE PDF 2 PAGES ---
+    function renderPrintSheet() {
+        const now = new Date();
+        const dateStr = now.toLocaleDateString('fr-FR');
+        document.getElementById('pdf-vma-header').textContent = `VMA : ${profile.vma.toFixed(1)} km/h (${speedToPace(profile.vma)}/km)`;
+        document.getElementById('pdf-date-header').textContent = `Édité le ${dateStr}`;
+
+        // Page 1 : Tableau complet avec cases surlignées
+        const pdfSplitsBody = document.getElementById('pdf-splits-body');
+        pdfSplitsBody.innerHTML = MATRIX_PCTS.map(pct => {
+            const sp = profile.vma * (pct / 100);
+            const spm = 3600 / (sp * 1000);
+            const rowBg = pct === 100 ? 'background: #f1f5f9;' : '';
+
+            const cells = PDF_DISTS.map(d => {
+                const hl = getRecommendedHighlight(pct, d);
+                const st = hl ? hl.pdfStyle : 'color: #1e293b;';
+                return `<td style="${st}">${formatTrack(d * spm)}</td>`;
+            }).join('');
+
+            return `
+                <tr style="${rowBg}">
+                    <td style="text-align: left; font-weight: 800; color: #0f172a;">${pct}%</td>
+                    <td style="color: #475569;">${sp.toFixed(1)}</td>
+                    <td style="font-weight: 700; color: #0284c7;">${speedToPace(sp)}</td>
+                    ${cells}
+                </tr>
+            `;
+        }).join('');
+
+        // Page 2 : Récapitulatif des zones
+        document.getElementById('pdf-profile-summary').textContent =
+            `VMA: ${profile.vma.toFixed(1)} km/h | FC: ${profile.fcRepos}-${profile.fcMax} bpm | Poids: ${profile.poids.toFixed(1)} kg`;
+
+        const pdfZonesBody = document.getElementById('pdf-zones-body');
+        pdfZonesBody.innerHTML = ZONES_DEF.map(z => {
+            const sMin = profile.vma * (z.vmaMin / 100);
+            const sMax = profile.vma * (z.vmaMax / 100);
+            const pSlow = speedToPace(sMin);
+            const pFast = speedToPace(sMax);
+            const fcMin = calcKarvonen(z.karvMin);
+            const fcMax = calcKarvonen(z.karvMax);
+            const watts = getZoneWatts(z.id);
+            const wkg = (watts > 0 && profile.poids > 0) ? `${(watts / profile.poids).toFixed(2)} W/kg` : '';
+
+            return `
+                <tr>
+                    <td style="padding: 8px; background: ${z.pdfBg}; color: ${z.pdfColor}; font-weight: 700;">
+                        ${z.name}<br>
+                        <span style="font-weight: 400; font-size: 9.5px; color: #334155;">${z.desc}</span>
+                    </td>
+                    <td style="padding: 8px; font-family: 'JetBrains Mono', monospace;">
+                        <strong>${z.vmaMin}-${z.vmaMax}%</strong><br>
+                        <span style="font-size: 9.5px; color: #475569;">${sMin.toFixed(1)} - ${sMax.toFixed(1)} km/h</span>
+                    </td>
+                    <td style="padding: 8px; font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 12px; color: #0f172a;">
+                        ${pFast} - ${pSlow}/km
+                    </td>
+                    <td style="padding: 8px; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #be123c;">
+                        ${fcMin} - ${fcMax} bpm<br>
+                        <span style="font-weight: 400; font-size: 9.5px; color: #475569;">(${z.karvMin}-${z.karvMax}% FC rés.)</span>
+                    </td>
+                    <td style="padding: 8px; font-family: 'JetBrains Mono', monospace; font-weight: 800; color: #b45309;">
+                        ${watts > 0 ? `${watts} W <span style="font-weight:400; font-size:10px; color:#475569;">(${wkg})</span>` : 'Non renseigné'}
+                    </td>
+                </tr>
+            `;
+        }).join('');
+
+        // Côte Page 2
+        const hillW = profile.wHill;
+        const hillWkg = (hillW > 0 && profile.poids > 0) ? `(${(hillW / profile.poids).toFixed(2)} W/kg)` : '';
+        document.getElementById('pdf-hill-box').textContent = hillW > 0 ? `${hillW} W ${hillWkg}` : 'Non renseigné';
+
+        // Courses Page 2
+        document.getElementById('pdf-races-head').innerHTML = RACES.map(r =>
+            `<th style="padding: 6px;">${r.name} (${racePct(r).toFixed(1).replace('.0', '')}% VMA)</th>`).join('');
+        const pdfRacesRow = document.getElementById('pdf-races-row');
+        pdfRacesRow.innerHTML = RACES.map(r => {
+            const sp = profile.vma * (racePct(r) / 100);
+            const sec = (r.meters / 1000) / sp * 3600;
+            return `<td style="padding: 8px;">${formatRace(sec)}<br><span style="font-size: 9.5px; font-weight: 400; color: #475569;">${speedToPace(sp)}/km</span></td>`;
+        }).join('');
+    }
+
+    function printTrainingSheet() {
+        renderPrintSheet();
+        window.print();
+    }
+
+    // --- GÉNÉRATEUR PDF : vraies pages A4 (page 1 paysage, page 2 portrait), sans dépendance ni réseau ---
+    const PDF_FONTS = { h: 'F1', hb: 'F2', c: 'F3', cb: 'F4', hi: 'F5' };
+
+    function pdfEncode(str) {
+        const special = { '’': 0x92, '‘': 0x91, '“': 0x93, '”': 0x94, '•': 0x95, '–': 0x96, '—': 0x97, '…': 0x85, 'œ': 0x9c, 'Œ': 0x8c };
+        let out = '';
+        for (const ch of String(str)) {
+            let c = special[ch] !== undefined ? special[ch] : ch.charCodeAt(0);
+            if (c > 255) c = 63;
+            if (c === 40 || c === 41 || c === 92) out += '\\' + String.fromCharCode(c);
+            else if (c < 32 || c > 126) out += '\\' + c.toString(8).padStart(3, '0');
+            else out += String.fromCharCode(c);
+        }
+        return out;
+    }
+
+    let _pdfMeasureCtx = null;
+    function pdfTextWidth(str, font, size) {
+        if (font === 'c' || font === 'cb') return String(str).length * 0.6 * size;
+        if (!_pdfMeasureCtx) _pdfMeasureCtx = document.createElement('canvas').getContext('2d');
+        const style = font === 'hb' ? 'bold ' : (font === 'hi' ? 'italic ' : '');
+        _pdfMeasureCtx.font = `${style}1000px Helvetica, Arial, sans-serif`;
+        return _pdfMeasureCtx.measureText(String(str)).width / 1000 * size;
+    }
+
+    function pdfWrap(str, font, size, maxW) {
+        const lines = [];
+        let cur = '';
+        String(str).split(' ').forEach(word => {
+            const t = cur ? cur + ' ' + word : word;
+            if (!cur || pdfTextWidth(t, font, size) <= maxW) cur = t;
+            else { lines.push(cur); cur = word; }
+        });
+        if (cur) lines.push(cur);
+        return lines;
+    }
+
+    function pdfColor(hex) {
+        const n = parseInt(hex.slice(1), 16);
+        return [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(v => (v / 255).toFixed(3)).join(' ');
+    }
+
+    // y = distance depuis le haut de la page (comme en HTML)
+    function makePdfPage(w, h) {
+        const ops = [];
+        const f = (v) => v.toFixed(2);
+        return {
+            w, h, ops,
+            rect(x, y, wd, ht, o = {}) {
+                if (o.fill) ops.push(`${pdfColor(o.fill)} rg ${f(x)} ${f(h - y - ht)} ${f(wd)} ${f(ht)} re f`);
+                if (o.stroke) ops.push(`${pdfColor(o.stroke)} RG ${o.lw || 0.5} w ${f(x)} ${f(h - y - ht)} ${f(wd)} ${f(ht)} re S`);
+            },
+            line(x1, y1, x2, y2, color, lw = 0.5) {
+                ops.push(`${pdfColor(color)} RG ${lw} w ${f(x1)} ${f(h - y1)} m ${f(x2)} ${f(h - y2)} l S`);
+            },
+            text(str, x, y, o = {}) {
+                const font = o.font || 'h', size = o.size || 10;
+                let px = x;
+                if (o.align === 'c' || o.align === 'r') {
+                    const tw = pdfTextWidth(str, font, size);
+                    px = o.align === 'c' ? x - tw / 2 : x - tw;
+                }
+                ops.push(`BT ${pdfColor(o.color || '#0f172a')} rg /${PDF_FONTS[font]} ${size} Tf ${f(px)} ${f(h - y)} Td (${pdfEncode(str)}) Tj ET`);
+            },
+            image(x, y, wd, ht) {
+                ops.push(`q ${wd} 0 0 ${ht} ${f(x)} ${f(h - y - ht)} cm /Im1 Do Q`);
+            }
+        };
+    }
+
+    function pdfAssemble(pages, logo) {
+        const chunks = [];
+        const offsets = [];
+        let pos = 0;
+        const push = (u8) => { chunks.push(u8); pos += u8.length; };
+        const enc = new TextEncoder();
+        const str = (s) => push(enc.encode(s));   // contenu strictement ASCII
+        const obj = (n, body) => { offsets[n] = pos; str(`${n} 0 obj\n${body}\nendobj\n`); };
+
+        const fontIds = [3, 4, 5, 6, 7];
+        const imgId = 8;
+        const firstPage = 9;
+        const pageIds = pages.map((_, i) => firstPage + i * 2);
+
+        str('%PDF-1.4\n');
+        obj(1, '<< /Type /Catalog /Pages 2 0 R >>');
+        obj(2, `<< /Type /Pages /Kids [${pageIds.map(id => id + ' 0 R').join(' ')}] /Count ${pages.length} >>`);
+        ['Helvetica', 'Helvetica-Bold', 'Courier', 'Courier-Bold', 'Helvetica-Oblique'].forEach((name, i) => {
+            obj(fontIds[i], `<< /Type /Font /Subtype /Type1 /BaseFont /${name} /Encoding /WinAnsiEncoding >>`);
+        });
+
+        const img = logo || { w: 1, h: 1, data: new Uint8Array([255, 255, 255]) };
+        offsets[imgId] = pos;
+        str(`${imgId} 0 obj\n<< /Type /XObject /Subtype /Image /Width ${img.w} /Height ${img.h} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Length ${img.data.length} >>\nstream\n`);
+        push(img.data);
+        str('\nendstream\nendobj\n');
+
+        pages.forEach((pg, i) => {
+            const pid = pageIds[i], cid = pid + 1;
+            const content = pg.ops.join('\n');
+            const fonts = fontIds.map((id, k) => `/F${k + 1} ${id} 0 R`).join(' ');
+            obj(pid, `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pg.w.toFixed(2)} ${pg.h.toFixed(2)}] /Resources << /Font << ${fonts} >> /XObject << /Im1 ${imgId} 0 R >> >> /Contents ${cid} 0 R >>`);
+            obj(cid, `<< /Length ${content.length} >>\nstream\n${content}\nendstream`);
+        });
+
+        const total = firstPage + pages.length * 2;
+        const xrefPos = pos;
+        let xref = `xref\n0 ${total}\n0000000000 65535 f \n`;
+        for (let n = 1; n < total; n++) xref += String(offsets[n]).padStart(10, '0') + ' 00000 n \n';
+        str(xref + `trailer\n<< /Size ${total} /Root 1 0 R >>\nstartxref\n${xrefPos}\n%%EOF\n`);
+
+        const out = new Uint8Array(pos);
+        let o = 0;
+        chunks.forEach(c => { out.set(c, o); o += c.length; });
+        return out;
+    }
+
+    async function pdfLoadLogo() {
+        try {
+            const ico = document.querySelector('link[rel="icon"]');
+            if (!ico) return null;
+            const img = new Image();
+            img.src = ico.href;
+            await img.decode();
+            const c = document.createElement('canvas');
+            c.width = 96; c.height = 96;
+            const cx = c.getContext('2d');
+            cx.drawImage(img, 0, 0, 96, 96);
+            const d = cx.getImageData(0, 0, 96, 96).data;
+            const rgb = new Uint8Array(96 * 96 * 3);
+            for (let i = 0, j = 0; i < d.length; i += 4) { rgb[j++] = d[i]; rgb[j++] = d[i + 1]; rgb[j++] = d[i + 2]; }
+            return { w: 96, h: 96, data: rgb };
+        } catch (e) { return null; }
+    }
+
+    // PAGE 1 — A4 PAYSAGE : temps de passage
+    function pdfPageSplits(logo, dateStr) {
+        const PW = 841.89, PH = 595.28, M = 28, W = PW - 2 * M;
+        const pg = makePdfPage(PW, PH);
+        let tx = M;
+        if (logo) { pg.image(M, 24, 34, 34); tx = M + 44; }
+        pg.text('FICHE TERRAIN — TEMPS DE PASSAGE FRACTIONNÉ', tx, 40, { font: 'hb', size: 15 });
+        pg.text('Allures cibles sur piste et route selon % de VMA • Page 1 / 2', tx, 54, { font: 'h', size: 8.5, color: '#475569' });
+        pg.text(`VMA : ${profile.vma.toFixed(1)} km/h (${speedToPace(profile.vma)}/km)`, M + W, 40, { font: 'cb', size: 12, color: '#0284c7', align: 'r' });
+        pg.text(`Édité le ${dateStr}`, M + W, 54, { font: 'h', size: 8, color: '#475569', align: 'r' });
+        pg.line(M, 64, M + W, 64, '#0f172a', 1.5);
+
+        // Légende
+        const legend = [
+            ['100-200 m : VMA courte (100-105 %)', '#ffe4e6', '#9f1239'],
+            ['300-600 m : VMA moyenne (96-100 %)', '#fee2e2', '#991b1b'],
+            ['800-1000 m : VMA longue (90-95 %)', '#ffedd5', '#9a3412'],
+            ['1500-2000 m : seuil SV2 (82-87 %)', '#fef3c7', '#92400e']
+        ];
+        let lx = M;
+        pg.text('Allures conseillées :', lx, 83, { font: 'hb', size: 8 });
+        lx += pdfTextWidth('Allures conseillées :', 'hb', 8) + 8;
+        legend.forEach(([t, bg, fg]) => {
+            const tw = pdfTextWidth(t, 'hb', 7.5) + 10;
+            pg.rect(lx, 74, tw, 14, { fill: bg });
+            pg.text(t, lx + 5, 83.5, { font: 'hb', size: 7.5, color: fg });
+            lx += tw + 6;
+        });
+
+        // Tableau
+        const top = 98, headH = 24;
+        const bottomLimit = PH - 40;
+        const rowH = Math.min(32, (bottomLimit - top - headH) / MATRIX_PCTS.length);
+        const dW = (W - 142) / PDF_DISTS.length;
+        const colW = [46, 46, 50, ...PDF_DISTS.map(() => dW)];
+        const heads = ['% VMA', 'Vitesse', 'Allure', ...PDF_DISTS.map(d => d + ' m')];
+        const colX = [];
+        colW.reduce((acc, w, i) => { colX[i] = acc; return acc + w; }, M);
+
+        pg.rect(M, top, W, headH, { fill: '#0f172a' });
+        heads.forEach((t, i) => {
+            if (i === 0) pg.text(t, colX[i] + 6, top + 15, { font: 'hb', size: 8.5, color: '#ffffff' });
+            else pg.text(t, colX[i] + colW[i] / 2, top + 15, { font: 'hb', size: 8.5, color: '#ffffff', align: 'c' });
+        });
+
+        MATRIX_PCTS.forEach((pct, r) => {
+            const y = top + headH + r * rowH;
+            const sp = profile.vma * (pct / 100);
+            const spm = 3600 / (sp * 1000);
+            const base = pct === 100 ? '#f1f5f9' : '#ffffff';
+            const cy = y + rowH / 2;
+            colW.forEach((w, i) => pg.rect(colX[i], y, w, rowH, { fill: base, stroke: '#cbd5e1', lw: 0.5 }));
+            pg.text(`${pct}%`, colX[0] + 6, cy + 4, { font: 'hb', size: 11 });
+            pg.text(sp.toFixed(1), colX[1] + colW[1] / 2, cy + 3.7, { font: 'c', size: 10, color: '#475569', align: 'c' });
+            pg.text(speedToPace(sp), colX[2] + colW[2] / 2, cy + 3.7, { font: 'cb', size: 10, color: '#0284c7', align: 'c' });
+            PDF_DISTS.forEach((d, k) => {
+                const i = 3 + k;
+                const hl = getRecommendedHighlight(pct, d);
+                let fg = '#1e293b', font = 'c';
+                if (hl) {
+                    const m = hl.pdfStyle.match(/background:\s*(#[0-9a-fA-F]{6});\s*color:\s*(#[0-9a-fA-F]{6})/);
+                    if (m) {
+                        pg.rect(colX[i], y, colW[i], rowH, { fill: m[1], stroke: '#cbd5e1', lw: 0.5 });
+                        fg = m[2];
+                        font = 'cb';
+                    }
+                }
+                pg.text(formatTrack(d * spm), colX[i] + colW[i] / 2, cy + 3.9, { font, size: 10.5, color: fg, align: 'c' });
+            });
+        });
+
+        // Pied de page
+        const fy = PH - 22;
+        pg.text('* Les cases colorées indiquent la plage d\'intensité recommandée pour chaque distance de répétition.', M, fy, { font: 'h', size: 7.5, color: '#475569' });
+        pg.text('RunPace Pro', M + W, fy, { font: 'hb', size: 7.5, color: '#475569', align: 'r' });
+        return pg;
+    }
+
+    // PAGE 2 — A4 PORTRAIT : zones, côte, projections
+    function pdfPageZones(logo, dateStr) {
+        const PW = 595.28, PH = 841.89, M = 36, W = PW - 2 * M;
+        const pg = makePdfPage(PW, PH);
+        let tx = M;
+        if (logo) { pg.image(M, 28, 34, 34); tx = M + 44; }
+        pg.text('RÉCAPITULATIF DES ZONES D\'ENTRAÎNEMENT', tx, 44, { font: 'hb', size: 14 });
+        pg.text('Vitesse, fréquence cardiaque (Karvonen) et puissance • Page 2 / 2', tx, 58, { font: 'h', size: 8.5, color: '#475569' });
+        pg.text(`Édité le ${dateStr}`, M + W, 58, { font: 'h', size: 8, color: '#475569', align: 'r' });
+        pg.line(M, 70, M + W, 70, '#0f172a', 1.5);
+
+        pg.rect(M, 80, W, 24, { fill: '#f1f5f9' });
+        pg.text(`VMA : ${profile.vma.toFixed(1)} km/h  |  FC : ${profile.fcRepos}-${profile.fcMax} bpm  |  Poids : ${profile.poids.toFixed(1)} kg`, M + 10, 95.5, { font: 'cb', size: 10 });
+
+        // Tableau des zones
+        const top = 118, headH = 24, rowH = 64;
+        const colW = [150, 95, 105, 95, W - 445];
+        const colX = [];
+        colW.reduce((acc, w, i) => { colX[i] = acc; return acc + w; }, M);
+        const heads = ['Zone d\'entraînement', '% VMA & vitesse', 'Allure cible', 'FC cible (Karvonen)', 'Puissance'];
+        pg.rect(M, top, W, headH, { fill: '#0f172a' });
+        heads.forEach((t, i) => pg.text(t, colX[i] + 8, top + 15.5, { font: 'hb', size: 8, color: '#ffffff' }));
+
+        ZONES_DEF.forEach((z, r) => {
+            const y = top + headH + r * rowH;
+            const sMin = profile.vma * (z.vmaMin / 100);
+            const sMax = profile.vma * (z.vmaMax / 100);
+            const watts = getZoneWatts(z.id);
+            colW.forEach((w, i) => pg.rect(colX[i], y, w, rowH, { fill: i === 0 ? z.pdfBg : '#ffffff', stroke: '#cbd5e1', lw: 0.5 }));
+
+            // Colonne zone (retour à la ligne automatique)
+            let ty = y + 15;
+            pdfWrap(z.name, 'hb', 8.5, colW[0] - 16).forEach(l => { pg.text(l, colX[0] + 8, ty, { font: 'hb', size: 8.5, color: z.pdfColor }); ty += 10.5; });
+            ty += 1;
+            pdfWrap(z.desc, 'h', 7, colW[0] - 16).forEach(l => { pg.text(l, colX[0] + 8, ty, { font: 'h', size: 7, color: '#334155' }); ty += 9; });
+
+            const l1 = y + rowH / 2 - 2, l2 = y + rowH / 2 + 11;
+            pg.text(`${z.vmaMin}-${z.vmaMax}%`, colX[1] + 8, l1, { font: 'cb', size: 10 });
+            pg.text(`${sMin.toFixed(1)} - ${sMax.toFixed(1)} km/h`, colX[1] + 8, l2, { font: 'c', size: 7.5, color: '#475569' });
+            pg.text(`${speedToPace(sMax)} - ${speedToPace(sMin)}/km`, colX[2] + 8, l1 + 5, { font: 'cb', size: 8.5 });
+            pg.text(`${calcKarvonen(z.karvMin)} - ${calcKarvonen(z.karvMax)} bpm`, colX[3] + 8, l1, { font: 'cb', size: 9.5, color: '#be123c' });
+            pg.text(`(${z.karvMin}-${z.karvMax}% FC rés.)`, colX[3] + 8, l2, { font: 'c', size: 7, color: '#475569' });
+            if (watts > 0) {
+                pg.text(`${watts} W`, colX[4] + 8, l1, { font: 'cb', size: 10, color: '#b45309' });
+                if (profile.poids > 0) pg.text(`(${(watts / profile.poids).toFixed(2)} W/kg)`, colX[4] + 8, l2, { font: 'c', size: 7.5, color: '#475569' });
+            } else {
+                pg.text('Non renseigné', colX[4] + 8, l1 + 5, { font: 'hi', size: 8, color: '#64748b' });
+            }
+        });
+
+        // Repère côte / D+
+        const hy = top + headH + ZONES_DEF.length * rowH + 18;
+        pg.rect(M, hy, W, 54, { fill: '#faf5ff', stroke: '#7e22ce', lw: 1.2 });
+        pg.text('REPÈRE SPÉCIFIQUE CÔTE & FORT DÉNIVELÉ (D+)', M + 10, hy + 17, { font: 'hb', size: 9, color: '#581c87' });
+        pdfWrap('Référence de puissance mécanique à maintenir en montée lorsque l\'allure (min/km) n\'est plus exploitable.', 'h', 7.5, W - 190)
+            .forEach((l, i) => pg.text(l, M + 10, hy + 30 + i * 9.5, { font: 'h', size: 7.5, color: '#6b21a8' }));
+        const hillW = profile.wHill;
+        const hillTxt = hillW > 0 ? `${hillW} W` + (profile.poids > 0 ? ` (${(hillW / profile.poids).toFixed(2)} W/kg)` : '') : 'Non renseigné';
+        pg.text(hillTxt, M + W - 10, hy + 32, { font: hillW > 0 ? 'cb' : 'hi', size: hillW > 0 ? 13 : 9, color: '#581c87', align: 'r' });
+
+        // Projections de course
+        const py = hy + 54 + 26;
+        pg.text('PROJECTIONS CHRONOS COMPÉTITION', M, py, { font: 'hb', size: 11 });
+        const ty0 = py + 10, cw = W / RACES.length;
+        RACES.forEach((r, i) => {
+            const x = M + i * cw;
+            const pct = racePct(r);
+            const sp = profile.vma * (pct / 100);
+            const sec = (r.meters / 1000) / sp * 3600;
+            pg.rect(x, ty0, cw, 24, { fill: '#f1f5f9', stroke: '#cbd5e1', lw: 0.5 });
+            pg.rect(x, ty0 + 24, cw, 56, { fill: '#ffffff', stroke: '#cbd5e1', lw: 0.5 });
+            pg.text(`${r.name} (${pct.toFixed(1).replace('.0', '')}% VMA)`, x + cw / 2, ty0 + 15.5, { font: 'hb', size: 8.5, align: 'c' });
+            pg.text(formatRace(sec), x + cw / 2, ty0 + 24 + 27, { font: 'cb', size: 14, align: 'c' });
+            pg.text(`${speedToPace(sp)}/km`, x + cw / 2, ty0 + 24 + 44, { font: 'c', size: 8, color: '#475569', align: 'c' });
+        });
+
+        // Pied de page
+        const fy = PH - 30;
+        pg.line(M, fy - 10, M + W, fy - 10, '#cbd5e1', 0.8);
+        pg.text('Méthode Karvonen : FC cible = FC repos + % x (FC max - FC repos)', M, fy, { font: 'h', size: 7.5, color: '#475569' });
+        pg.text('RunPace Pro • Fiche personnelle', M + W, fy, { font: 'hb', size: 7.5, color: '#475569', align: 'r' });
+        return pg;
+    }
+
+    async function buildPdf() {
+        const logo = await pdfLoadLogo();
+        const dateStr = new Date().toLocaleDateString('fr-FR');
+        const p1 = pdfPageSplits(logo, dateStr);
+        const p2 = pdfPageZones(logo, dateStr);
+        return pdfAssemble([p1, p2], logo);
+    }
+
+    async function exportPdf() {
+        try {
+            const bytes = await buildPdf();
+            const d = new Date();
+            const name = `RunPace_fiche_${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}.pdf`;
+            const blob = new Blob([bytes], { type: 'application/pdf' });
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Mac/i.test(navigator.platform));
+            if (isMobile && window.File && navigator.canShare) {
+                const file = new File([blob], name, { type: 'application/pdf' });
+                if (navigator.canShare({ files: [file] })) {
+                    await navigator.share({ files: [file], title: 'Fiche RunPace Pro' });
+                    return;
+                }
+            }
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = name;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            setTimeout(() => URL.revokeObjectURL(url), 60000);
+        } catch (e) {
+            if (e && e.name === 'AbortError') return;   // partage annulé par l'utilisateur
+            printTrainingSheet();                        // secours : impression du navigateur
+        }
+    }
+
+    // --- ONGLET SÉANCE : lecture d'un fichier Garmin .fit (tout reste sur l'appareil) ---
+    const FIT_EPOCH = 631065600;
+    const FIT_TYPES = {
+        0: [1, 'u', 0xFF], 1: [1, 's', 0x7F], 2: [1, 'u', 0xFF], 3: [2, 's', 0x7FFF], 4: [2, 'u', 0xFFFF],
+        5: [4, 's', 0x7FFFFFFF], 6: [4, 'u', 0xFFFFFFFF], 7: [1, 'str', null], 8: [4, 'f', null], 9: [8, 'd', null],
+        10: [1, 'u', 0], 11: [2, 'u', 0], 12: [4, 'u', 0], 13: [1, 'u', 0xFF]
+    };
+
+    function fitDecode(buf) {
+        const dv = new DataView(buf);
+        const u8 = new Uint8Array(buf);
+        const hs = dv.getUint8(0);
+        if (hs < 12 || String.fromCharCode(u8[8], u8[9], u8[10], u8[11]) !== '.FIT') throw new Error('Ce fichier n\'est pas un .fit valide.');
+        const end = Math.min(buf.byteLength - 2, hs + dv.getUint32(4, true));
+        const defs = {};
+        const out = { records: [], laps: [], sessions: [] };
+        let pos = hs, lastTs = 0;
+        while (pos < end) {
+            const h = u8[pos++];
+            let local, compOffset = null;
+            if (h & 0x80) {
+                local = (h >> 5) & 3; compOffset = h & 0x1F;
+            } else if (h & 0x40) {
+                local = h & 0x0F;
+                const dev = (h & 0x20) !== 0;
+                pos++;
+                const le = u8[pos++] === 0;
+                const gnum = dv.getUint16(pos, le); pos += 2;
+                const n = u8[pos++];
+                const fields = [];
+                for (let i = 0; i < n; i++) { fields.push({ num: u8[pos], size: u8[pos + 1], type: u8[pos + 2] & 0x1F }); pos += 3; }
+                let devSize = 0;
+                if (dev) { const nd = u8[pos++]; for (let i = 0; i < nd; i++) { devSize += u8[pos + 1]; pos += 3; } }
+                defs[local] = { gnum, le, fields, devSize };
+                continue;
+            } else {
+                local = h & 0x0F;
+            }
+            const d = defs[local];
+            if (!d) throw new Error('Fichier .fit illisible (définition manquante).');
+            const keep = d.gnum === 20 || d.gnum === 19 || d.gnum === 18;
+            const msg = keep ? {} : null;
+            for (const f of d.fields) {
+                if (keep) {
+                    const t = FIT_TYPES[f.type];
+                    if (t && t[1] !== 'str' && f.size >= t[0]) {
+                        let v;
+                        if (t[1] === 'u') {
+                            v = t[0] === 1 ? dv.getUint8(pos) : t[0] === 2 ? dv.getUint16(pos, d.le) : dv.getUint32(pos, d.le);
+                            if (v === t[2]) v = undefined;
+                        } else if (t[1] === 's') {
+                            v = t[0] === 1 ? dv.getInt8(pos) : t[0] === 2 ? dv.getInt16(pos, d.le) : dv.getInt32(pos, d.le);
+                            if (v === t[2]) v = undefined;
+                        } else if (t[1] === 'f') {
+                            v = dv.getFloat32(pos, d.le); if (!isFinite(v)) v = undefined;
+                        } else {
+                            v = dv.getFloat64(pos, d.le); if (!isFinite(v)) v = undefined;
+                        }
+                        if (v !== undefined) msg[f.num] = v;
+                    }
+                }
+                pos += f.size;
+            }
+            pos += d.devSize;
+            if (!keep && compOffset === null) {
+                // même sans conserver le message, on suit l'horloge si un timestamp est présent
+            }
+            if (compOffset !== null) {
+                let ts = (lastTs & ~0x1F) + compOffset;
+                if (compOffset < (lastTs & 0x1F)) ts += 0x20;
+                lastTs = ts;
+                if (msg) msg[253] = ts;
+            } else if (msg && msg[253] !== undefined) {
+                lastTs = msg[253];
+            }
+            if (!msg) continue;
+            if (d.gnum === 20) out.records.push(msg);
+            else if (d.gnum === 19) out.laps.push(msg);
+            else out.sessions.push(msg);
+        }
+        return out;
+    }
+
+    // Lecture d'un .zip (export « original » de Garmin Connect) : on en extrait le premier .fit
+    async function fitFromZip(buf) {
+        const dv = new DataView(buf), u8 = new Uint8Array(buf);
+        let e = buf.byteLength - 22;
+        while (e >= 0 && dv.getUint32(e, true) !== 0x06054B50) e--;
+        if (e < 0) throw new Error('Archive .zip illisible.');
+        const n = dv.getUint16(e + 10, true);
+        let p = dv.getUint32(e + 16, true);
+        for (let i = 0; i < n; i++) {
+            if (dv.getUint32(p, true) !== 0x02014B50) break;
+            const method = dv.getUint16(p + 10, true), csize = dv.getUint32(p + 20, true);
+            const nl = dv.getUint16(p + 28, true), xl = dv.getUint16(p + 30, true), cl = dv.getUint16(p + 32, true);
+            const lho = dv.getUint32(p + 42, true);
+            const name = new TextDecoder().decode(u8.subarray(p + 46, p + 46 + nl));
+            p += 46 + nl + xl + cl;
+            if (!/\.fit$/i.test(name)) continue;
+            const lnl = dv.getUint16(lho + 26, true), lxl = dv.getUint16(lho + 28, true);
+            const data = u8.subarray(lho + 30 + lnl + lxl, lho + 30 + lnl + lxl + csize);
+            if (method === 0) return data.slice().buffer;
+            if (method === 8) {
+                if (typeof DecompressionStream === 'undefined') throw new Error('Ce navigateur ne sait pas ouvrir les .zip : décompresse le fichier puis choisis le .fit.');
+                const stream = new Blob([data]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+                return await new Response(stream).arrayBuffer();
+            }
+        }
+        throw new Error('Aucun fichier .fit trouvé dans l\'archive.');
+    }
+
+    const seanceState = { data: null, reps: [], blocks: [], fileName: '' };
+
+    function sMean(a) { const v = a.filter(x => typeof x === 'number' && isFinite(x)); return v.length ? v.reduce((s, x) => s + x, 0) / v.length : null; }
+    function sFmt(v, d = 0, unit = '') { return (v === null || v === undefined || !isFinite(v)) ? '–' : v.toFixed(d) + unit; }
+    function sTime(sec) { return sec == null ? '–' : sec.toFixed(1) + ' s'; }
+
+    function analyseFit(fit) {
+        const laps = fit.laps.slice().sort((a, b) => (a[254] || 0) - (b[254] || 0));
+        const recs = fit.records.filter(r => r[253] !== undefined).sort((a, b) => a[253] - b[253]);
+        const hasIntensity = laps.some(l => l[23] === 0) && laps.some(l => l[23] === 4 || l[23] === 1);
+        const info = laps.map(l => ({
+            lap: l, start: l[2], dur: (l[7] || 0) / 1000, dist: (l[9] || 0) / 100,
+            speed: l[110] !== undefined ? l[110] / 1000 : null
+        }));
+        let repLaps;
+        if (hasIntensity) {
+            repLaps = info.filter(x => x.lap[23] === 0 && x.dur > 5);
+        } else {
+            // sans intensité : tours courts et nettement plus rapides que la moyenne des tours courts
+            const short = info.filter(x => x.dur > 5 && x.dur < 180 && x.speed);
+            const sp = short.map(x => x.speed).sort((a, b) => a - b);
+            const thr = sp.length ? (sp[0] + sp[sp.length - 1]) / 2 : 0;
+            repLaps = short.filter(x => x.speed > thr);
+        }
+        const reps = repLaps.map((x, i) => {
+            const t0 = x.start, t1 = x.start + Math.ceil(x.dur);
+            const rr = recs.filter(r => r[253] >= t0 && r[253] <= t1);
+            const hrs = rr.map(r => r[3]);
+            const last = hrs.filter(v => v !== undefined).slice(-5);
+            const spm = sMean(rr.filter(r => r[4] !== undefined).map(r => 2 * (r[4] + (r[53] || 0) / 128)));
+            const wattsRec = sMean(rr.map(r => r[7]));
+            return {
+                n: i + 1, start: x.start, dur: x.dur, gpsDist: x.dist,
+                hr: x.lap[15] !== undefined ? x.lap[15] : sMean(hrs), hrEnd: sMean(last),
+                hrMax: x.lap[16] !== undefined ? x.lap[16] : (hrs.length ? Math.max(...hrs.filter(v => v !== undefined)) : null),
+                spm, watts: x.lap[19] !== undefined ? x.lap[19] : wattsRec,
+                vo: sMean(rr.map(r => r[39] !== undefined ? r[39] / 10 : undefined)),
+                gct: sMean(rr.map(r => r[41] !== undefined ? r[41] / 10 : undefined))
+            };
+        });
+        // blocs : une coupure de plus de 100 s entre deux répétitions
+        const blocks = [];
+        reps.forEach((r, i) => {
+            if (i === 0 || (r.start - (reps[i - 1].start + reps[i - 1].dur)) > 100) blocks.push([]);
+            blocks[blocks.length - 1].push(r);
+        });
+        return { reps, blocks, hasIntensity };
+    }
+
+    function repMetrics(r, dist, vma) {
+        const v = dist / r.dur * 3.6;
+        const step = r.spm ? (dist / r.dur) / (r.spm / 60) : null;
+        return { speed: v, pct: v / vma * 100, step };
+    }
+
+    async function onFitFile(input) {
+        const file = input.files && input.files[0];
+        const status = document.getElementById('seance-status');
+        if (!file) return;
+        status.textContent = 'Lecture de ' + file.name + '…';
+        status.className = 'text-xs text-slate-400';
+        try {
+            let buf = await file.arrayBuffer();
+            const head = new Uint8Array(buf, 0, 4);
+            if (head[0] === 0x50 && head[1] === 0x4B) buf = await fitFromZip(buf);
+            const fit = fitDecode(buf);
+            const res = analyseFit(fit);
+            if (!res.reps.length) throw new Error('Aucune répétition détectée. Utilise le bouton « lap » à chaque répétition sur la montre.');
+            seanceState.data = res; seanceState.fileName = file.name;
+            document.getElementById('seance-label').dataset.touched = '';
+            const dists = res.reps.map(r => r.gpsDist).sort((a, b) => a - b);
+            const med = dists[Math.floor(dists.length / 2)];
+            document.getElementById('seance-dist').value = Math.max(50, Math.round(med / 50) * 50);
+            status.textContent = file.name + ' — ' + res.reps.length + ' répétitions détectées.';
+            status.className = 'text-xs text-emerald-400';
+            renderSeance();
+        } catch (e) {
+            status.textContent = e.message || 'Fichier illisible.';
+            status.className = 'text-xs text-rose-400';
+            document.getElementById('seance-result').classList.add('hidden');
+        }
+        input.value = '';
+    }
+
+    function svgBars(values, labels, opts) {
+        const w = 320, h = 120, pl = 30, pb = 18, pt = 8;
+        const lo = opts.min, hi = opts.max;
+        const bw = (w - pl) / values.length;
+        let s = `<svg viewBox="0 0 ${w} ${h}" class="w-full" role="img" aria-label="${opts.title}">`;
+        [lo, (lo + hi) / 2, hi].forEach(g => {
+            const y = pt + (h - pt - pb) * (1 - (g - lo) / (hi - lo));
+            s += `<line x1="${pl}" x2="${w}" y1="${y}" y2="${y}" stroke="#334155" stroke-width="0.5"/><text x="${pl - 3}" y="${y + 3}" text-anchor="end" font-size="8" fill="#94a3b8">${g.toFixed(opts.d || 0)}</text>`;
+        });
+        values.forEach((v, i) => {
+            if (v == null) return;
+            const frac = Math.max(0, Math.min(1, (v - lo) / (hi - lo)));
+            const bh = (h - pt - pb) * frac;
+            const x = pl + i * bw + bw * 0.15;
+            const col = opts.colors ? opts.colors[i] : '#38bdf8';
+            s += `<rect x="${x}" y="${h - pb - bh}" width="${bw * 0.7}" height="${bh}" rx="2" fill="${col}"><title>${labels[i]} : ${v.toFixed(opts.d || 0)}</title></rect>`;
+            if (values.length <= 24) s += `<text x="${x + bw * 0.35}" y="${h - 5}" text-anchor="middle" font-size="7" fill="#94a3b8">${i + 1}</text>`;
+        });
+        return s + '</svg>';
+    }
+
+    function renderSeance() {
+        const res = seanceState.data;
+        if (!res) return;
+        const vma = profile.vma;
+        const dist = Math.max(50, parseFloat(document.getElementById('seance-dist').value) || 200);
+        const rows = res.reps.map(r => Object.assign({}, r, repMetrics(r, dist, vma)));
+        const blocks = [];
+        let k = 0;
+        res.blocks.forEach(b => { blocks.push(rows.slice(k, k + b.length)); k += b.length; });
+
+        // tableau des répétitions
+        let html = '';
+        blocks.forEach((b, bi) => {
+            html += `<tr class="bg-slate-800/60"><td colspan="11" class="px-2 py-1 text-[11px] font-bold text-sky-300">Bloc ${bi + 1}</td></tr>`;
+            b.forEach(r => {
+                html += `<tr class="border-t border-slate-800"><td class="px-2 py-1.5 text-slate-400">${r.n}</td>` +
+                    `<td class="px-2 py-1.5 font-mono font-bold text-white">${sTime(r.dur)}</td>` +
+                    `<td class="px-2 py-1.5 font-mono">${sFmt(r.speed, 1)}</td><td class="px-2 py-1.5 font-mono">${sFmt(r.pct, 0)}%</td>` +
+                    `<td class="px-2 py-1.5 font-mono">${sFmt(r.hrEnd, 0)}</td><td class="px-2 py-1.5 font-mono">${sFmt(r.hrMax, 0)}</td>` +
+                    `<td class="px-2 py-1.5 font-mono">${sFmt(r.spm, 0)}</td><td class="px-2 py-1.5 font-mono">${sFmt(r.step, 2)}</td>` +
+                    `<td class="px-2 py-1.5 font-mono">${sFmt(r.watts, 0)}</td><td class="px-2 py-1.5 font-mono">${sFmt(r.vo, 0)}</td><td class="px-2 py-1.5 font-mono">${sFmt(r.gct, 0)}</td></tr>`;
+            });
+        });
+        document.getElementById('seance-tbody').innerHTML = html;
+
+        // comparaison des blocs
+        const stat = (b, key) => sMean(b.map(r => r[key]));
+        const defs = [
+            ['Temps moyen (s)', 'dur', 1], ['Vitesse (km/h)', 'speed', 1], ['% VMA', 'pct', 1], ['FC fin de rep', 'hrEnd', 0],
+            ['Cadence (pas/min)', 'spm', 1], ['Longueur de foulée (m)', 'step', 2], ['Puissance (W)', 'watts', 0],
+            ['Oscillation verticale (mm)', 'vo', 0], ['Contact au sol (ms)', 'gct', 0]
+        ];
+        let cmp = `<tr class="text-slate-400 text-[11px]"><th class="px-2 py-1.5 text-left font-semibold">Moyenne</th>` +
+            blocks.map((_, i) => `<th class="px-2 py-1.5 text-right font-semibold">Bloc ${i + 1}</th>`).join('') +
+            (blocks.length === 2 ? '<th class="px-2 py-1.5 text-right font-semibold">Écart</th>' : '') + '</tr>';
+        defs.forEach(([label, key, d]) => {
+            const vals = blocks.map(b => stat(b, key));
+            if (vals.every(v => v === null)) return;
+            let diff = '';
+            if (blocks.length === 2 && vals[0] !== null && vals[1] !== null) {
+                const dv = vals[1] - vals[0];
+                diff = `<td class="px-2 py-1.5 text-right font-mono text-amber-300">${dv > 0 ? '+' : ''}${dv.toFixed(d)}</td>`;
+            } else if (blocks.length === 2) diff = '<td></td>';
+            cmp += `<tr class="border-t border-slate-800"><td class="px-2 py-1.5 text-slate-300">${label}</td>` +
+                vals.map(v => `<td class="px-2 py-1.5 text-right font-mono text-white">${sFmt(v, d)}</td>`).join('') + diff + '</tr>';
+        });
+        document.getElementById('seance-cmp').innerHTML = cmp;
+
+        // graphiques
+        const colors = rows.map((r, i) => ['#38bdf8', '#f59e0b', '#a78bfa', '#34d399'][blocks.findIndex(b => b.includes(r)) % 4]);
+        const pcts = rows.map(r => r.pct);
+        const spms = rows.map(r => r.spm);
+        const pmin = Math.floor(Math.min(...pcts) / 5) * 5 - 5, pmax = Math.ceil(Math.max(...pcts) / 5) * 5 + 2;
+        const sv = spms.filter(v => v != null);
+        const cmin = sv.length ? Math.floor(Math.min(...sv) / 10) * 10 - 10 : 0, cmax = sv.length ? Math.ceil(Math.max(...sv) / 10) * 10 : 1;
+        document.getElementById('seance-chart-pct').innerHTML = svgBars(pcts, rows.map((r, i) => 'Rép ' + r.n), { min: pmin, max: pmax, title: '% VMA par répétition', colors });
+        document.getElementById('seance-chart-spm').innerHTML = sv.length ? svgBars(spms, rows.map(r => 'Rép ' + r.n), { min: cmin, max: cmax, title: 'Cadence par répétition', colors }) : '<p class="text-xs text-slate-500">Cadence absente du fichier.</p>';
+
+        // résumé
+        const avgW = sMean(rows.map(r => r.watts));
+        document.getElementById('seance-summary').innerHTML =
+            [['Répétitions', rows.length], ['Temps moyen', sTime(sMean(rows.map(r => r.dur)))], ['% VMA moyen', sFmt(sMean(pcts), 0) + '%'], ['Puissance moy.', sFmt(avgW, 0) + ' W']]
+                .map(([a, b]) => `<div class="bg-slate-950 border border-slate-800 rounded-xl p-3"><div class="text-[10px] uppercase tracking-wide text-slate-400">${a}</div><div class="text-lg font-bold font-mono text-white">${b}</div></div>`).join('');
+
+        const reading = buildReading(rows, blocks), synth = buildSynth(rows, blocks);
+        const eq = blocks.length > 1 && blocks.every(b => b.length === blocks[0].length);
+        const autoLabel = eq ? `${blocks.length}×${blocks[0].length}×${dist}` : `${rows.length}×${dist}`;
+        seanceState.cur = { rows, blocks, dist, reading, synth, autoLabel, start: res.reps[0].start };
+        const lab = document.getElementById('seance-label');
+        if (!lab.dataset.touched) lab.value = autoLabel;
+        document.getElementById('seance-journal-msg').textContent = '';
+        document.getElementById('seance-reading').innerHTML = buildReading(rows, blocks).map(t => '<li>' + t + '</li>').join('');
+        document.getElementById('seance-synth').textContent = buildSynth(rows, blocks);
+        document.getElementById('seance-share-msg').textContent = '';
+        // report de puissance
+        const pm = sMean(pcts);
+        const zn = pm >= 93 ? 5 : pm >= 85 ? 4 : pm >= 75 ? 3 : pm >= 65 ? 2 : 1;
+        const sel = document.getElementById('seance-zone');
+        if (!sel.dataset.touched) sel.value = String(zn);
+        document.getElementById('seance-power-val').textContent = avgW ? Math.round(avgW) + ' W' : '–';
+        document.getElementById('seance-result').classList.remove('hidden');
+    }
+
+    function reportPower() {
+        const res = seanceState.data;
+        if (!res) return;
+        const w = Math.round(sMean(res.reps.map(r => r.watts)) || 0);
+        const msg = document.getElementById('seance-report-msg');
+        if (!w) { msg.textContent = 'Pas de puissance dans ce fichier.'; return; }
+        const z = document.getElementById('seance-zone').value;
+        if (z === 'hill') profile.wHill = w; else profile['wZ' + z] = w;
+        saveProfile(); fillInputs(); renderAll();
+        msg.textContent = '✓ ' + w + ' W enregistrés dans ' + (z === 'hill' ? 'la côte' : 'la zone Z' + z) + '.';
+    }
+
+    // --- LECTURE ET SYNTHÈSE (règles fixes appliquées aux chiffres du fichier) ---
+    function buildReading(rows, blocks) {
+        const out = [];
+        const durs = rows.map(r => r.dur);
+        const mn = Math.min(...durs), mx = Math.max(...durs), avg = sMean(durs);
+        const pm = sMean(rows.map(r => r.pct));
+        let t = pm >= 98 && pm <= 104 ? 'dans la cible de la VMA' : pm > 104 ? 'au-dessus de la VMA' : 'sous la VMA';
+        out.push(`Intensité : ${pm.toFixed(0)} % de la VMA en moyenne, ${t}.`);
+        const spread = mx - mn;
+        out.push(`Régularité : temps entre ${mn.toFixed(1)} s et ${mx.toFixed(1)} s (écart ${spread.toFixed(1)} s, soit ${(spread / avg * 100).toFixed(1)} %). ` +
+            (spread / avg < 0.04 ? 'Séance régulière.' : 'Allure irrégulière : à surveiller.'));
+        blocks.forEach((b, i) => {
+            if (b.length < 4) return;
+            const a = sMean(b.slice(0, 3).map(r => r.hrEnd)), z = sMean(b.slice(-3).map(r => r.hrEnd));
+            if (a !== null && z !== null) out.push(`Bloc ${i + 1} : FC de fin de répétition de ${a.toFixed(0)} à ${z.toFixed(0)} bpm (${z - a >= 0 ? '+' : ''}${(z - a).toFixed(0)}) entre les 3 premières et les 3 dernières reps.`);
+        });
+        if (blocks.length === 2) {
+            const g = k => [sMean(blocks[0].map(r => r[k])), sMean(blocks[1].map(r => r[k]))];
+            const [c1, c2] = g('spm'), [s1, s2] = g('step'), [d1, d2] = g('dur'), [h1, h2] = g('hrEnd');
+            if (c1 !== null && c2 !== null) {
+                out.push(`Cadence : ${c1.toFixed(0)} puis ${c2.toFixed(0)} pas/min (${c2 - c1 >= 0 ? '+' : ''}${(c2 - c1).toFixed(0)}), foulée ${s1.toFixed(2)} puis ${s2.toFixed(2)} m. ` +
+                    `Pour ${(d2 - d1 >= 0 ? '+' : '') + (d2 - d1).toFixed(1)} s sur le temps moyen et ${(h2 - h1 >= 0 ? '+' : '') + (h2 - h1).toFixed(0)} bpm de FC en fin de rep.`);
+            }
+        }
+        const gct = sMean(rows.map(r => r.gct)), vo = sMean(rows.map(r => r.vo));
+        if (gct !== null) out.push(`Contact au sol : ${gct.toFixed(0)} ms en moyenne (` + (gct < 200 ? 'court' : gct <= 225 ? 'correct pour cette allure' : 'long') + ').');
+        if (vo !== null) out.push(`Oscillation verticale : ${vo.toFixed(0)} mm (` + (vo < 90 ? 'économe' : vo <= 105 ? 'correcte' : 'élevée') + '). Repères indicatifs, à croiser avec ta morphologie.');
+        return out;
+    }
+
+    function buildSynth(rows, blocks) {
+        const d = new Date((seanceState.data.reps[0].start + FIT_EPOCH) * 1000).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+        const pm = sMean(rows.map(r => r.pct)), avgW = sMean(rows.map(r => r.watts));
+        const sz = blocks.map(b => b.length).join(' × ');
+        let s = `Séance du ${d} : ${blocks.length > 1 ? (blocks.every(b => b.length === blocks[0].length) ? blocks.length + ' blocs de ' + blocks[0].length + ' répétitions' : blocks.length + ' blocs (' + sz + ' répétitions)') : rows.length + ' répétitions'} de ${document.getElementById('seance-dist').value} m. ` +
+            `Temps moyen ${sTime(sMean(rows.map(r => r.dur)))}, soit ${pm.toFixed(0)} % de la VMA (${profile.vma.toFixed(1)} km/h)` +
+            `${avgW ? ', puissance moyenne ' + avgW.toFixed(0) + ' W' : ''}. `;
+        if (blocks.length === 2) {
+            const c1 = sMean(blocks[0].map(r => r.spm)), c2 = sMean(blocks[1].map(r => r.spm));
+            const h1 = sMean(blocks[0].map(r => r.hrEnd)), h2 = sMean(blocks[1].map(r => r.hrEnd));
+            const d1 = sMean(blocks[0].map(r => r.dur)), d2 = sMean(blocks[1].map(r => r.dur));
+            if (c1 !== null && c2 !== null) s += `Entre les deux blocs, la cadence passe de ${c1.toFixed(0)} à ${c2.toFixed(0)} pas/min pour un temps quasi identique (${d1.toFixed(1)} s → ${d2.toFixed(1)} s) et une FC de fin de rep de ${h1.toFixed(0)} à ${h2.toFixed(0)} bpm.`;
+        }
+        return s.trim();
+    }
+
+    function shareSynth() {
+        const txt = document.getElementById('seance-synth').textContent;
+        const msg = document.getElementById('seance-share-msg');
+        if (navigator.share) {
+            navigator.share({ title: 'Séance RunPace', text: txt }).catch(() => {});
+        } else if (navigator.clipboard) {
+            navigator.clipboard.writeText(txt).then(() => { msg.textContent = '✓ Texte copié.'; }).catch(() => { msg.textContent = 'Copie impossible.'; });
+        }
+    }
+
+    // --- CARNET D'ENTRAÎNEMENT (séances enregistrées sur l'appareil) ---
+    const JOURNAL_KEY = 'runpace_pro_journal_v1';
+    const J_METRICS = [
+        ['dur', 'Temps moyen (s)', 1], ['pct', '% VMA', 1], ['hrEnd', 'FC fin de rep (bpm)', 0], ['hrMax', 'FC max (bpm)', 0],
+        ['spm', 'Cadence (pas/min)', 1], ['step', 'Foulée (m)', 2], ['watts', 'Puissance (W)', 0],
+        ['vo', 'Oscillation (mm)', 0], ['gct', 'Contact (ms)', 0]
+    ];
+    const jSel = new Set();
+
+    function esc(s) { return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+    function jLoad() { try { const a = JSON.parse(localStorage.getItem(JOURNAL_KEY) || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
+    function jSave(a) { try { localStorage.setItem(JOURNAL_KEY, JSON.stringify(a)); return true; } catch (e) { return false; } }
+    function jMeans(rows) {
+        const m = {};
+        ['dur', 'speed', 'pct', 'hrEnd', 'hrMax', 'spm', 'step', 'watts', 'vo', 'gct'].forEach(k => {
+            const v = sMean(rows.map(r => r[k]));
+            m[k] = v === null ? null : Math.round(v * 1000) / 1000;
+        });
+        return m;
+    }
+    function jDate(ts, long) { return new Date(ts).toLocaleDateString('fr-FR', long ? { day: 'numeric', month: 'long', year: 'numeric' } : { day: '2-digit', month: '2-digit', year: '2-digit' }); }
+
+    function setSeanceView(v) {
+        document.getElementById('seance-view-a').classList.toggle('hidden', v !== 'a');
+        document.getElementById('seance-view-c').classList.toggle('hidden', v !== 'c');
+        const on = 'bg-sky-500 text-slate-950', off = 'text-slate-300';
+        [['a', 'seance-btn-a'], ['c', 'seance-btn-c']].forEach(([k, id]) => {
+            const b = document.getElementById(id);
+            b.className = 'py-2 rounded-lg text-sm font-bold transition ' + (k === v ? on : off);
+        });
+        if (v === 'c') { jShow('list'); renderJournal(); }
+    }
+    function jShow(name) {
+        ['list', 'detail', 'compare'].forEach(n => document.getElementById('j-' + n).classList.toggle('hidden', n !== name));
+        if (name !== 'list') window.scrollTo({ top: 0 });
+    }
+
+    function addToJournal() {
+        const cur = seanceState.cur, msg = document.getElementById('seance-journal-msg');
+        if (!cur) return;
+        const label = (document.getElementById('seance-label').value || '').trim() || cur.autoLabel;
+        const entry = {
+            id: String(cur.start) + '-' + cur.rows.length, ts: (cur.start + FIT_EPOCH) * 1000, label, dist: cur.dist, vma: profile.vma,
+            n: cur.rows.length, fileName: seanceState.fileName, m: jMeans(cur.rows), blocks: cur.blocks.map(jMeans),
+            reps: cur.rows.map(r => ({ n: r.n, dur: r.dur, pct: r.pct, hrEnd: r.hrEnd, spm: r.spm, step: r.step, watts: r.watts, vo: r.vo, gct: r.gct })),
+            reading: cur.reading, synth: cur.synth
+        };
+        const all = jLoad();
+        const i = all.findIndex(e => e.id === entry.id);
+        if (i >= 0) all[i] = entry; else all.push(entry);
+        msg.className = 'text-xs text-emerald-400';
+        msg.textContent = jSave(all) ? (i >= 0 ? '✓ Séance déjà présente : mise à jour.' : '✓ Séance ajoutée au carnet (' + all.length + ' au total).') : 'Enregistrement impossible (stockage du navigateur plein ou bloqué).';
+        if (msg.textContent.startsWith('Enreg')) msg.className = 'text-xs text-rose-400';
+    }
+
+    function jToggle(id) {
+        if (jSel.has(id)) jSel.delete(id); else jSel.add(id);
+        document.getElementById('j-sel-info').textContent = jSel.size + ' séance(s) cochée(s)';
+    }
+
+    function renderJournal() {
+        const all = jLoad().sort((a, b) => b.ts - a.ts);
+        for (const id of Array.from(jSel)) if (!all.some(e => e.id === id)) jSel.delete(id);
+        const list = document.getElementById('j-items');
+        if (!all.length) {
+            list.innerHTML = '<p class="text-xs text-slate-400">Aucune séance enregistrée. Analyse un fichier .fit puis appuie sur « Ajouter au carnet ».</p>';
+        } else {
+            list.innerHTML = all.map(e => `<div class="flex items-center gap-2 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2">` +
+                `<input type="checkbox" ${jSel.has(e.id) ? 'checked' : ''} onchange="jToggle('${e.id}')" class="w-4 h-4 accent-sky-500">` +
+                `<button type="button" onclick="jOpen('${e.id}')" class="flex-1 text-left"><div class="text-sm font-bold text-white">${esc(e.label)}</div>` +
+                `<div class="text-[11px] text-slate-400">${jDate(e.ts)} · ${e.n} reps · ${sFmt(e.m.dur, 1)} s · ${sFmt(e.m.pct, 0)} % VMA</div></button></div>`).join('');
+        }
+        document.getElementById('j-sel-info').textContent = jSel.size + ' séance(s) cochée(s)';
+        const types = Array.from(new Set(all.map(e => e.label)));
+        const ts = document.getElementById('j-trend-type'), prev = ts.value;
+        ts.innerHTML = types.map(t => `<option value="${esc(t)}">${esc(t)}</option>`).join('');
+        if (types.includes(prev)) ts.value = prev;
+        const ms = document.getElementById('j-trend-metric');
+        if (!ms.options.length) ms.innerHTML = J_METRICS.map(([k, l]) => `<option value="${k}">${l}</option>`).join('');
+        renderTrend();
+    }
+
+    function jOpen(id) {
+        const e = jLoad().find(x => x.id === id);
+        if (!e) return;
+        const rows = (e.reps || []).map(r => `<tr class="border-t border-slate-800"><td class="px-2 py-1 text-slate-400">${r.n}</td><td class="px-2 py-1 font-mono">${sFmt(r.dur, 1)}</td><td class="px-2 py-1 font-mono">${sFmt(r.pct, 0)}%</td><td class="px-2 py-1 font-mono">${sFmt(r.hrEnd, 0)}</td><td class="px-2 py-1 font-mono">${sFmt(r.spm, 0)}</td><td class="px-2 py-1 font-mono">${sFmt(r.step, 2)}</td><td class="px-2 py-1 font-mono">${sFmt(r.watts, 0)}</td></tr>`).join('');
+        const mrows = J_METRICS.map(([k, l, d]) => `<tr class="border-t border-slate-800"><td class="px-2 py-1 text-slate-300">${l}</td><td class="px-2 py-1 text-right font-mono text-white">${sFmt(e.m[k], d)}</td>` +
+            (e.blocks || []).map(b => `<td class="px-2 py-1 text-right font-mono">${sFmt(b[k], d)}</td>`).join('') + '</tr>').join('');
+        document.getElementById('j-detail-body').innerHTML =
+            `<h3 class="text-base font-bold text-white">${esc(e.label)}</h3><p class="text-xs text-slate-400">${jDate(e.ts, true)} · ${e.n} répétitions de ${e.dist} m · VMA ${Number(e.vma).toFixed(1)} km/h</p>` +
+            `<p class="text-xs text-slate-300 leading-relaxed">${esc(e.synth || '')}</p>` +
+            `<ul class="space-y-1 text-xs text-slate-300 list-disc pl-4">${(e.reading || []).map(t => '<li>' + esc(t) + '</li>').join('')}</ul>` +
+            `<div class="overflow-x-auto"><table class="w-full text-xs"><thead><tr class="text-slate-400 text-[11px]"><th class="px-2 py-1 text-left">Moyenne</th><th class="px-2 py-1 text-right">Séance</th>${(e.blocks || []).length > 1 ? e.blocks.map((_, i) => `<th class="px-2 py-1 text-right">Bloc ${i + 1}</th>`).join('') : ''}</tr></thead><tbody>${mrows}</tbody></table></div>` +
+            `<div class="overflow-x-auto"><table class="w-full text-xs whitespace-nowrap"><thead><tr class="text-slate-400 text-[11px]"><th class="px-2 py-1 text-left">#</th><th class="px-2 py-1 text-left">s</th><th class="px-2 py-1 text-left">%VMA</th><th class="px-2 py-1 text-left">FC fin</th><th class="px-2 py-1 text-left">Cad.</th><th class="px-2 py-1 text-left">Foulée</th><th class="px-2 py-1 text-left">W</th></tr></thead><tbody>${rows}</tbody></table></div>` +
+            `<button type="button" onclick="jDelete('${e.id}')" class="text-xs text-rose-300 border border-rose-900 rounded-lg px-3 py-2">Supprimer cette séance</button>`;
+        jShow('detail');
+    }
+
+    function jDelete(id) {
+        if (!confirm('Supprimer cette séance du carnet ?')) return;
+        jSave(jLoad().filter(e => e.id !== id));
+        jSel.delete(id);
+        jShow('list'); renderJournal();
+    }
+
+    function jCompare() {
+        const msg = document.getElementById('j-sel-info');
+        if (jSel.size !== 2) { msg.textContent = 'Coche exactement deux séances (' + jSel.size + ' cochée(s)).'; return; }
+        const sel = jLoad().filter(e => jSel.has(e.id)).sort((a, b) => a.ts - b.ts);
+        const [a, b] = sel;
+        const delta = (x, y, d) => (x === null || y === null || x === undefined || y === undefined) ? '' : ((y - x >= 0 ? '+' : '') + (y - x).toFixed(d));
+        let rows = '';
+        J_METRICS.forEach(([k, l, d]) => {
+            if (a.m[k] === null && b.m[k] === null) return;
+            rows += `<tr class="border-t border-slate-800"><td class="px-2 py-1.5 text-slate-300">${l}</td><td class="px-2 py-1.5 text-right font-mono">${sFmt(a.m[k], d)}</td><td class="px-2 py-1.5 text-right font-mono">${sFmt(b.m[k], d)}</td><td class="px-2 py-1.5 text-right font-mono text-amber-300">${delta(a.m[k], b.m[k], d)}</td></tr>`;
+        });
+        const nb = Math.min((a.blocks || []).length, (b.blocks || []).length);
+        if (nb > 1) {
+            for (let i = 0; i < nb; i++) {
+                [['dur', 'Temps', 1], ['hrEnd', 'FC fin', 0], ['spm', 'Cadence', 1], ['step', 'Foulée', 2]].forEach(([k, l, d]) => {
+                    const x = a.blocks[i][k], y = b.blocks[i][k];
+                    if (x === null && y === null) return;
+                    rows += `<tr class="border-t border-slate-800"><td class="px-2 py-1.5 text-slate-400">Bloc ${i + 1} · ${l}</td><td class="px-2 py-1.5 text-right font-mono">${sFmt(x, d)}</td><td class="px-2 py-1.5 text-right font-mono">${sFmt(y, d)}</td><td class="px-2 py-1.5 text-right font-mono text-amber-300">${delta(x, y, d)}</td></tr>`;
+                });
+            }
+        }
+        const warn = (a.label !== b.label || a.dist !== b.dist) ? '<p class="text-xs text-amber-300">Types de séance différents : compare avec prudence.</p>' : '';
+        document.getElementById('j-compare-body').innerHTML = warn +
+            `<div class="overflow-x-auto"><table class="w-full text-xs"><thead><tr class="text-slate-400 text-[11px]"><th class="px-2 py-1.5 text-left">Moyenne</th><th class="px-2 py-1.5 text-right">${jDate(a.ts)}<br>${esc(a.label)}</th><th class="px-2 py-1.5 text-right">${jDate(b.ts)}<br>${esc(b.label)}</th><th class="px-2 py-1.5 text-right">Écart</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+        jShow('compare');
+    }
+
+    function renderTrend() {
+        const type = document.getElementById('j-trend-type').value;
+        const key = document.getElementById('j-trend-metric').value;
+        const months = parseInt(document.getElementById('j-trend-period').value, 10);
+        const box = document.getElementById('j-trend-chart'), txt = document.getElementById('j-trend-text');
+        const lim = months ? Date.now() - months * 30.5 * 86400000 : 0;
+        const pts = jLoad().filter(e => e.label === type && e.ts >= lim && e.m[key] !== null && e.m[key] !== undefined).sort((a, b) => a.ts - b.ts);
+        const def = J_METRICS.find(m => m[0] === key) || J_METRICS[0];
+        if (pts.length < 2) { box.innerHTML = ''; txt.textContent = type ? 'Il faut au moins deux séances de ce type sur la période pour voir une tendance.' : ''; return; }
+        const w = 320, h = 140, pl = 36, pr = 8, pt = 10, pb = 22;
+        const ys = pts.map(p => p.m[key]);
+        let lo = Math.min(...ys), hi = Math.max(...ys);
+        if (hi === lo) { lo -= 1; hi += 1; }
+        const pad = (hi - lo) * 0.15; lo -= pad; hi += pad;
+        const t0 = pts[0].ts, t1 = pts[pts.length - 1].ts, span = Math.max(1, t1 - t0);
+        const X = t => pl + (w - pl - pr) * (t - t0) / span, Y = v => pt + (h - pt - pb) * (1 - (v - lo) / (hi - lo));
+        let s = `<svg viewBox="0 0 ${w} ${h}" class="w-full" role="img" aria-label="${esc(def[1])}">`;
+        [lo, (lo + hi) / 2, hi].forEach(g => { s += `<line x1="${pl}" x2="${w - pr}" y1="${Y(g)}" y2="${Y(g)}" stroke="#334155" stroke-width="0.5"/><text x="${pl - 3}" y="${Y(g) + 3}" text-anchor="end" font-size="8" fill="#94a3b8">${g.toFixed(def[2])}</text>`; });
+        s += `<polyline fill="none" stroke="#38bdf8" stroke-width="2" points="${pts.map(p => X(p.ts).toFixed(1) + ',' + Y(p.m[key]).toFixed(1)).join(' ')}"/>`;
+        pts.forEach(p => { s += `<circle cx="${X(p.ts).toFixed(1)}" cy="${Y(p.m[key]).toFixed(1)}" r="3.5" fill="#38bdf8" stroke="#0f172a" stroke-width="1.5"><title>${jDate(p.ts)} : ${p.m[key].toFixed(def[2])}</title></circle>`; });
+        s += `<text x="${pl}" y="${h - 6}" font-size="8" fill="#94a3b8">${jDate(t0)}</text><text x="${w - pr}" y="${h - 6}" text-anchor="end" font-size="8" fill="#94a3b8">${jDate(t1)}</text></svg>`;
+        box.innerHTML = s;
+        const d = ys[ys.length - 1] - ys[0];
+        txt.textContent = `${pts.length} séances « ${type} » : ${def[1]} de ${ys[0].toFixed(def[2])} à ${ys[ys.length - 1].toFixed(def[2])} (${d >= 0 ? '+' : ''}${d.toFixed(def[2])}) entre le ${jDate(t0)} et le ${jDate(t1)}. Tendance sur peu de séances : à prendre avec prudence, d'autant que la forme du jour pèse beaucoup.`;
+    }
+
+    function jExport() {
+        const data = { app: 'RunPace', version: 1, exportedAt: new Date().toISOString(), journal: jLoad() };
+        const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'carnet-runpace-' + new Date().toISOString().slice(0, 10) + '.json';
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+        document.getElementById('j-io-msg').textContent = '✓ Carnet exporté (' + data.journal.length + ' séances).';
+    }
+
+    async function jImport(input) {
+        const f = input.files && input.files[0], msg = document.getElementById('j-io-msg');
+        if (!f) return;
+        try {
+            const data = JSON.parse(await f.text());
+            const inc = (Array.isArray(data) ? data : data.journal || []).filter(e => e && e.id && e.m && e.ts);
+            if (!inc.length) throw new Error('vide');
+            const all = jLoad();
+            inc.forEach(e => { const i = all.findIndex(x => x.id === e.id); if (i >= 0) all[i] = e; else all.push(e); });
+            jSave(all);
+            msg.textContent = '✓ ' + inc.length + ' séance(s) importée(s), ' + all.length + ' au total.';
+            renderJournal();
+        } catch (e) { msg.textContent = 'Fichier de carnet illisible.'; }
+        input.value = '';
+    }
+
+    // --- NAVIGATION ONGLETS ---
+    function openTab(tabId, btn) {
+        const target = document.getElementById(tabId);
+        if (!target) return;
+
+        document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.add('hidden'));
+        target.classList.remove('hidden');
+
+        document.querySelectorAll('.nav-btn').forEach(button => {
+            button.classList.remove('text-sky-400', 'active');
+            button.classList.add('text-slate-400');
+        });
+
+        const activeButton = btn || document.querySelector(`.nav-btn[onclick*="${tabId}"]`);
+        if (activeButton) {
+            activeButton.classList.remove('text-slate-400');
+            activeButton.classList.add('text-sky-400', 'active');
+        }
+        if (tabId === 'tab-seance') renderSeance();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // --- CONTRÔLES FRACTIONNÉ & CONVERTISSEUR ---
+    function setPct(val) {
+        simState.pct = Math.min(110, Math.max(80, parseInt(val, 10) || 100));
+        document.getElementById('sl-pct').value = simState.pct;
+        renderFractionne();
+    }
+
+    function adjustPct(delta) {
+        setPct(simState.pct + delta);
+    }
+
+    function syncFromKmh() {
+        const kmh = parseFloat(document.getElementById('conv-kmh').value);
+        if (!kmh || kmh <= 0) return;
+        const sec = 3600 / kmh;
+        let m = Math.floor(sec / 60);
+        let s = Math.round(sec % 60);
+        if (s === 60) { m += 1; s = 0; }
+        document.getElementById('conv-min').value = m;
+        document.getElementById('conv-sec').value = s;
+        document.getElementById('conv-pct-out').textContent = `${((kmh / profile.vma) * 100).toFixed(1)} % VMA`;
+    }
+
+    function syncFromPace() {
+        const m = parseInt(document.getElementById('conv-min').value, 10) || 0;
+        const s = parseInt(document.getElementById('conv-sec').value, 10) || 0;
+        const total = m * 60 + s;
+        if (total <= 0) return;
+        const kmh = 3600 / total;
+        document.getElementById('conv-kmh').value = kmh.toFixed(2);
+        document.getElementById('conv-pct-out').textContent = `${((kmh / profile.vma) * 100).toFixed(1)} % VMA`;
+    }
+
+    // --- INIT ---
+    document.addEventListener('DOMContentLoaded', () => {
+        const ico = document.querySelector('link[rel="icon"]');
+        if (ico) document.querySelectorAll('img[data-logo]').forEach(i => { i.src = ico.href; });
+        loadProfile();
+
+        // Écouteurs Profil
+        ['in-vma', 'in-fcrepos', 'in-fcmax', 'in-poids', 'in-w-z1', 'in-w-z2', 'in-w-z3', 'in-w-z4', 'in-w-z5', 'in-w-hill'].forEach(id => {
+            document.getElementById(id).addEventListener('input', readInputsAndRefresh);
+        });
+        document.getElementById('sl-vma').addEventListener('input', (e) => {
+            document.getElementById('in-vma').value = parseFloat(e.target.value).toFixed(1);
+            readInputsAndRefresh();
+        });
+
+        // Écouteurs Fractionné
+        document.getElementById('sl-pct').addEventListener('input', (e) => setPct(e.target.value));
+        document.getElementById('sel-dist').addEventListener('change', (e) => {
+            simState.dist = parseInt(e.target.value, 10);
+            renderFractionne();
+        });
+
+        // Écouteurs Convertisseur
+        document.getElementById('conv-kmh').addEventListener('input', syncFromKmh);
+        document.getElementById('conv-min').addEventListener('input', syncFromPace);
+        document.getElementById('conv-sec').addEventListener('input', syncFromPace);
+
+        renderAll();
+    });
+</script>
+<script>
+    // Mode hors ligne : le service worker garde l'appli en mémoire après la première ouverture
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+            navigator.serviceWorker.register('sw.js').catch(function () {});
+        });
+    }
+</script>
+</body>
+</html>
