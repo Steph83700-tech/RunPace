@@ -565,7 +565,7 @@
                         <table class="w-full text-xs text-slate-200 whitespace-nowrap">
                             <thead><tr class="text-slate-400 text-[11px]">
                                 <th class="px-2 py-1.5 text-left font-semibold">#</th><th class="px-2 py-1.5 text-left font-semibold">Temps</th><th class="px-2 py-1.5 text-left font-semibold">km/h</th><th class="px-2 py-1.5 text-left font-semibold">%VMA</th>
-                                <th class="px-2 py-1.5 text-left font-semibold">FC fin</th><th class="px-2 py-1.5 text-left font-semibold">FC max</th><th class="px-2 py-1.5 text-left font-semibold">Cad.</th><th class="px-2 py-1.5 text-left font-semibold">Foulée m</th>
+                                <th class="px-2 py-1.5 text-left font-semibold">FC fin</th><th class="px-2 py-1.5 text-left font-semibold">FC max</th><th class="px-2 py-1.5 text-left font-semibold">FC récup</th><th class="px-2 py-1.5 text-left font-semibold">Cad.</th><th class="px-2 py-1.5 text-left font-semibold">Foulée m</th>
                                 <th class="px-2 py-1.5 text-left font-semibold">W</th><th class="px-2 py-1.5 text-left font-semibold">Osc. mm</th><th class="px-2 py-1.5 text-left font-semibold">Contact ms</th>
                             </tr></thead>
                             <tbody id="seance-tbody"></tbody>
@@ -586,6 +586,7 @@
                     <h3 class="text-sm font-bold text-white pt-2">Synthèse</h3>
                     <p id="seance-synth" class="text-xs text-slate-300 leading-relaxed"></p>
                     <button type="button" onclick="shareSynth()" class="bg-slate-800 border border-slate-700 text-slate-100 font-semibold text-sm px-4 py-2 rounded-xl active:scale-95 transition">Partager la synthèse</button>
+                    <button type="button" onclick="copyCurrentForAi()" class="bg-slate-800 border border-slate-700 text-slate-100 font-semibold text-sm px-4 py-2 rounded-xl active:scale-95 transition ml-2">Copier pour l'IA</button>
                     <p id="seance-share-msg" class="text-xs text-emerald-400"></p>
                 </div>
                 <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
@@ -620,6 +621,20 @@
                             <button type="button" onclick="jCompare()" class="bg-sky-500 text-slate-950 font-bold text-sm px-4 py-2 rounded-xl active:scale-95 transition">Comparer les 2 cochées</button>
                             <span id="j-sel-info" class="text-xs text-slate-400"></span>
                         </div>
+                    </div>
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+                        <h3 class="text-sm font-bold text-white">Noter une séance à la main</h3>
+                        <p class="text-xs text-slate-400">Pour la PPG, le renforcement, un footing ou toute séance sans tours. Elle apparaît dans le carnet mais pas dans les tendances de course.</p>
+                        <div class="grid grid-cols-2 gap-2">
+                            <input id="jm-date" type="date" class="bg-slate-950 border border-slate-700 rounded-lg px-2 py-2 text-sm text-white">
+                            <input id="jm-type" list="jm-types" placeholder="Type (PPG…)" maxlength="40" class="bg-slate-950 border border-slate-700 rounded-lg px-2 py-2 text-sm text-white">
+                            <datalist id="jm-types"><option value="PPG"><option value="Renforcement"><option value="Côtes"><option value="Footing"><option value="Sortie longue"><option value="Autre"></datalist>
+                            <input id="jm-min" type="number" inputmode="numeric" min="0" max="600" placeholder="Durée (min)" class="bg-slate-950 border border-slate-700 rounded-lg px-2 py-2 text-sm text-white">
+                            <input id="jm-rpe" type="number" inputmode="numeric" min="1" max="10" placeholder="Intensité 1-10" class="bg-slate-950 border border-slate-700 rounded-lg px-2 py-2 text-sm text-white">
+                        </div>
+                        <textarea id="jm-note" rows="3" maxlength="600" placeholder="Commentaire (exercices, sensations, fatigue…)" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2 py-2 text-sm text-white"></textarea>
+                        <button type="button" onclick="jAddManual()" class="bg-sky-500 hover:bg-sky-400 active:scale-95 text-slate-950 font-bold text-sm px-4 py-2 rounded-xl transition">Ajouter</button>
+                        <p id="jm-msg" class="text-xs"></p>
                     </div>
                     <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
                         <h3 class="text-sm font-bold text-white">Tendance</h3>
@@ -1848,6 +1863,18 @@
                 gct: sMean(rr.map(r => r[41] !== undefined ? r[41] / 10 : undefined))
             };
         });
+        // récupération entre deux répétitions du même bloc (coupure <= 100 s)
+        reps.forEach((r, i) => {
+            const nx = reps[i + 1];
+            if (nx) {
+                const end = r.start + r.dur, gap = nx.start - end;
+                if (gap > 0 && gap <= 100) {
+                    const hv = recs.filter(q => q[253] >= end && q[253] <= nx.start && q[3] !== undefined).map(q => q[3]).slice(-3);
+                    r.recDur = gap; r.hrRec = sMean(hv);
+                }
+            }
+            r.drop = (r.hrEnd != null && r.hrRec != null) ? r.hrEnd - r.hrRec : null;
+        });
         // blocs : une coupure de plus de 100 s entre deux répétitions
         const blocks = [];
         reps.forEach((r, i) => {
@@ -1926,12 +1953,12 @@
         // tableau des répétitions
         let html = '';
         blocks.forEach((b, bi) => {
-            html += `<tr class="bg-slate-800/60"><td colspan="11" class="px-2 py-1 text-[11px] font-bold text-sky-300">Bloc ${bi + 1}</td></tr>`;
+            html += `<tr class="bg-slate-800/60"><td colspan="12" class="px-2 py-1 text-[11px] font-bold text-sky-300">Bloc ${bi + 1}</td></tr>`;
             b.forEach(r => {
                 html += `<tr class="border-t border-slate-800"><td class="px-2 py-1.5 text-slate-400">${r.n}</td>` +
                     `<td class="px-2 py-1.5 font-mono font-bold text-white">${sTime(r.dur)}</td>` +
                     `<td class="px-2 py-1.5 font-mono">${sFmt(r.speed, 1)}</td><td class="px-2 py-1.5 font-mono">${sFmt(r.pct, 0)}%</td>` +
-                    `<td class="px-2 py-1.5 font-mono">${sFmt(r.hrEnd, 0)}</td><td class="px-2 py-1.5 font-mono">${sFmt(r.hrMax, 0)}</td>` +
+                    `<td class="px-2 py-1.5 font-mono">${sFmt(r.hrEnd, 0)}</td><td class="px-2 py-1.5 font-mono">${sFmt(r.hrMax, 0)}</td><td class="px-2 py-1.5 font-mono">${sFmt(r.hrRec, 0)}</td>` +
                     `<td class="px-2 py-1.5 font-mono">${sFmt(r.spm, 0)}</td><td class="px-2 py-1.5 font-mono">${sFmt(r.step, 2)}</td>` +
                     `<td class="px-2 py-1.5 font-mono">${sFmt(r.watts, 0)}</td><td class="px-2 py-1.5 font-mono">${sFmt(r.vo, 0)}</td><td class="px-2 py-1.5 font-mono">${sFmt(r.gct, 0)}</td></tr>`;
             });
@@ -1941,7 +1968,7 @@
         // comparaison des blocs
         const stat = (b, key) => sMean(b.map(r => r[key]));
         const defs = [
-            ['Temps moyen (s)', 'dur', 1], ['Vitesse (km/h)', 'speed', 1], ['% VMA', 'pct', 1], ['FC fin de rep', 'hrEnd', 0],
+            ['Temps moyen (s)', 'dur', 1], ['Vitesse (km/h)', 'speed', 1], ['% VMA', 'pct', 1], ['FC fin de rep', 'hrEnd', 0], ['FC fin de récup', 'hrRec', 0], ['Chute de FC en récup', 'drop', 0],
             ['Cadence (pas/min)', 'spm', 1], ['Longueur de foulée (m)', 'step', 2], ['Puissance (W)', 'watts', 0],
             ['Oscillation verticale (mm)', 'vo', 0], ['Contact au sol (ms)', 'gct', 0]
         ];
@@ -2032,6 +2059,8 @@
                     `Pour ${(d2 - d1 >= 0 ? '+' : '') + (d2 - d1).toFixed(1)} s sur le temps moyen et ${(h2 - h1 >= 0 ? '+' : '') + (h2 - h1).toFixed(0)} bpm de FC en fin de rep.`);
             }
         }
+        const dr = blocks.map(b => sMean(b.map(r => r.drop)));
+        if (dr.some(v => v !== null)) out.push('Récupération entre répétitions : la FC redescend en moyenne de ' + dr.map((v, i) => (v === null ? '–' : v.toFixed(0)) + ' bpm (bloc ' + (i + 1) + ')').join(', ') + ' pendant ' + (sMean(rows.map(r => r.recDur)) || 0).toFixed(0) + ' s.');
         const gct = sMean(rows.map(r => r.gct)), vo = sMean(rows.map(r => r.vo));
         if (gct !== null) out.push(`Contact au sol : ${gct.toFixed(0)} ms en moyenne (` + (gct < 200 ? 'court' : gct <= 225 ? 'correct pour cette allure' : 'long') + ').');
         if (vo !== null) out.push(`Oscillation verticale : ${vo.toFixed(0)} mm (` + (vo < 90 ? 'économe' : vo <= 105 ? 'correcte' : 'élevée') + '). Repères indicatifs, à croiser avec ta morphologie.');
@@ -2067,7 +2096,7 @@
     // --- CARNET D'ENTRAÎNEMENT (séances enregistrées sur l'appareil) ---
     const JOURNAL_KEY = 'runpace_pro_journal_v1';
     const J_METRICS = [
-        ['dur', 'Temps moyen (s)', 1], ['pct', '% VMA', 1], ['hrEnd', 'FC fin de rep (bpm)', 0], ['hrMax', 'FC max (bpm)', 0],
+        ['dur', 'Temps moyen (s)', 1], ['pct', '% VMA', 1], ['hrEnd', 'FC fin de rep (bpm)', 0], ['hrRec', 'FC fin de récup (bpm)', 0], ['drop', 'Chute de FC en récup (bpm)', 0], ['hrMax', 'FC max (bpm)', 0],
         ['spm', 'Cadence (pas/min)', 1], ['step', 'Foulée (m)', 2], ['watts', 'Puissance (W)', 0],
         ['vo', 'Oscillation (mm)', 0], ['gct', 'Contact (ms)', 0]
     ];
@@ -2078,7 +2107,7 @@
     function jSave(a) { try { localStorage.setItem(JOURNAL_KEY, JSON.stringify(a)); return true; } catch (e) { return false; } }
     function jMeans(rows) {
         const m = {};
-        ['dur', 'speed', 'pct', 'hrEnd', 'hrMax', 'spm', 'step', 'watts', 'vo', 'gct'].forEach(k => {
+        ['dur', 'speed', 'pct', 'hrEnd', 'hrRec', 'drop', 'hrMax', 'spm', 'step', 'watts', 'vo', 'gct'].forEach(k => {
             const v = sMean(rows.map(r => r[k]));
             m[k] = v === null ? null : Math.round(v * 1000) / 1000;
         });
@@ -2094,23 +2123,29 @@
             const b = document.getElementById(id);
             b.className = 'py-2 rounded-lg text-sm font-bold transition ' + (k === v ? on : off);
         });
-        if (v === 'c') { jShow('list'); renderJournal(); }
+        if (v === 'c') { jShow('list'); const d = document.getElementById('jm-date'); if (!d.value) d.value = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10); renderJournal(); }
     }
     function jShow(name) {
         ['list', 'detail', 'compare'].forEach(n => document.getElementById('j-' + n).classList.toggle('hidden', n !== name));
         if (name !== 'list') window.scrollTo({ top: 0 });
     }
 
-    function addToJournal() {
-        const cur = seanceState.cur, msg = document.getElementById('seance-journal-msg');
-        if (!cur) return;
+    function buildEntry() {
+        const cur = seanceState.cur;
+        if (!cur) return null;
         const label = (document.getElementById('seance-label').value || '').trim() || cur.autoLabel;
-        const entry = {
+        return {
             id: String(cur.start) + '-' + cur.rows.length, ts: (cur.start + FIT_EPOCH) * 1000, label, dist: cur.dist, vma: profile.vma,
             n: cur.rows.length, fileName: seanceState.fileName, m: jMeans(cur.rows), blocks: cur.blocks.map(jMeans),
-            reps: cur.rows.map(r => ({ n: r.n, dur: r.dur, pct: r.pct, hrEnd: r.hrEnd, spm: r.spm, step: r.step, watts: r.watts, vo: r.vo, gct: r.gct })),
+            reps: cur.rows.map(r => ({ n: r.n, dur: r.dur, pct: r.pct, hrEnd: r.hrEnd, hrRec: r.hrRec, drop: r.drop, spm: r.spm, step: r.step, watts: r.watts, vo: r.vo, gct: r.gct })),
             reading: cur.reading, synth: cur.synth
         };
+    }
+
+    function addToJournal() {
+        const msg = document.getElementById('seance-journal-msg');
+        const entry = buildEntry();
+        if (!entry) return;
         const all = jLoad();
         const i = all.findIndex(e => e.id === entry.id);
         if (i >= 0) all[i] = entry; else all.push(entry);
@@ -2134,10 +2169,10 @@
             list.innerHTML = all.map(e => `<div class="flex items-center gap-2 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2">` +
                 `<input type="checkbox" ${jSel.has(e.id) ? 'checked' : ''} onchange="jToggle('${e.id}')" class="w-4 h-4 accent-sky-500">` +
                 `<button type="button" onclick="jOpen('${e.id}')" class="flex-1 text-left"><div class="text-sm font-bold text-white">${esc(e.label)}</div>` +
-                `<div class="text-[11px] text-slate-400">${jDate(e.ts)} · ${e.n} reps · ${sFmt(e.m.dur, 1)} s · ${sFmt(e.m.pct, 0)} % VMA</div></button></div>`).join('');
+                `<div class="text-[11px] text-slate-400">${e.manual ? jDate(e.ts) + ' · ' + (e.minutes ? e.minutes + ' min · ' : '') + (e.rpe ? 'intensité ' + e.rpe + '/10' : 'séance notée à la main') : jDate(e.ts) + ' · ' + e.n + ' reps · ' + sFmt(e.m.dur, 1) + ' s · ' + sFmt(e.m.pct, 0) + ' % VMA'}</div></button></div>`).join('');
         }
         document.getElementById('j-sel-info').textContent = jSel.size + ' séance(s) cochée(s)';
-        const types = Array.from(new Set(all.map(e => e.label)));
+        const types = Array.from(new Set(all.filter(e => !e.manual).map(e => e.label)));
         const ts = document.getElementById('j-trend-type'), prev = ts.value;
         ts.innerHTML = types.map(t => `<option value="${esc(t)}">${esc(t)}</option>`).join('');
         if (types.includes(prev)) ts.value = prev;
@@ -2149,6 +2184,14 @@
     function jOpen(id) {
         const e = jLoad().find(x => x.id === id);
         if (!e) return;
+        if (e.manual) {
+            document.getElementById('j-detail-body').innerHTML =
+                `<h3 class="text-base font-bold text-white">${esc(e.label)}</h3><p class="text-xs text-slate-400">${jDate(e.ts, true)}${e.minutes ? ' · ' + e.minutes + ' min' : ''}${e.rpe ? ' · intensité ressentie ' + e.rpe + '/10' : ''}</p>` +
+                `<p class="text-sm text-slate-200 leading-relaxed whitespace-pre-wrap">${esc(e.synth || 'Pas de commentaire.')}</p>` +
+                `<button type="button" onclick="jCopy('${e.id}')" class="text-xs text-slate-100 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 mr-2">Copier pour l'IA</button><button type="button" onclick="jDelete('${e.id}')" class="text-xs text-rose-300 border border-rose-900 rounded-lg px-3 py-2">Supprimer cette séance</button><p id="j-copy-msg" class="text-xs text-emerald-400"></p>`;
+            jShow('detail');
+            return;
+        }
         const rows = (e.reps || []).map(r => `<tr class="border-t border-slate-800"><td class="px-2 py-1 text-slate-400">${r.n}</td><td class="px-2 py-1 font-mono">${sFmt(r.dur, 1)}</td><td class="px-2 py-1 font-mono">${sFmt(r.pct, 0)}%</td><td class="px-2 py-1 font-mono">${sFmt(r.hrEnd, 0)}</td><td class="px-2 py-1 font-mono">${sFmt(r.spm, 0)}</td><td class="px-2 py-1 font-mono">${sFmt(r.step, 2)}</td><td class="px-2 py-1 font-mono">${sFmt(r.watts, 0)}</td></tr>`).join('');
         const mrows = J_METRICS.map(([k, l, d]) => `<tr class="border-t border-slate-800"><td class="px-2 py-1 text-slate-300">${l}</td><td class="px-2 py-1 text-right font-mono text-white">${sFmt(e.m[k], d)}</td>` +
             (e.blocks || []).map(b => `<td class="px-2 py-1 text-right font-mono">${sFmt(b[k], d)}</td>`).join('') + '</tr>').join('');
@@ -2158,7 +2201,7 @@
             `<ul class="space-y-1 text-xs text-slate-300 list-disc pl-4">${(e.reading || []).map(t => '<li>' + esc(t) + '</li>').join('')}</ul>` +
             `<div class="overflow-x-auto"><table class="w-full text-xs"><thead><tr class="text-slate-400 text-[11px]"><th class="px-2 py-1 text-left">Moyenne</th><th class="px-2 py-1 text-right">Séance</th>${(e.blocks || []).length > 1 ? e.blocks.map((_, i) => `<th class="px-2 py-1 text-right">Bloc ${i + 1}</th>`).join('') : ''}</tr></thead><tbody>${mrows}</tbody></table></div>` +
             `<div class="overflow-x-auto"><table class="w-full text-xs whitespace-nowrap"><thead><tr class="text-slate-400 text-[11px]"><th class="px-2 py-1 text-left">#</th><th class="px-2 py-1 text-left">s</th><th class="px-2 py-1 text-left">%VMA</th><th class="px-2 py-1 text-left">FC fin</th><th class="px-2 py-1 text-left">Cad.</th><th class="px-2 py-1 text-left">Foulée</th><th class="px-2 py-1 text-left">W</th></tr></thead><tbody>${rows}</tbody></table></div>` +
-            `<button type="button" onclick="jDelete('${e.id}')" class="text-xs text-rose-300 border border-rose-900 rounded-lg px-3 py-2">Supprimer cette séance</button>`;
+            `<button type="button" onclick="jCopy('${e.id}')" class="text-xs text-slate-100 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 mr-2">Copier pour l'IA</button><button type="button" onclick="jDelete('${e.id}')" class="text-xs text-rose-300 border border-rose-900 rounded-lg px-3 py-2">Supprimer cette séance</button><p id="j-copy-msg" class="text-xs text-emerald-400"></p>`;
         jShow('detail');
     }
 
@@ -2173,6 +2216,7 @@
         const msg = document.getElementById('j-sel-info');
         if (jSel.size !== 2) { msg.textContent = 'Coche exactement deux séances (' + jSel.size + ' cochée(s)).'; return; }
         const sel = jLoad().filter(e => jSel.has(e.id)).sort((a, b) => a.ts - b.ts);
+        if (sel.some(e => e.manual)) { msg.textContent = 'Une séance notée à la main ne peut pas être comparée : coche deux séances analysées.'; return; }
         const [a, b] = sel;
         const delta = (x, y, d) => (x === null || y === null || x === undefined || y === undefined) ? '' : ((y - x >= 0 ? '+' : '') + (y - x).toFixed(d));
         let rows = '';
@@ -2248,6 +2292,55 @@
         } catch (e) { msg.textContent = 'Fichier de carnet illisible.'; }
         input.value = '';
     }
+
+    function jAddManual() {
+        const g = id => document.getElementById(id);
+        const msg = g('jm-msg');
+        const day = g('jm-date').value;
+        const label = (g('jm-type').value || '').trim();
+        if (!day || !label) { msg.className = 'text-xs text-rose-400'; msg.textContent = 'Date et type de séance obligatoires.'; return; }
+        const minutes = parseInt(g('jm-min').value, 10) || 0;
+        const rpe = Math.min(10, Math.max(0, parseInt(g('jm-rpe').value, 10) || 0));
+        const entry = { id: 'man-' + Date.now(), manual: true, ts: new Date(day + 'T12:00:00').getTime(), label, dist: 0, vma: profile.vma, n: 0, m: {}, blocks: [], reps: [], reading: [], synth: (g('jm-note').value || '').trim(), minutes, rpe };
+        const all = jLoad(); all.push(entry);
+        msg.className = 'text-xs text-emerald-400';
+        msg.textContent = jSave(all) ? '✓ Séance ajoutée au carnet.' : 'Enregistrement impossible.';
+        g('jm-note').value = ''; g('jm-min').value = ''; g('jm-rpe').value = '';
+        renderJournal();
+    }
+
+    // --- COPIE D'UNE SÉANCE EN TEXTE COMPACT (pour la coller dans une discussion avec une IA) ---
+    function entryText(e) {
+        const L = [];
+        if (e.manual) {
+            L.push(`Séance notée à la main — ${e.label}, ${jDate(e.ts, true)}${e.minutes ? ', ' + e.minutes + ' min' : ''}${e.rpe ? ', intensité ressentie ' + e.rpe + '/10' : ''}.`);
+            if (e.synth) L.push('Commentaire : ' + e.synth);
+            return L.join('\n');
+        }
+        L.push(`Séance ${e.label} du ${jDate(e.ts, true)} — ${e.n} répétitions de ${e.dist} m (vitesses calculées sur la distance nominale).`);
+        L.push(`Profil : VMA ${Number(e.vma).toFixed(1)} km/h, FC repos ${profile.fcRepos}, FC max ${profile.fcMax}.`);
+        if (e.synth) L.push('Synthèse : ' + e.synth);
+        (e.reading || []).forEach(t => L.push('- ' + t));
+        const f = (v, d) => (v === null || v === undefined) ? '-' : Number(v).toFixed(d);
+        const nb = (e.blocks || []).length;
+        L.push('Moyennes (séance' + (nb > 1 ? ', ' + e.blocks.map((_, i) => 'bloc ' + (i + 1)).join(', ') : '') + ') :');
+        J_METRICS.forEach(([k, l, d]) => { if (e.m[k] != null) L.push(`${l} : ${f(e.m[k], d)}` + (nb > 1 ? ' | ' + e.blocks.map(b => f(b[k], d)).join(' | ') : '')); });
+        L.push('Répétitions (n ; temps s ; %VMA ; FC fin ; FC fin récup ; cadence ; foulée m ; W ; osc mm ; contact ms) :');
+        (e.reps || []).forEach(r => L.push([r.n, f(r.dur, 1), f(r.pct, 0), f(r.hrEnd, 0), f(r.hrRec, 0), f(r.spm, 0), f(r.step, 2), f(r.watts, 0), f(r.vo, 0), f(r.gct, 0)].join(' ; ')));
+        return L.join('\n');
+    }
+
+    async function copyText(txt, msgEl) {
+        try {
+            await navigator.clipboard.writeText(txt);
+            msgEl.textContent = '✓ Texte copié, colle-le dans ta discussion.';
+        } catch (err) {
+            if (navigator.share) { navigator.share({ title: 'Séance RunPace', text: txt }).catch(() => {}); }
+            else msgEl.textContent = 'Copie impossible sur ce navigateur.';
+        }
+    }
+    function jCopy(id) { const e = jLoad().find(x => x.id === id); if (e) copyText(entryText(e), document.getElementById('j-copy-msg')); }
+    function copyCurrentForAi() { const e = buildEntry(); if (e) copyText(entryText(e), document.getElementById('seance-share-msg')); }
 
     // --- NAVIGATION ONGLETS ---
     function openTab(tabId, btn) {
