@@ -2165,7 +2165,8 @@
         return {
             id: String(cur.start) + '-' + cur.rows.length, ts: (cur.start + FIT_EPOCH) * 1000, label, dist: cur.dist, vma: profile.vma,
             n: cur.rows.length, fileName: seanceState.fileName, m: jMeans(cur.rows), blocks: cur.blocks.map(jMeans),
-            reps: cur.rows.map(r => ({ n: r.n, dur: r.dur, pct: r.pct, hrEnd: r.hrEnd, hrRec: r.hrRec, drop: r.drop, spm: r.spm, step: r.step, watts: r.watts, vo: r.vo, gct: r.gct })),
+            bs: cur.blocks.map(b => b.length),
+            reps: cur.rows.map(r => ({ n: r.n, dur: r.dur, speed: r.speed, pct: r.pct, hrEnd: r.hrEnd, hrMax: r.hrMax, hrRec: r.hrRec, drop: r.drop, spm: r.spm, step: r.step, watts: r.watts, vo: r.vo, gct: r.gct })),
             reading: cur.reading, synth: cur.synth
         };
     }
@@ -2220,7 +2221,20 @@
             jShow('detail');
             return;
         }
-        const rows = (e.reps || []).map(r => `<tr class="border-t border-slate-800"><td class="px-2 py-1 text-slate-400">${r.n}</td><td class="px-2 py-1 font-mono">${sFmt(r.dur, 1)}</td><td class="px-2 py-1 font-mono">${sFmt(r.pct, 0)}%</td><td class="px-2 py-1 font-mono">${sFmt(r.hrEnd, 0)}</td><td class="px-2 py-1 font-mono">${sFmt(r.spm, 0)}</td><td class="px-2 py-1 font-mono">${sFmt(r.step, 2)}</td><td class="px-2 py-1 font-mono">${sFmt(r.watts, 0)}</td></tr>`).join('');
+        const nbk = (e.blocks || []).length;
+        const sizes = e.bs || ((nbk > 1 && e.n % nbk === 0) ? e.blocks.map(() => e.n / nbk) : [e.n]);
+        let rows = '', ridx = 0;
+        const td = (v, d, suf) => `<td class="px-2 py-1 font-mono">${sFmt(v, d)}${v === null || v === undefined ? '' : (suf || '')}</td>`;
+        sizes.forEach((sz, bi) => {
+            if (sizes.length > 1) rows += `<tr class="bg-slate-800/60"><td colspan="12" class="px-2 py-1 text-[11px] font-bold text-sky-300">Bloc ${bi + 1}</td></tr>`;
+            (e.reps || []).slice(ridx, ridx + sz).forEach(r => {
+                const spd = (r.speed !== undefined && r.speed !== null) ? r.speed : ((e.dist && r.dur) ? e.dist / r.dur * 3.6 : null);
+                rows += `<tr class="border-t border-slate-800"><td class="px-2 py-1 text-slate-400">${r.n}</td>` +
+                    `<td class="px-2 py-1 font-mono font-bold text-white">${sFmt(r.dur, 1)} s</td>` + td(spd, 1) + td(r.pct, 0, '%') + td(r.hrEnd, 0) + td(r.hrMax, 0) + td(r.hrRec, 0) +
+                    td(r.spm, 0) + td(r.step, 2) + td(r.watts, 0) + td(r.vo, 0) + td(r.gct, 0) + '</tr>';
+            });
+            ridx += sz;
+        });
         const mrows = J_METRICS.map(([k, l, d]) => `<tr class="border-t border-slate-800"><td class="px-2 py-1 text-slate-300">${l}</td><td class="px-2 py-1 text-right font-mono text-white">${sFmt(e.m[k], d)}</td>` +
             (e.blocks || []).map(b => `<td class="px-2 py-1 text-right font-mono">${sFmt(b[k], d)}</td>`).join('') + '</tr>').join('');
         document.getElementById('j-detail-body').innerHTML =
@@ -2228,7 +2242,7 @@
             `<p class="text-xs text-slate-300 leading-relaxed">${esc(e.synth || '')}</p>` +
             `<ul class="space-y-1 text-xs text-slate-300 list-disc pl-4">${(e.reading || []).map(t => '<li>' + esc(t) + '</li>').join('')}</ul>` +
             `<div class="overflow-x-auto"><table class="w-full text-xs"><thead><tr class="text-slate-400 text-[11px]"><th class="px-2 py-1 text-left">Moyenne</th><th class="px-2 py-1 text-right">Séance</th>${(e.blocks || []).length > 1 ? e.blocks.map((_, i) => `<th class="px-2 py-1 text-right">Bloc ${i + 1}</th>`).join('') : ''}</tr></thead><tbody>${mrows}</tbody></table></div>` +
-            `<div class="overflow-x-auto"><table class="w-full text-xs whitespace-nowrap"><thead><tr class="text-slate-400 text-[11px]"><th class="px-2 py-1 text-left">#</th><th class="px-2 py-1 text-left">s</th><th class="px-2 py-1 text-left">%VMA</th><th class="px-2 py-1 text-left">FC fin</th><th class="px-2 py-1 text-left">Cad.</th><th class="px-2 py-1 text-left">Foulée</th><th class="px-2 py-1 text-left">W</th></tr></thead><tbody>${rows}</tbody></table></div>` +
+            `<div class="overflow-x-auto -mx-1"><table class="w-full text-xs text-slate-200 whitespace-nowrap"><thead><tr class="text-slate-400 text-[11px]"><th class="px-2 py-1 text-left font-semibold">#</th><th class="px-2 py-1 text-left font-semibold">Temps</th><th class="px-2 py-1 text-left font-semibold">km/h</th><th class="px-2 py-1 text-left font-semibold">%VMA</th><th class="px-2 py-1 text-left font-semibold">FC fin</th><th class="px-2 py-1 text-left font-semibold">FC max</th><th class="px-2 py-1 text-left font-semibold">FC récup</th><th class="px-2 py-1 text-left font-semibold">Cad.</th><th class="px-2 py-1 text-left font-semibold">Foulée m</th><th class="px-2 py-1 text-left font-semibold">W</th><th class="px-2 py-1 text-left font-semibold">Osc. mm</th><th class="px-2 py-1 text-left font-semibold">Contact ms</th></tr></thead><tbody>${rows}</tbody></table></div>` +
             `<button type="button" onclick="jCopy('${e.id}')" class="text-xs text-slate-100 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 mr-2">Copier pour l'IA</button><button type="button" onclick="jDelete('${e.id}')" class="text-xs text-rose-300 border border-rose-900 rounded-lg px-3 py-2">Supprimer cette séance</button><p id="j-copy-msg" class="text-xs text-emerald-400"></p>`;
         jShow('detail');
     }
@@ -2353,8 +2367,8 @@
         const nb = (e.blocks || []).length;
         L.push('Moyennes (séance' + (nb > 1 ? ', ' + e.blocks.map((_, i) => 'bloc ' + (i + 1)).join(', ') : '') + ') :');
         J_METRICS.forEach(([k, l, d]) => { if (e.m[k] != null) L.push(`${l} : ${f(e.m[k], d)}` + (nb > 1 ? ' | ' + e.blocks.map(b => f(b[k], d)).join(' | ') : '')); });
-        L.push('Répétitions (n ; temps s ; %VMA ; FC fin ; FC fin récup ; cadence ; foulée m ; W ; osc mm ; contact ms) :');
-        (e.reps || []).forEach(r => L.push([r.n, f(r.dur, 1), f(r.pct, 0), f(r.hrEnd, 0), f(r.hrRec, 0), f(r.spm, 0), f(r.step, 2), f(r.watts, 0), f(r.vo, 0), f(r.gct, 0)].join(' ; ')));
+        L.push('Répétitions (n ; temps s ; km/h ; %VMA ; FC fin ; FC max ; FC fin récup ; cadence ; foulée m ; W ; osc mm ; contact ms) :');
+        (e.reps || []).forEach(r => L.push([r.n, f(r.dur, 1), f(r.speed !== undefined && r.speed !== null ? r.speed : (e.dist && r.dur ? e.dist / r.dur * 3.6 : null), 1), f(r.pct, 0), f(r.hrEnd, 0), f(r.hrMax, 0), f(r.hrRec, 0), f(r.spm, 0), f(r.step, 2), f(r.watts, 0), f(r.vo, 0), f(r.gct, 0)].join(' ; ')));
         return L.join('\n');
     }
 
