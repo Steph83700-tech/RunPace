@@ -546,11 +546,7 @@
             <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-4 shadow-lg">
                 <div>
                     <h2 class="text-lg font-bold text-white">Projections Chronos Compétition</h2>
-                    <p id="proj-desc" class="text-xs text-slate-400 mt-1"></p>
-                </div>
-                <div class="grid grid-cols-2 gap-1 bg-slate-950 border border-slate-800 rounded-xl p-1">
-                    <button type="button" id="proj-btn-vma" onclick="setProjMode('vma')" class="py-2 rounded-lg text-xs sm:text-sm font-bold transition bg-sky-500 text-slate-950">Selon ma VMA</button>
-                    <button type="button" id="proj-btn-conv" onclick="setProjMode('conv')" class="py-2 rounded-lg text-xs sm:text-sm font-bold transition text-slate-300">Selon le convertisseur</button>
+                    <p class="text-xs text-slate-400 mt-1">Chaque projection repose sur un % de ta VMA, modifiable. Saisis un chrono récent (ex : 39:30 ou 1:23:45) pour caler ce % sur ta réalité.</p>
                 </div>
                 <div id="races-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <!-- Généré dynamiquement -->
@@ -1202,7 +1198,7 @@
                     </div>
                     <div class="font-mono text-xl font-extrabold text-sky-400" data-time></div>
                 </div>
-                <div class="grid grid-cols-2 gap-2" data-inputs>
+                <div class="grid grid-cols-2 gap-2">
                     <label class="block">
                         <span class="block text-[10px] uppercase text-slate-400 mb-1">% de VMA</span>
                         <input type="number" inputmode="decimal" step="0.5" min="60" max="110" data-pct class="w-full font-mono text-base font-bold bg-slate-900 border border-slate-700 rounded-lg px-2 py-1.5 text-white text-center">
@@ -1260,63 +1256,29 @@
         return hh * 3600 + m * 60 + s;
     }
 
-    let projMode = 'vma';
-    function convSpeed() {
-        const v = parseFloat(document.getElementById('conv-kmh').value);
-        return v > 0 ? v : 0;
-    }
-    function setProjMode(m) {
-        projMode = m;
-        const on = 'bg-sky-500 text-slate-950', off = 'text-slate-300';
-        document.getElementById('proj-btn-vma').className = 'py-2 rounded-lg text-xs sm:text-sm font-bold transition ' + (m === 'vma' ? on : off);
-        document.getElementById('proj-btn-conv').className = 'py-2 rounded-lg text-xs sm:text-sm font-bold transition ' + (m === 'conv' ? on : off);
-        updateRaces();
-    }
-    function setConvDist(km) {
-        document.getElementById('conv-dist').value = km;
-        convRefresh();
-    }
-    function convRefresh() {
-        const kmh = convSpeed();
-        const d = parseFloat(String(document.getElementById('conv-dist').value).replace(',', '.'));
-        document.getElementById('conv-time-out').textContent = (kmh > 0 && d > 0) ? formatRace(d / kmh * 3600) : '–';
-        if (projMode === 'conv') updateRaces();
-    }
-
     function updateRaces() {
         const grid = document.getElementById('races-grid');
         if (!grid.firstElementChild) buildRacesGrid();
-        const conv = projMode === 'conv';
-        const kmhConv = convSpeed();
-        document.getElementById('proj-desc').textContent = conv
-            ? `Temps de chaque distance en tenant la vitesse du convertisseur (${kmhConv ? kmhConv.toFixed(1) : '–'} km/h, ${kmhConv ? speedToPace(kmhConv) : "--'--\""}/km). Ces temps ne modifient pas les % de VMA enregistrés.`
-            : 'Chaque projection repose sur un % de ta VMA, modifiable. Saisis un chrono récent (ex : 39:30 ou 1:23:45) pour caler ce % sur ta réalité.';
         RACES.forEach(r => {
             const card = grid.querySelector(`[data-race="${r.key}"]`);
-            const inputs = card.querySelector('[data-inputs]');
-            const hint = card.querySelector('[data-hint]');
-            inputs.classList.toggle('hidden', conv);
-            if (conv) {
-                if (kmhConv > 0) {
-                    card.querySelector('[data-pace]').textContent = `${speedToPace(kmhConv)}/km • ${kmhConv.toFixed(1)} km/h`;
-                    card.querySelector('[data-time]').textContent = formatRace((r.meters / 1000) / kmhConv * 3600);
-                    hint.textContent = `Soit ${(kmhConv / profile.vma * 100).toFixed(1)} % de ta VMA (référence ${racePct(r).toFixed(1).replace('.0', '')} %).`;
-                } else {
-                    card.querySelector('[data-pace]').textContent = '';
-                    card.querySelector('[data-time]').textContent = '–';
-                    hint.textContent = '';
-                }
-                return;
-            }
             const pct = racePct(r);
             const sp = profile.vma * (pct / 100);
             const sec = (r.meters / 1000) / sp * 3600;
             card.querySelector('[data-pace]').textContent = `${speedToPace(sp)}/km • ${sp.toFixed(1)} km/h`;
             card.querySelector('[data-time]').textContent = formatRace(sec);
-            if (hint.textContent.startsWith('Soit ')) hint.textContent = '';
             const inp = card.querySelector('[data-pct]');
             if (document.activeElement !== inp) inp.value = pct;
         });
+    }
+
+    function setConvDist(km) {
+        document.getElementById('conv-dist').value = km;
+        convRefresh();
+    }
+    function convRefresh() {
+        const kmh = parseFloat(document.getElementById('conv-kmh').value);
+        const d = parseFloat(String(document.getElementById('conv-dist').value).replace(',', '.'));
+        document.getElementById('conv-time-out').textContent = (kmh > 0 && d > 0) ? formatRace(d / kmh * 3600) : '–';
     }
 
     // --- SAUVEGARDE / TRANSFERT DU PROFIL ---
