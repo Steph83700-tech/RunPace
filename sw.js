@@ -1,8 +1,9 @@
 // RunPace Pro — service worker (mode hors ligne)
 // Pour publier une nouvelle version de l'appli : change simplement le numéro ci-dessous.
-const VERSION = 'runpace-v9';
+const VERSION = 'runpace-v10';
 
-const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png'];
+const SHELL = ['./', 'index.html', 'style.css', 'app-core.js', 'app-pdf.js', 'app-fit.js', 'app-seance.js', 'app-journal.js', 'app-main.js',
+    'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png'];
 
 // Ressources externes utilisées par la page (style Tailwind et polices) : mises en mémoire à l'installation
 const EXTERNAL = [
@@ -13,7 +14,12 @@ const EXTERNAL = [
 self.addEventListener('install', (event) => {
     event.waitUntil((async () => {
         const cache = await caches.open(VERSION);
-        await cache.addAll(SHELL);
+        // cache:'reload' : on récupère les fichiers neufs, pas une copie gardée par le navigateur
+        await Promise.all(SHELL.map(async (u) => {
+            const res = await fetch(new Request(u, { cache: 'reload' }));
+            if (!res.ok) throw new Error('Échec : ' + u);
+            await cache.put(u, res);
+        }));
         await Promise.all(EXTERNAL.map(async (url) => {
             try { await cache.put(url, await fetch(new Request(url, { mode: 'no-cors' }))); } catch (e) { /* hors ligne à l'installation : on réessaiera au fil des visites */ }
         }));
