@@ -1886,21 +1886,23 @@
     function analyseFit(fit) {
         const laps = fit.laps.slice().sort((a, b) => (a[254] || 0) - (b[254] || 0));
         const recs = fit.records.filter(r => r[253] !== undefined).sort((a, b) => a[253] - b[253]);
-        const hasIntensity = laps.some(l => l[23] === 0) && laps.some(l => l[23] === 4 || l[23] === 1);
+        const hasIntensity = laps.some(l => l[23] !== undefined);
         const info = laps.map(l => ({
             lap: l, start: l[2], dur: (l[7] || 0) / 1000, dist: (l[9] || 0) / 100,
             speed: l[110] !== undefined ? l[110] / 1000 : null
         }));
-        let repLaps;
-        if (hasIntensity) {
-            repLaps = info.filter(x => x.lap[23] === 0 && x.dur > 5);
-        } else {
-            // sans intensité : tours courts et nettement plus rapides que la moyenne des tours courts
+        let repLaps = [];
+        // tours marqués « actif » (0) ou « intervalle » (5) par la montre ; les échauffements, retours au calme et récupérations sont exclus
+        if (hasIntensity) repLaps = info.filter(x => (x.lap[23] === 0 || x.lap[23] === 5) && x.dur > 5);
+        if (!repLaps.length) {
+            // sans marquage : tours courts et nettement plus rapides que la moyenne des tours courts
             const short = info.filter(x => x.dur > 5 && x.dur < 180 && x.speed);
             const sp = short.map(x => x.speed).sort((a, b) => a - b);
             const thr = sp.length ? (sp[0] + sp[sp.length - 1]) / 2 : 0;
             repLaps = short.filter(x => x.speed > thr);
         }
+        // dernier recours (tours automatiques, course continue) : tous les tours sauf échauffement, retour au calme, récupération
+        if (!repLaps.length) repLaps = info.filter(x => x.dur > 30 && ![1, 2, 3, 4].includes(x.lap[23]));
         const reps = repLaps.map((x, i) => {
             const t0 = x.start, t1 = x.start + Math.ceil(x.dur);
             const rr = recs.filter(r => r[253] >= t0 && r[253] <= t1);
@@ -1909,7 +1911,7 @@
             const spm = sMean(rr.filter(r => r[4] !== undefined).map(r => 2 * (r[4] + (r[53] || 0) / 128)));
             const wattsRec = sMean(rr.map(r => r[7]));
             return {
-                n: i + 1, start: x.start, dur: x.dur, gpsDist: x.dist, exact: x.lap[24] === 2,
+                n: i + 1, start: x.start, dur: x.dur, gpsDist: x.dist, trig: x.lap[24], exact: x.lap[24] === 2 || x.lap[24] === 7,
                 hr: x.lap[15] !== undefined ? x.lap[15] : sMean(hrs), hrEnd: sMean(last),
                 hrMax: x.lap[16] !== undefined ? x.lap[16] : (hrs.length ? Math.max(...hrs.filter(v => v !== undefined)) : null),
                 spm, watts: x.lap[19] !== undefined ? x.lap[19] : wattsRec,
@@ -1917,6 +1919,14 @@
                 gct: sMean(rr.map(r => r[41] !== undefined ? r[41] / 10 : undefined))
             };
         });
+        // dernier tour incomplet (arrêt de la montre) sans équivalent dans la séance : ignoré
+        let dropped = null;
+        if (reps.length >= 4) {
+            const last = reps[reps.length - 1], others = reps.slice(0, -1);
+            const sib = others.filter(r => Math.abs(r.gpsDist - last.gpsDist) <= 0.25 * last.gpsDist).length;
+            const sorted = others.map(r => r.gpsDist).sort((a, b) => a - b), med = sorted[Math.floor(sorted.length / 2)];
+            if (last.trig === 7 && !sib && last.gpsDist < 0.6 * med) { dropped = { dist: Math.round(last.gpsDist), dur: last.dur }; reps.pop(); }
+        }
         assignNominal(reps);
 
         // coupures entre répétitions (secondes)
@@ -1948,8 +1958,13 @@
             series[series.length - 1].push(r);
         });
         const compound = series.some(s => s.length > 1);
+        // course continue : aucune pause entre les tours (tours automatiques) ; on compare les deux moitiés
+        const continuous = reps.length >= 4 && real.length === 0;
         let blocks;
-        if (compound) {
+        if (continuous) {
+            const h = Math.floor(reps.length / 2);
+            blocks = reps.length >= 6 ? [reps.slice(0, h), reps.slice(h)] : [reps.slice()];
+        } else if (compound) {
             blocks = series;
         } else {
             // blocs : une coupure nettement plus longue que la récupération habituelle
@@ -1961,7 +1976,7 @@
                 blocks[blocks.length - 1].push(r);
             });
         }
-        return { reps, blocks, compound, hasIntensity };
+        return { reps, blocks, compound: compound && !continuous, continuous, dropped, hasIntensity, grp: continuous ? 'Moitié' : (compound ? 'Série' : 'Bloc') };
     }
 
     function repMetrics(r, dist, vma) {
@@ -1986,7 +2001,7 @@
             seanceState.data = res; seanceState.fileName = file.name;
             document.getElementById('seance-label').dataset.touched = '';
             document.getElementById('seance-dist').value = '';
-            status.textContent = file.name + ' — ' + res.reps.length + ' répétitions détectées.';
+            status.textContent = file.name + ' — ' + res.reps.length + (res.continuous ? ' tours détectés (course continue, tours automatiques).' : ' répétitions détectées.');
             status.className = 'text-xs text-emerald-400';
             renderSeance();
         } catch (e) {
@@ -2036,8 +2051,9 @@
         for (let i = 0; i < n; i++) { sxy += (xs[i] - mx) * (ys[i] - my); sxx += (xs[i] - mx) ** 2; syy += (ys[i] - my) ** 2; }
         return (sxx && syy) ? sxy / Math.sqrt(sxx * syy) : 0;
     }
-    function autoLabelFor(rows, blocks) {
+    function autoLabelFor(rows, blocks, res) {
         const dl = distList(rows);
+        if (res && res.continuous && dl.length === 1) return `${rows.length}×${dl[0]} continu`;
         if (dl.length > 1) {
             const pats = blocks.map(b => b.map(r => r.dist).join('+'));
             if (blocks.length > 1 && pats.every(p => p === pats[0])) return `${blocks.length}×(${pats[0]})`;
@@ -2088,10 +2104,11 @@
         const blocks = [];
         let k = 0;
         res.blocks.forEach(b => { blocks.push(rows.slice(k, k + b.length)); k += b.length; });
-        const grp = res.compound ? 'Série' : 'Bloc';
+        const grp = res.grp;
         const dl = distList(rows), multi = dl.length > 1;
-        document.getElementById('seance-dist-info').textContent = (over > 0 ? 'Distance forcée : ' : 'Distances retenues : ') + distText(rows) +
-            (over > 0 ? '.' : ' (déduites des tours). Les vitesses sont calculées avec ces distances et le temps de chaque tour, plus fiable que le GPS sur piste. Saisis une distance pour la forcer.');
+        document.getElementById('seance-dist-info').textContent = (over > 0 ? 'Distance forcée : ' : 'Distances retenues : ') + distText(rows) + (over > 0 ? '' : ' (déduites des tours)') + '.' +
+            (res.dropped ? ' Dernier tour incomplet (' + res.dropped.dist + ' m) ignoré.' : '') +
+            (over > 0 ? '' : ' Les vitesses sont calculées avec ces distances et le temps de chaque tour, plus fiable que le GPS sur piste. Saisis une distance pour la forcer.');
 
         // tableau des répétitions
         let html = '';
@@ -2130,8 +2147,8 @@
                 .map(([a, b]) => `<div class="bg-slate-950 border border-slate-800 rounded-xl p-3"><div class="text-[10px] uppercase tracking-wide text-slate-400">${a}</div><div class="text-lg font-bold font-mono text-white">${b}</div></div>`).join('');
 
         const reading = buildReading(rows, blocks, res), synth = buildSynth(rows, blocks, res);
-        const autoLabel = autoLabelFor(rows, blocks);
-        seanceState.cur = { rows, blocks, dist: multi ? 0 : dl[0], dtxt: distText(rows), grp, compound: !!res.compound, reading, synth, autoLabel, start: res.reps[0].start };
+        const autoLabel = autoLabelFor(rows, blocks, res);
+        seanceState.cur = { rows, blocks, dist: multi ? 0 : dl[0], dtxt: distText(rows), grp, compound: !!res.compound, continuous: !!res.continuous, reading, synth, autoLabel, start: res.reps[0].start };
         const lab = document.getElementById('seance-label');
         if (!lab.dataset.touched) lab.value = autoLabel;
         document.getElementById('seance-journal-msg').textContent = '';
@@ -2160,7 +2177,7 @@
 
     // --- LECTURE ET SYNTHÈSE (règles fixes appliquées aux chiffres du fichier) ---
     function buildReading(rows, blocks, res) {
-        const out = [], grp = res.compound ? 'série' : 'bloc';
+        const out = [], grp = res.grp.toLowerCase(), unit = res.continuous ? 'tours' : 'reps';
         const dl = distList(rows), multi = dl.length > 1;
         const byD = d => rows.filter(r => r.dist === d);
         if (multi) {
@@ -2175,18 +2192,19 @@
             if (L.length < 3) return;
             const du = L.map(r => r.dur), mn = Math.min(...du), mx = Math.max(...du), avg = sMean(du), spread = mx - mn, rel = spread / avg;
             let verdict;
-            if (rel < 0.04) verdict = 'Régulier.';
+            if (res.continuous) verdict = '';
+            else if (rel < 0.04) verdict = 'Régulier.';
             else {
                 const c = pearson(L.map((_, i) => i), du);
                 verdict = Math.abs(c) >= 0.8 ? (c < 0 ? 'Allure progressive : de plus en plus rapide.' : 'Allure qui baisse : de plus en plus lente.') : 'Allure irrégulière : à surveiller.';
             }
-            out.push(`Régularité${multi ? ' (' + d + ' m)' : ''} : temps entre ${sTime(mn)} et ${sTime(mx)} (écart ${spread.toFixed(1)} s, soit ${(rel * 100).toFixed(1)} %). ${verdict}`);
+            out.push(`Régularité${multi ? ' (' + d + ' m)' : ''} : temps entre ${sTime(mn)} et ${sTime(mx)} (écart ${spread.toFixed(1)} s, soit ${(rel * 100).toFixed(1)} %). ${verdict}`.trim());
         });
         if (!multi) {
             blocks.forEach((b, i) => {
                 if (b.length < 4) return;
                 const a = sMean(b.slice(0, 3).map(r => r.hrEnd)), z = sMean(b.slice(-3).map(r => r.hrEnd));
-                if (a !== null && z !== null) out.push(`${grp.charAt(0).toUpperCase() + grp.slice(1)} ${i + 1} : FC de fin de répétition de ${a.toFixed(0)} à ${z.toFixed(0)} bpm (${sDelta(z - a, 0)}) entre les 3 premières et les 3 dernières reps.`);
+                if (a !== null && z !== null) out.push(`${grp.charAt(0).toUpperCase() + grp.slice(1)} ${i + 1} : FC de fin de répétition de ${a.toFixed(0)} à ${z.toFixed(0)} bpm (${sDelta(z - a, 0)}) entre les 3 premiers et les 3 derniers ${unit}.`);
             });
             if (blocks.length === 2) {
                 const g = k => [sMean(blocks[0].map(r => r[k])), sMean(blocks[1].map(r => r[k]))];
@@ -2244,6 +2262,15 @@
             return s.trim();
         }
         const pm = sMean(rows.map(r => r.pct));
+        if (res.continuous) {
+            let s = `Course du ${d} : ${rows.length} tours de ${dl[0]} m en continu${res.dropped ? ' (dernier tour incomplet de ' + res.dropped.dist + ' m ignoré)' : ''}. Temps moyen ${sTime(sMean(rows.map(r => r.dur)))} par tour, soit ${pm.toFixed(0)} % de la VMA (${profile.vma.toFixed(1)} km/h)${wTxt}. `;
+            if (blocks.length === 2) {
+                const g = k => [sMean(blocks[0].map(r => r[k])), sMean(blocks[1].map(r => r[k]))];
+                const [d1, d2] = g('dur'), [h1, h2] = g('hrEnd'), [c1, c2] = g('spm');
+                s += `Entre la première et la seconde moitié : temps moyen par tour ${sTime(d1)} → ${sTime(d2)}` + (h1 !== null && h2 !== null ? `, FC de fin ${h1.toFixed(0)} → ${h2.toFixed(0)} bpm` : '') + (c1 !== null && c2 !== null ? `, cadence ${c1.toFixed(0)} → ${c2.toFixed(0)} pas/min` : '') + '.';
+            }
+            return s.trim();
+        }
         const sz = blocks.map(b => b.length).join(' × ');
         let s = `Séance du ${d} : ${blocks.length > 1 ? (blocks.every(b => b.length === blocks[0].length) ? blocks.length + ' blocs de ' + blocks[0].length + ' répétitions' : blocks.length + ' blocs (' + sz + ' répétitions)') : rows.length + ' répétitions'} de ${dl[0]} m. ` +
             `Temps moyen ${sTime(sMean(rows.map(r => r.dur)))}, soit ${pm.toFixed(0)} % de la VMA (${profile.vma.toFixed(1)} km/h)${wTxt}. `;
@@ -2308,7 +2335,7 @@
         if (!cur) return null;
         const label = (document.getElementById('seance-label').value || '').trim() || cur.autoLabel;
         return {
-            id: String(cur.start) + '-' + cur.rows.length, ts: (cur.start + FIT_EPOCH) * 1000, label, dist: cur.dist, dtxt: cur.dtxt, grp: cur.grp, compound: cur.compound, vma: profile.vma,
+            id: String(cur.start) + '-' + cur.rows.length, ts: (cur.start + FIT_EPOCH) * 1000, label, dist: cur.dist, dtxt: cur.dtxt, grp: cur.grp, compound: cur.compound, continuous: cur.continuous, vma: profile.vma,
             n: cur.rows.length, fileName: seanceState.fileName, m: jMeans(cur.rows), blocks: cur.blocks.map(jMeans),
             bs: cur.blocks.map(b => b.length),
             reps: cur.rows.map(r => ({ n: r.n, dist: r.dist, dur: r.dur, speed: r.speed, pct: r.pct, hrEnd: r.hrEnd, hrMax: r.hrMax, hrRec: r.hrRec, drop: r.drop, spm: r.spm, step: r.step, watts: r.watts, vo: r.vo, gct: r.gct })),
