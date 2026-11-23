@@ -12,6 +12,71 @@
         return m + "'" + String(r).padStart(2, '0') + '"';
     }
 
+    function sHMS(sec) {
+        let h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = Math.round(sec % 60);
+        if (s === 60) { s = 0; m++; }
+        if (m === 60) { m = 0; h++; }
+        return h > 0 ? `${h}h${String(m).padStart(2, '0')}'${String(s).padStart(2, '0')}"` : `${m}'${String(s).padStart(2, '0')}"`;
+    }
+    function sPace(secPerKm) {
+        if (!secPerKm || !isFinite(secPerKm)) return '–';
+        let m = Math.floor(secPerKm / 60), s = Math.round(secPerKm % 60);
+        if (s === 60) { s = 0; m++; }
+        return `${m}'${String(s).padStart(2, '0')}"/km`;
+    }
+
+    // Relief : la course est découpée en tronçons de 100 m classés montée (> +2 %), plat, descente (< −2 %)
+    const TERRAIN_DEFS = [['up', 'Montée', '> +2 %'], ['flat', 'Plat', '−2 à +2 %'], ['down', 'Descente', '< −2 %']];
+    function computeCourse(reps, recs) {
+        const dist = reps.reduce((a, r) => a + (r.nom || r.gpsDist), 0);
+        const time = reps.reduce((a, r) => a + r.dur, 0);
+        let asc = reps.some(r => r.asc !== null) ? reps.reduce((a, r) => a + (r.asc || 0), 0) : null;
+        let desc = reps.some(r => r.desc !== null) ? reps.reduce((a, r) => a + (r.desc || 0), 0) : null;
+        const t0 = reps[0].start, last = reps[reps.length - 1], t1 = last.start + last.dur;
+        const rr = recs.filter(q => q[253] >= t0 && q[253] <= t1 && q[5] !== undefined);
+        const altOf = q => q[78] !== undefined ? q[78] / 5 - 500 : (q[2] !== undefined ? q[2] / 5 - 500 : undefined);
+        const chunks = [];
+        const addChunk = (i0, i1) => {
+            const a0 = altOf(rr[i0]), a1 = altOf(rr[i1]);
+            const dd = (rr[i1][5] - rr[i0][5]) / 100, dt = rr[i1][253] - rr[i0][253];
+            if (a0 === undefined || a1 === undefined || dd <= 0 || dt <= 0) return;
+            const seg = rr.slice(i0, i1 + 1), grade = (a1 - a0) / dd * 100;
+            chunks.push({
+                dd, dt, dAlt: a1 - a0, grade, cls: grade > 2 ? 'up' : grade < -2 ? 'down' : 'flat',
+                hr: sMean(seg.map(q => q[3])), spm: sMean(seg.filter(q => q[4] !== undefined).map(q => 2 * (q[4] + (q[53] || 0) / 128))), w: sMean(seg.map(q => q[7]))
+            });
+        };
+        let i0 = 0;
+        for (let i = 1; i < rr.length; i++) if ((rr[i][5] - rr[i0][5]) / 100 >= 100) { addChunk(i0, i); i0 = i; }
+        if (rr.length && (rr[rr.length - 1][5] - rr[i0][5]) / 100 >= 50) addChunk(i0, rr.length - 1);
+        const tot = chunks.reduce((a, c) => a + c.dd, 0);
+        const terrain = TERRAIN_DEFS.map(([key, label, rule]) => {
+            const L = chunks.filter(c => c.cls === key);
+            const d = L.reduce((a, c) => a + c.dd, 0), t = L.reduce((a, c) => a + c.dt, 0);
+            const wm = k => { let a = 0, w = 0; L.forEach(c => { if (typeof c[k] === 'number' && isFinite(c[k])) { a += c[k] * c.dt; w += c.dt; } }); return w ? a / w : null; };
+            return { key, label, rule, dist: d, share: tot ? d / tot * 100 : 0, pace: d ? t / d * 1000 : null,
+                grade: d ? L.reduce((a, c) => a + c.dAlt, 0) / d * 100 : null, hr: wm('hr'), spm: wm('spm'), w: wm('w') };
+        });
+        if (asc === null && chunks.length) {
+            asc = chunks.reduce((a, c) => a + Math.max(0, c.dAlt), 0);
+            desc = chunks.reduce((a, c) => a + Math.max(0, -c.dAlt), 0);
+        }
+        return { dist, time, pace: time / dist * 1000, asc, desc, terrain: chunks.length ? terrain : null };
+    }
+
+    function terrainHtml(c) {
+        if (!c || !c.terrain) return '';
+        const th = 'px-2 py-1.5 text-right font-semibold', td = 'px-2 py-1.5 text-right font-mono';
+        let h = `<tr class="text-slate-400 text-[11px]"><th class="px-2 py-1.5 text-left font-semibold">Terrain</th><th class="${th}">Dist.</th><th class="${th}">Part</th><th class="${th}">Pente</th><th class="${th}">Allure</th><th class="${th}">FC</th><th class="${th}">Cad.</th><th class="${th}">W</th></tr>`;
+        c.terrain.forEach(t => {
+            if (!t.dist) return;
+            h += `<tr class="border-t border-slate-800"><td class="px-2 py-1.5 text-slate-300">${t.label}<div class="text-[10px] text-slate-500">${t.rule}</div></td>` +
+                `<td class="${td}">${(t.dist / 1000).toFixed(2)} km</td><td class="${td}">${t.share.toFixed(0)} %</td><td class="${td}">${t.grade === null ? '–' : sDelta(t.grade, 1) + ' %'}</td>` +
+                `<td class="${td} text-white">${sPace(t.pace)}</td><td class="${td}">${sFmt(t.hr, 0)}</td><td class="${td}">${sFmt(t.spm, 0)}</td><td class="${td}">${sFmt(t.w, 0)}</td></tr>`;
+        });
+        return h;
+    }
+
     const STD_DISTS = [100, 150, 200, 250, 300, 400, 500, 600, 800, 1000, 1200, 1500, 1600, 2000, 3000, 5000];
     // Distance « théorique » de chaque tour : exacte si la montre l'a coupé à la distance (tour automatique),
     // sinon distance GPS regroupée par familles puis arrondie à une distance de piste courante.
@@ -65,12 +130,15 @@
                 hrMax: x.lap[16] !== undefined ? x.lap[16] : (hrs.length ? Math.max(...hrs.filter(v => v !== undefined)) : null),
                 spm, watts: x.lap[19] !== undefined ? x.lap[19] : wattsRec,
                 vo: sMean(rr.map(r => r[39] !== undefined ? r[39] / 10 : undefined)),
-                gct: sMean(rr.map(r => r[41] !== undefined ? r[41] / 10 : undefined))
+                gct: sMean(rr.map(r => r[41] !== undefined ? r[41] / 10 : undefined)),
+                asc: x.lap[21] !== undefined ? x.lap[21] : null, desc: x.lap[22] !== undefined ? x.lap[22] : null
             };
         });
-        // dernier tour incomplet (arrêt de la montre) sans équivalent dans la séance : ignoré
+        // course continue : aucune pause entre les tours (tours automatiques)
+        const continuous0 = reps.length >= 4 && reps.slice(1).every((r, i) => r.start - (reps[i].start + reps[i].dur) <= 5);
+        // dernier tour incomplet (arrêt de la montre) sans équivalent dans la séance : ignoré (sauf course continue : on garde tout)
         let dropped = null;
-        if (reps.length >= 4) {
+        if (!continuous0 && reps.length >= 4) {
             const last = reps[reps.length - 1], others = reps.slice(0, -1);
             const sib = others.filter(r => Math.abs(r.gpsDist - last.gpsDist) <= 0.25 * last.gpsDist).length;
             const sorted = others.map(r => r.gpsDist).sort((a, b) => a - b), med = sorted[Math.floor(sorted.length / 2)];
@@ -107,12 +175,14 @@
             series[series.length - 1].push(r);
         });
         const compound = series.some(s => s.length > 1);
-        // course continue : aucune pause entre les tours (tours automatiques) ; on compare les deux moitiés
-        const continuous = reps.length >= 4 && real.length === 0;
+        // course continue : on compare les deux moitiés (coupées à la moitié de la distance)
+        const continuous = continuous0;
         let blocks;
         if (continuous) {
-            const h = Math.floor(reps.length / 2);
-            blocks = reps.length >= 6 ? [reps.slice(0, h), reps.slice(h)] : [reps.slice()];
+            const totalNom = reps.reduce((a, r) => a + r.nom, 0);
+            let cum = 0, h = reps.length;
+            for (let i = 0; i < reps.length; i++) { cum += reps[i].nom; if (cum >= totalNom / 2) { h = i + 1; break; } }
+            blocks = (reps.length >= 6 && h < reps.length) ? [reps.slice(0, h), reps.slice(h)] : [reps.slice()];
         } else if (compound) {
             blocks = series;
         } else {
@@ -125,7 +195,7 @@
                 blocks[blocks.length - 1].push(r);
             });
         }
-        return { reps, blocks, compound: compound && !continuous, continuous, dropped, hasIntensity, grp: continuous ? 'Moitié' : (compound ? 'Série' : 'Bloc') };
+        return { reps, blocks, compound: compound && !continuous, continuous, dropped, course: continuous ? computeCourse(reps, recs) : null, hasIntensity, grp: continuous ? 'Moitié' : (compound ? 'Série' : 'Bloc') };
     }
 
     function repMetrics(r, dist, vma) {
@@ -150,6 +220,7 @@
             seanceState.data = res; seanceState.fileName = file.name;
             document.getElementById('seance-label').dataset.touched = '';
             document.getElementById('seance-dist').value = '';
+            document.getElementById('seance-split').checked = !!(res.continuous && res.course && res.course.dist >= 10000);
             status.textContent = file.name + ' — ' + res.reps.length + (res.continuous ? ' tours détectés (course continue, tours automatiques).' : ' répétitions détectées.');
             status.className = 'text-xs text-emerald-400';
             renderSeance();
@@ -201,6 +272,7 @@
         return (sxx && syy) ? sxy / Math.sqrt(sxx * syy) : 0;
     }
     function autoLabelFor(rows, blocks, res) {
+        if (res && res.continuous && res.course) return 'Sortie ' + Math.round(res.course.dist / 1000) + ' km';
         const dl = distList(rows);
         if (res && res.continuous && dl.length === 1) return `${rows.length}×${dl[0]} continu`;
         if (dl.length > 1) {
@@ -219,11 +291,11 @@
         ['Oscillation verticale (mm)', 'vo', 0], ['Contact au sol (ms)', 'gct', 0]
     ];
     // Tableau de comparaison des blocs (ou des séries) ; si les distances diffèrent, une section par distance
-    function buildCmpHtml(rows, blocks, grp) {
-        const dl = distList(rows), multi = dl.length > 1, nb = blocks.length;
+    function buildCmpHtml(rows, blocks, grp, single) {
+        const dl = distList(rows), multi = dl.length > 1 && !single, nb = blocks.length;
         const th = 'px-2 py-1.5 text-right font-semibold';
         let html = `<tr class="text-slate-400 text-[11px]"><th class="px-2 py-1.5 text-left font-semibold">Moyenne</th>` +
-            blocks.map((_, i) => `<th class="${th}">${grp} ${i + 1}</th>`).join('') +
+            blocks.map((_, i) => `<th class="${th}">${single && nb === 1 ? 'Course' : grp + ' ' + (i + 1)}</th>`).join('') +
             (nb >= 2 ? `<th class="${th}">${nb === 2 ? 'Écart' : 'Dern.−1er'}</th>` : '') + '</tr>';
         const cols = nb + 1 + (nb >= 2 ? 1 : 0);
         (multi ? dl : [null]).forEach(d => {
@@ -248,34 +320,41 @@
         const res = seanceState.data;
         if (!res) return;
         const vma = profile.vma;
-        const over = parseFloat(document.getElementById('seance-dist').value);
+        const over = res.continuous ? NaN : parseFloat(document.getElementById('seance-dist').value);
         const rows = res.reps.map(r => { const d = over > 0 ? over : r.nom; return Object.assign({}, r, { dist: d }, repMetrics(r, d, vma)); });
         const blocks = [];
         let k = 0;
-        res.blocks.forEach(b => { blocks.push(rows.slice(k, k + b.length)); k += b.length; });
-        const grp = res.grp;
-        const dl = distList(rows), multi = dl.length > 1;
+        const contSplit = !!res.continuous && document.getElementById('seance-split').checked;
+        if (res.continuous && !contSplit) blocks.push(rows.slice());
+        else res.blocks.forEach(b => { blocks.push(rows.slice(k, k + b.length)); k += b.length; });
+        const grp = res.grp, cont = !!res.continuous;
+        document.getElementById('seance-split-wrap').classList.toggle('hidden', !cont);
+        const dl = distList(rows), multi = dl.length > 1 && !cont;
         document.getElementById('seance-dist-info').textContent = (over > 0 ? 'Distance forcée : ' : 'Distances retenues : ') + distText(rows) + (over > 0 ? '' : ' (déduites des tours)') + '.' +
             (res.dropped ? ' Dernier tour incomplet (' + res.dropped.dist + ' m) ignoré.' : '') +
             (over > 0 ? '' : ' Les vitesses sont calculées avec ces distances et le temps de chaque tour, plus fiable que le GPS sur piste. Saisis une distance pour la forcer.');
 
+        document.getElementById('seance-dist-wrap').classList.toggle('hidden', cont);
+        document.getElementById('seance-table-title').textContent = cont ? 'Détail par tour' : 'Détail par répétition';
+        if (cont) document.getElementById('seance-dist-info').textContent = 'Course continue : tours de la montre (' + distText(rows) + '). Les distances sont celles relevées par la montre.' + (res.course && res.course.asc !== null ? '' : ' Pas de dénivelé dans ce fichier.');
         // tableau des répétitions
         let html = '';
         blocks.forEach((b, bi) => {
-            if (blocks.length > 1) html += `<tr class="bg-slate-800/60"><td colspan="13" class="px-2 py-1 text-[11px] font-bold text-sky-300">${grp} ${bi + 1}</td></tr>`;
+            if (blocks.length > 1) html += `<tr class="bg-slate-800/60"><td colspan="14" class="px-2 py-1 text-[11px] font-bold text-sky-300">${grp} ${bi + 1}</td></tr>`;
             b.forEach(r => {
                 html += `<tr class="border-t border-slate-800"><td class="px-2 py-1.5 text-slate-400">${r.n}</td><td class="px-2 py-1.5 font-mono">${r.dist}</td>` +
                     `<td class="px-2 py-1.5 font-mono font-bold text-white">${sTime(r.dur)}</td>` +
                     `<td class="px-2 py-1.5 font-mono">${sFmt(r.speed, 1)}</td><td class="px-2 py-1.5 font-mono">${sFmt(r.pct, 0)}%</td>` +
                     `<td class="px-2 py-1.5 font-mono">${sFmt(r.hrEnd, 0)}</td><td class="px-2 py-1.5 font-mono">${sFmt(r.hrMax, 0)}</td><td class="px-2 py-1.5 font-mono">${sFmt(r.hrRec, 0)}</td>` +
                     `<td class="px-2 py-1.5 font-mono">${sFmt(r.spm, 0)}</td><td class="px-2 py-1.5 font-mono">${sFmt(r.step, 2)}</td>` +
-                    `<td class="px-2 py-1.5 font-mono">${sFmt(r.watts, 0)}</td><td class="px-2 py-1.5 font-mono">${sFmt(r.vo, 0)}</td><td class="px-2 py-1.5 font-mono">${sFmt(r.gct, 0)}</td></tr>`;
+                    `<td class="px-2 py-1.5 font-mono">${sFmt(r.watts, 0)}</td><td class="px-2 py-1.5 font-mono">${sFmt(r.vo, 0)}</td><td class="px-2 py-1.5 font-mono">${sFmt(r.gct, 0)}</td>` +
+                    `<td class="px-2 py-1.5 font-mono">${r.asc !== null && r.asc !== undefined ? '+' + r.asc + '/−' + r.desc : '–'}</td></tr>`;
             });
         });
         document.getElementById('seance-tbody').innerHTML = html;
 
         // comparaison des blocs / séries
-        document.getElementById('seance-cmp').innerHTML = buildCmpHtml(rows, blocks, grp);
+        document.getElementById('seance-cmp').innerHTML = buildCmpHtml(rows, blocks, grp, cont);
 
         // graphiques
         const colors = rows.map(r => ['#38bdf8', '#f59e0b', '#a78bfa', '#34d399'][blocks.findIndex(b => b.includes(r)) % 4]);
@@ -284,20 +363,32 @@
         const pmin = Math.floor(Math.min(...pcts) / 5) * 5 - 5, pmax = Math.ceil(Math.max(...pcts) / 5) * 5 + 2;
         const sv = spms.filter(v => v != null);
         const cmin = sv.length ? Math.floor(Math.min(...sv) / 10) * 10 - 10 : 0, cmax = sv.length ? Math.ceil(Math.max(...sv) / 10) * 10 : 1;
-        document.getElementById('seance-chart-pct').innerHTML = svgBars(pcts, rows.map(r => 'Rép ' + r.n), { min: pmin, max: pmax, title: '% VMA par répétition', colors });
-        document.getElementById('seance-chart-spm').innerHTML = sv.length ? svgBars(spms, rows.map(r => 'Rép ' + r.n), { min: cmin, max: cmax, title: 'Cadence par répétition', colors }) : '<p class="text-xs text-slate-500">Cadence absente du fichier.</p>';
+        document.getElementById('seance-chart-pct').innerHTML = svgBars(pcts, rows.map(r => (cont ? 'Tour ' : 'Rép ') + r.n), { min: pmin, max: pmax, title: '% VMA par ' + (cont ? 'tour' : 'répétition'), colors });
+        document.getElementById('seance-chart-spm').innerHTML = sv.length ? svgBars(spms, rows.map(r => (cont ? 'Tour ' : 'Rép ') + r.n), { min: cmin, max: cmax, title: 'Cadence par ' + (cont ? 'tour' : 'répétition'), colors }) : '<p class="text-xs text-slate-500">Cadence absente du fichier.</p>';
 
         // résumé
         const totD = rows.reduce((s, r) => s + r.dist, 0), totT = rows.reduce((s, r) => s + r.dur, 0);
         const pm = multi ? (totD / totT * 3.6) / vma * 100 : sMean(pcts);
         const avgW = wMean(rows, 'watts');
-        document.getElementById('seance-summary').innerHTML =
-            [['Répétitions', rows.length], multi ? ['Effort total', sTime(totT)] : ['Temps moyen', sTime(sMean(rows.map(r => r.dur)))], ['% VMA moyen', sFmt(pm, 0) + '%'], ['Puissance moy.', sFmt(avgW, 0) + ' W']]
-                .map(([a, b]) => `<div class="bg-slate-950 border border-slate-800 rounded-xl p-3"><div class="text-[10px] uppercase tracking-wide text-slate-400">${a}</div><div class="text-lg font-bold font-mono text-white">${b}</div></div>`).join('');
+        const card = ([a, b]) => `<div class="bg-slate-950 border border-slate-800 rounded-xl p-3"><div class="text-[10px] uppercase tracking-wide text-slate-400">${a}</div><div class="text-lg font-bold font-mono text-white">${b}</div></div>`;
+        let cards;
+        if (cont && res.course) {
+            const c = res.course, hrM = wMean(rows, 'hr'), hrX = Math.max(...rows.map(r => r.hrMax).filter(v => v != null));
+            cards = [['Distance', (c.dist / 1000).toFixed(2) + ' km'], ['Durée', sHMS(c.time)], ['Allure moy.', sPace(c.pace)], ['% VMA moyen', sFmt((c.dist / c.time * 3.6) / vma * 100, 0) + '%'],
+                ['FC moy. / max', sFmt(hrM, 0) + ' / ' + sFmt(isFinite(hrX) ? hrX : null, 0)], ['D+ / D−', c.asc === null ? '–' : '+' + Math.round(c.asc) + ' / −' + Math.round(c.desc) + ' m'],
+                ['Cadence moy.', sFmt(wMean(rows, 'spm'), 0)], ['Puissance moy.', sFmt(avgW, 0) + ' W']];
+        } else {
+            cards = [['Répétitions', rows.length], multi ? ['Effort total', sTime(totT)] : ['Temps moyen', sTime(sMean(rows.map(r => r.dur)))], ['% VMA moyen', sFmt(pm, 0) + '%'], ['Puissance moy.', sFmt(avgW, 0) + ' W']];
+        }
+        document.getElementById('seance-summary').innerHTML = cards.map(card).join('');
+        const tcard = document.getElementById('seance-course-card');
+        const tHtml = cont ? terrainHtml(res.course) : '';
+        tcard.classList.toggle('hidden', !tHtml);
+        document.getElementById('seance-terrain').innerHTML = tHtml;
 
         const reading = buildReading(rows, blocks, res), synth = buildSynth(rows, blocks, res);
         const autoLabel = autoLabelFor(rows, blocks, res);
-        seanceState.cur = { rows, blocks, dist: multi ? 0 : dl[0], dtxt: distText(rows), grp, compound: !!res.compound, continuous: !!res.continuous, reading, synth, autoLabel, start: res.reps[0].start };
+        seanceState.cur = { rows, blocks, dist: multi ? 0 : dl[0], dtxt: distText(rows), grp, compound: !!res.compound, continuous: !!res.continuous, course: res.course || null, reading, synth, autoLabel, start: res.reps[0].start };
         const lab = document.getElementById('seance-label');
         if (!lab.dataset.touched) lab.value = autoLabel;
         document.getElementById('seance-journal-msg').textContent = '';
@@ -326,6 +417,7 @@
 
     // --- LECTURE ET SYNTHÈSE (règles fixes appliquées aux chiffres du fichier) ---
     function buildReading(rows, blocks, res) {
+        if (res.continuous && res.course) return buildReadingCourse(rows, blocks, res);
         const out = [], grp = res.grp.toLowerCase(), unit = res.continuous ? 'tours' : 'reps';
         const dl = distList(rows), multi = dl.length > 1;
         const byD = d => rows.filter(r => r.dist === d);
@@ -389,6 +481,7 @@
     }
 
     function buildSynth(rows, blocks, res) {
+        if (res.continuous && res.course) return buildSynthCourse(rows, blocks, res);
         const d = new Date((seanceState.data.reps[0].start + FIT_EPOCH) * 1000).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
         const dl = distList(rows), multi = dl.length > 1;
         const avgW = wMean(rows, 'watts');
@@ -428,6 +521,69 @@
             const h1 = sMean(blocks[0].map(r => r.hrEnd)), h2 = sMean(blocks[1].map(r => r.hrEnd));
             const d1 = sMean(blocks[0].map(r => r.dur)), d2 = sMean(blocks[1].map(r => r.dur));
             if (c1 !== null && c2 !== null) s += `Entre les deux blocs, la cadence passe de ${c1.toFixed(0)} à ${c2.toFixed(0)} pas/min pour un temps quasi identique (${d1.toFixed(1)} s → ${d2.toFixed(1)} s) et une FC de fin de rep de ${h1.toFixed(0)} à ${h2.toFixed(0)} bpm.`;
+        }
+        return s.trim();
+    }
+
+
+    // --- COURSE / SORTIE CONTINUE : lecture et synthèse ---
+    function buildReadingCourse(rows, blocks, res) {
+        const out = [], c = res.course, vma = profile.vma;
+        const pct = (c.dist / c.time * 3.6) / vma * 100;
+        out.push(`Course : ${(c.dist / 1000).toFixed(2)} km en ${sHMS(c.time)}, allure moyenne ${sPace(c.pace)}, soit ${pct.toFixed(0)} % de la VMA.`);
+        if (c.asc !== null) out.push(`Dénivelé : ${Math.round(c.asc)} m de montée, ${Math.round(c.desc)} m de descente.`);
+        const hrM = wMean(rows, 'hr'), hrs = rows.map(r => r.hrMax).filter(v => v != null), hrX = hrs.length ? Math.max(...hrs) : null;
+        if (hrM !== null && hrX !== null) out.push(`FC : ${hrM.toFixed(0)} bpm en moyenne, maximum ${hrX} bpm (${(hrX / profile.fcMax * 100).toFixed(0)} % de la FC max du profil)` + (hrX > profile.fcMax ? ' : au-dessus de la FC max du profil, à vérifier.' : '.'));
+        if (c.terrain) {
+            const T = k => c.terrain.find(t => t.key === k), up = T('up'), fl = T('flat'), dn = T('down');
+            [up, fl, dn].forEach(t => { if (t.dist >= 300) out.push(`${t.label} (${t.rule}) : ${(t.dist / 1000).toFixed(2)} km (${t.share.toFixed(0)} % du parcours), allure ${sPace(t.pace)}, FC ${sFmt(t.hr, 0)} bpm, cadence ${sFmt(t.spm, 0)} pas/min.`); });
+            [[up, 'En montée'], [dn, 'En descente']].forEach(([t, lab]) => {
+                if (t.dist >= 500 && fl.dist >= 500 && t.pace && fl.pace) out.push(`${lab} : ${sDelta(t.pace - fl.pace, 0)} s/km par rapport au plat` + (t.hr !== null && fl.hr !== null ? `, FC ${sDelta(t.hr - fl.hr, 0)} bpm.` : '.'));
+            });
+        }
+        if (blocks.length === 2) {
+            const dd = b => b.reduce((a, r) => a + r.dist, 0), pc = b => b.reduce((a, r) => a + r.dur, 0) / dd(b) * 1000;
+            const p1 = pc(blocks[0]), p2 = pc(blocks[1]);
+            const h1 = sMean(blocks[0].map(r => r.hrEnd)), h2 = sMean(blocks[1].map(r => r.hrEnd));
+            const a1 = blocks[0].reduce((a, r) => a + (r.asc || 0), 0), a2 = blocks[1].reduce((a, r) => a + (r.asc || 0), 0);
+            out.push(`Deux moitiés (${(dd(blocks[0]) / 1000).toFixed(1)} km puis ${(dd(blocks[1]) / 1000).toFixed(1)} km) : allure ${sPace(p1)} puis ${sPace(p2)} (${sDelta(p2 - p1, 0)} s/km)` +
+                (h1 !== null && h2 !== null ? `, FC de fin ${h1.toFixed(0)} puis ${h2.toFixed(0)} bpm` : '') + (c.asc !== null ? `, dénivelé positif ${a1} puis ${a2} m` : '') + '.');
+        }
+        const full = rows.filter(r => r.dist >= 900);
+        if (full.length >= 3) {
+            const fast = full.reduce((m, r) => r.dur / r.dist < m.dur / m.dist ? r : m), slow = full.reduce((m, r) => r.dur / r.dist > m.dur / m.dist ? r : m);
+            const rel = r => r.asc !== null && r.asc !== undefined ? ` (+${r.asc} / −${r.desc} m)` : '';
+            out.push(`Tour le plus rapide : n°${fast.n}, ${sTime(fast.dur)}${rel(fast)} ; le plus lent : n°${slow.n}, ${sTime(slow.dur)}${rel(slow)}.`);
+        }
+        const gct = sMean(rows.map(r => r.gct)), vo = sMean(rows.map(r => r.vo));
+        if (pct < 95) {
+            const bits = [];
+            if (gct !== null) bits.push(`contact au sol ${gct.toFixed(0)} ms`);
+            if (vo !== null) bits.push(`oscillation verticale ${vo.toFixed(0)} mm`);
+            if (bits.length) out.push('Dynamique de course : ' + bits.join(', ') + '. Les repères habituels valent pour une allure proche de la VMA : à allure plus lente, un contact plus long est normal, donc pas de jugement ici.');
+        }
+        return out;
+    }
+
+    function buildSynthCourse(rows, blocks, res) {
+        const c = res.course, vma = profile.vma;
+        const d = new Date((seanceState.data.reps[0].start + FIT_EPOCH) * 1000).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+        const pct = (c.dist / c.time * 3.6) / vma * 100;
+        let s = `Course du ${d} : ${(c.dist / 1000).toFixed(1)} km en ${sHMS(c.time)} (${sPace(c.pace)}, ${pct.toFixed(0)} % de la VMA de ${vma.toFixed(1)} km/h)`;
+        if (c.asc !== null) s += `, D+ ${Math.round(c.asc)} m, D− ${Math.round(c.desc)} m`;
+        const hrM = wMean(rows, 'hr'), hrs = rows.map(r => r.hrMax).filter(v => v != null);
+        s += '.' + (hrM !== null && hrs.length ? ` FC moyenne ${hrM.toFixed(0)} bpm, maximum ${Math.max(...hrs)} bpm.` : '');
+        if (blocks.length === 2) {
+            const dd = b => b.reduce((a, r) => a + r.dist, 0), pc = b => b.reduce((a, r) => a + r.dur, 0) / dd(b) * 1000;
+            s += ` Entre les deux moitiés : allure ${sPace(pc(blocks[0]))} puis ${sPace(pc(blocks[1]))}, FC de fin ${sFmt(sMean(blocks[0].map(r => r.hrEnd)), 0)} puis ${sFmt(sMean(blocks[1].map(r => r.hrEnd)), 0)} bpm.`;
+        }
+        if (c.terrain) {
+            const up = c.terrain.find(t => t.key === 'up'), fl = c.terrain.find(t => t.key === 'flat'), dn = c.terrain.find(t => t.key === 'down');
+            const bits = [];
+            if (up.dist >= 300) bits.push(`en montée ${sPace(up.pace)} (FC ${sFmt(up.hr, 0)})`);
+            if (fl.dist >= 300) bits.push(`à plat ${sPace(fl.pace)} (FC ${sFmt(fl.hr, 0)})`);
+            if (dn.dist >= 300) bits.push(`en descente ${sPace(dn.pace)} (FC ${sFmt(dn.hr, 0)})`);
+            if (bits.length) s += ' Selon le relief : ' + bits.join(', ') + '.';
         }
         return s.trim();
     }

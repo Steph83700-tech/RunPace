@@ -489,18 +489,28 @@
             </div>
             <div id="seance-result" class="hidden space-y-5">
                 <div id="seance-summary" class="grid grid-cols-2 sm:grid-cols-4 gap-2"></div>
+                <div id="seance-course-card" class="hidden bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
+                    <h3 class="text-sm font-bold text-white">Relief et allure</h3>
+                    <div class="overflow-x-auto"><table id="seance-terrain" class="w-full text-xs"></table></div>
+                    <p class="text-[11px] text-slate-500">Parcours découpé en tronçons de 100 m selon la pente. L'altitude vient du baromètre de la montre : à lire comme un ordre de grandeur.</p>
+                </div>
                 <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
-                    <label class="flex items-center justify-between gap-3 text-sm text-slate-300">
+                    <label id="seance-split-wrap" class="hidden flex items-center justify-between gap-3 text-sm text-slate-300">
+                        <span>Comparer les deux moitiés de la course</span>
+                        <input id="seance-split" type="checkbox" class="w-5 h-5 accent-sky-500" onchange="renderSeance()">
+                    </label>
+                    <label id="seance-dist-wrap" class="flex items-center justify-between gap-3 text-sm text-slate-300">
                         <span>Forcer la distance d'une répétition (m)</span>
                         <input id="seance-dist" type="number" inputmode="numeric" min="50" step="50" value="" placeholder="auto" oninput="renderSeance()" class="w-24 bg-slate-950 border border-slate-700 rounded-lg px-2 py-1.5 text-right font-mono text-white">
                     </label>
                     <p id="seance-dist-info" class="text-[11px] text-slate-500"></p>
+                    <h3 id="seance-table-title" class="text-sm font-bold text-white">Détail par répétition</h3>
                     <div class="overflow-x-auto -mx-1">
                         <table class="w-full text-xs text-slate-200 whitespace-nowrap">
                             <thead><tr class="text-slate-400 text-[11px]">
                                 <th class="px-2 py-1.5 text-left font-semibold">#</th><th class="px-2 py-1.5 text-left font-semibold">m</th><th class="px-2 py-1.5 text-left font-semibold">Temps</th><th class="px-2 py-1.5 text-left font-semibold">km/h</th><th class="px-2 py-1.5 text-left font-semibold">%VMA</th>
                                 <th class="px-2 py-1.5 text-left font-semibold">FC fin</th><th class="px-2 py-1.5 text-left font-semibold">FC max</th><th class="px-2 py-1.5 text-left font-semibold">FC récup</th><th class="px-2 py-1.5 text-left font-semibold">Cad.</th><th class="px-2 py-1.5 text-left font-semibold">Foulée m</th>
-                                <th class="px-2 py-1.5 text-left font-semibold">W</th><th class="px-2 py-1.5 text-left font-semibold">Osc. mm</th><th class="px-2 py-1.5 text-left font-semibold">Contact ms</th>
+                                <th class="px-2 py-1.5 text-left font-semibold">W</th><th class="px-2 py-1.5 text-left font-semibold">Osc. mm</th><th class="px-2 py-1.5 text-left font-semibold">Contact ms</th><th class="px-2 py-1.5 text-left font-semibold">D+/D−</th>
                             </tr></thead>
                             <tbody id="seance-tbody"></tbody>
                         </table>
