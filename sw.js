@@ -1,6 +1,6 @@
 // RunPace Pro — service worker (mode hors ligne)
 // Pour publier une nouvelle version de l'appli : change simplement le numéro ci-dessous.
-const VERSION = 'runpace-v11';
+const VERSION = 'runpace-v12';
 
 const SHELL = ['./', 'index.html', 'style.css', 'app-core.js', 'app-pdf.js', 'app-fit.js', 'app-seance.js', 'app-journal.js', 'app-main.js',
     'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png'];

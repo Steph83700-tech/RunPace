@@ -186,12 +186,12 @@
         } else if (compound) {
             blocks = series;
         } else {
-            // blocs : une coupure nettement plus longue que la récupération habituelle
+            // blocs : une coupure nettement plus longue que la récupération habituelle (plus de 100 s et plus de 1,5 × la médiane)
             const sorted = real.slice().sort((a, b) => a - b);
             const med = sorted.length ? sorted[Math.floor(sorted.length / 2)] : 0;
             blocks = [];
             reps.forEach((r, i) => {
-                if (i === 0 || gaps[i - 1] > Math.max(100, 1.8 * med)) blocks.push([]);
+                if (i === 0 || gaps[i - 1] > Math.max(100, 1.5 * med)) blocks.push([]);
                 blocks[blocks.length - 1].push(r);
             });
         }
